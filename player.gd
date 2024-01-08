@@ -88,7 +88,8 @@ func state_runToExit():
 		statePrevID = stateID;
 		state = stateNext;
 		stateChanged = true;
-		state.call()
+		state.call() # update enter, main, leave and exit funcs
+		#state_onEnter(stateTime) # force onEnter changes?
 	else:
 		stateTime -= 1;
 		
@@ -98,7 +99,8 @@ func state_forceExit(stateNextOverride):
 	statePrevID = stateID;
 	state = stateNextOverride;
 	stateChanged = true;
-	state.call();
+	state.call(); #update enter, main, leave and exit funcs
+	state_onEnter(stateTime) # force onEnter changes
 	
 func stateDriver(stateTime_):
 	#onEnter
@@ -115,8 +117,8 @@ func stateInit():
 	#STATE EXAMPLES
 	state_Idle = func():
 		stateID		= "Idle";
-		var stateTimer  = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		var stateNext	= null; # normal exit
+		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= null; # normal exit
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.IDLE;
@@ -135,14 +137,11 @@ func stateInit():
 			if(slide): state_forceExit(state_Slide)
 			return
 		
-		stateTime = stateTimer;
-		if(stateChanged): return;
-		return;
 
 	state_Run = func():
 		stateID		= "Run";
-		var stateTimer  = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		var stateNext	= null; # normal exit
+		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= null; # normal exit
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.RUN;
@@ -157,16 +156,15 @@ func stateInit():
 		exitFunctions = func():
 			if(!is_on_floor()): state_forceExit(state_Air)
 			if(input_move.x == 0): state_forceExit(state_Idle)
+			var slide = (input_move.y == -1) && input_jump_press
+			if(slide): state_forceExit(state_Slide)
 			return
-		
-		stateTime = stateTimer;
-		if(stateChanged): return;
-		return
+
 
 	state_Air = func():
 		stateID		= "Air";
-		var stateTimer  = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		var stateNext	= null; # normal exit
+		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= null; # normal exit
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.AIR;
 			return
@@ -181,13 +179,11 @@ func stateInit():
 			if(is_on_floor()): state_forceExit(state_Idle)
 			return
 			
-		stateTime = stateTimer;
-		if(stateChanged): return;
 
 	state_Ladder = func():
 		stateID		= "Ladder";
-		var stateTimer  = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		var stateNext	= null; # normal exit
+		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= null; # normal exit
 
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.LADDER;
@@ -202,39 +198,39 @@ func stateInit():
 		exitFunctions = func():
 			return
 			
-		stateTime = stateTimer;
-		if(stateChanged): return;
 
 	state_Slide = func():
 		stateID		= "Slide";
-		var stateTimer  = 15; # how long should the state run for. set to -1 if the state does not have a timed end
-		var stateNext	= state_Idle; # normal exit
+		stateTime   = 20; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= state_Idle; # normal exit
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.SLIDE;
-			velocity.x = facing * SPEED * 1.2
 			input_jump_press = false; #reset input
+			ignore_friction = true;
 			jump_cooldown = 5;
 			return
 				
 		mainFunc	= func(): # run continuously
-			return
+			velocity.x = facing * SPEED * 2
+			if(stateTime == 1):
+				#if there is a ceiling above us
+					#increase state time by 1
+				pass
 			
 		onLeaveFunc = func(): # run only when the state is changed. may not be necessary
+			ignore_friction = false;
 			return
 			
 		exitFunctions = func():
-			#var jump = Input.is_action_pressed("act_jump")
-			#if(jump): state_forceExit(state_Air)
+			var jump = Input.is_action_just_pressed("act_jump") && (jump_cooldown == 0)
+			if(jump): state_forceExit(state_Air)
 			return;
-		
-		stateTime = stateTimer;
-		if(stateChanged): return;
 	
 	state_Teleport = func():
 		stateID		= "Teleport";
-		var stateTimer  = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		var stateNext	= null; # normal exit
+		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= null; # normal exit
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.TELEPORT;
@@ -249,13 +245,11 @@ func stateInit():
 		exitFunctions = func():
 			return
 		
-		stateTime = stateTimer;	
-		if(stateChanged): return;
 
 	state_Damage = func():
 		stateID		= "Damage";
-		var stateTimer  = 20; # how long should the state run for. set to -1 if the state does not have a timed end
-		var stateNext	= null; # normal exit
+		stateTime   = 20; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= state_Idle; # normal exit
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.DAMAGE;
@@ -273,13 +267,11 @@ func stateInit():
 		exitFunctions = func():
 			return
 		
-		stateTime = stateTimer;	
-		if(stateChanged): return;
 		
 	state_Stun = func():
 		stateID		= "Stun";
-		var stateTimer  = 30; # how long should the state run for. set to -1 if the state does not have a timed end
-		var stateNext	= null; # normal exit
+		stateTime   = 30; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= state_Idle; # normal exit
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.STUN;
@@ -295,9 +287,6 @@ func stateInit():
 			
 		exitFunctions = func():
 			return
-		
-		stateTime = stateTimer;	
-		if(stateChanged): return;
 		
 
 func _ready():
@@ -315,6 +304,7 @@ func _physics_process(delta: float) -> void:
 	
 	handle_gravity(delta)
 	handle_movement()
+	handle_friction()
 	handle_jump()
 	handle_shoot()
 	
@@ -330,9 +320,13 @@ func _draw():
 func handle_movement():
 	if input_move.x:
 		facing = input_move.x
+		if(stateID == "Slide"): return
 		velocity.x = facing * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		
+func handle_friction():
+	if(ignore_friction): return
+	if(input_move.x): return	
+	velocity.x = move_toward(velocity.x, 0, FRICTION)
 
 func get_input():
 	input_move.x = Input.get_axis("move_left", "move_right")
@@ -371,11 +365,6 @@ func handle_cooldowns():
 	if(jump_cooldown): jump_cooldown -= 1;
 	pass
 
-func handle_friction():
-	if (input_move): return
-	if (ignore_friction) : return
-	velocity.x = move_toward(velocity.x, 0, FRICTION)
-	velocity.y = move_toward(velocity.y, 0, FRICTION)
 			
 func update_animation():
 	animated_sprite_2d.scale.x = facing
