@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg7y1iajpp82d"]
+
+[ext_resource type="Script" path="res://polygon2d_draw_collison.gd" id="1_75o2a"]
+[ext_resource type="PackedScene" uid="uid://cwo6seha311se" path="res://player.tscn" id="2_ni0p5"]
+
+[node name="World" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(16, 56)
+polygon = PackedVector2Array(-16, 160, -16, 184, 240, 184, 240, 160)
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+script = ExtResource("1_75o2a")
+
+[node name="Player" parent="." instance=ExtResource("2_ni0p5")]
+position = Vector2(112, 112)
+floor_snap_length = 4.0
