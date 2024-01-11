@@ -178,7 +178,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -195,7 +195,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"run_shoot",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -234,7 +234,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_446pv"]
-size = Vector2(16, 24)
+size = Vector2(12, 24)
 
 [sub_resource type="Animation" id="Animation_jk5sc"]
 resource_name = "Idle"
@@ -304,7 +304,7 @@ script = ExtResource("1_jkyx8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(9.53674e-07, -16)
 sprite_frames = SubResource("SpriteFrames_1xo5c")
-animation = &"air_shoot"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -12)
@@ -321,3 +321,6 @@ vframes = 7
 libraries = {
 "": SubResource("AnimationLibrary_7merl")
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -32)

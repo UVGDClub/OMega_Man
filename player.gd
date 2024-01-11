@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 #REFERENCES
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var bulletSource = preload("res://bullet_small.tscn")
+@onready var World = $"../.."
 
 #ANIMATION STATE
 enum ANIM {
@@ -344,8 +346,14 @@ func handle_shoot():
 	if(shoot_cooldown != 0): return
 	if(input_shoot):
 		print("shoot")
+		# shoot projectile
+		var bullet_ = bulletSource.instantiate()
+		bullet_.set_velocity(facing)
+		bullet_.position = position + Vector2(facing*13,-13)
+		World.add_child(bullet_)
 		shoot_cooldown = shoot_cooldown_MAX;
 		shoot_anim_timer = shoot_anim_timer_max;
+		
 		# shoot projectile
 		
 func handle_jump():

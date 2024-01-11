@@ -9,7 +9,7 @@
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(16, 56)
-polygon = PackedVector2Array(-16, 160, -16, 184, 240, 184, 240, 160)
+polygon = PackedVector2Array(-16, 160, -16, 184, 368, 184, 368, 160, 248, 160, 248, 136, 208, 136, 208, 160, 8, 160, 8, -56, -16, -56)
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
 script = ExtResource("1_75o2a")
