@@ -13,6 +13,7 @@ config_version=5
 config/name="OMega_Man"
 run/main_scene="res://world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+boot_splash/image="res://icon.png"
 config/icon="res://icon.png"
 
 [display]

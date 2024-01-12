@@ -2,6 +2,9 @@ extends CharacterBody2D
 
 #REFERENCES
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite_2d = $Sprite2D
+@onready var animation_player = $AnimationPlayer
+
 @onready var bulletSource = preload("res://bullet_small.tscn")
 @onready var World = $"../.."
 
@@ -21,7 +24,7 @@ var anim_state = ANIM.IDLE;
 
 #CONSTANTS
 const SPEED = 100.0
-const JUMP_VELOCITY = -300.0
+const JUMP_VELOCITY = -350.0
 const FRICTION = 45.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -40,14 +43,16 @@ var input_shoot : bool;
 var input_jump : bool;
 var input_jump_press : bool;
 
-var jump_cooldown : int = 0;
-
 #COOLDOWNS
 var INVINCIBILITY: int = 0;
 var dash_cooldown_MAX: int = 30;
 var dash_cooldown: int = 0;
+var jump_cooldown : int = 0;
 var shoot_cooldown_MAX: int = 5
 var shoot_cooldown: int = 0
+
+#OFFSETS
+var bullet_offset: Vector2 = Vector2.ZERO;
 
 #STATE INITIALIZE (godot needs this?)
 var state_Idle;
@@ -115,6 +120,115 @@ func stateDriver(stateTime_):
 		exitFunctions.call()
 	stateChanged = false
 
+
+func _ready():
+	stateInit();
+	state = state_Idle;
+	state.call()
+	pass
+
+
+func _physics_process(delta: float) -> void:
+	handle_cooldowns();
+	
+	get_input()
+	stateDriver(stateTime);
+	
+	handle_gravity(delta)
+	handle_movement()
+	handle_friction()
+	handle_jump()
+	handle_shoot()
+	
+
+	update_animation()
+	
+	move_and_slide()
+	queue_redraw(); # necessary for updating draws calls in-script
+
+func _draw():
+	pass
+	
+func handle_movement():
+	if input_move.x:
+		facing = input_move.x
+		if(stateID == "Slide"): return
+		velocity.x = facing * SPEED
+		
+func handle_friction():
+	if(ignore_friction): return
+	if(input_move.x): return	
+	velocity.x = move_toward(velocity.x, 0, FRICTION)
+
+func get_input():
+	input_move.x = Input.get_axis("move_left", "move_right")
+	input_move.y = Input.get_axis("move_down", "move_up")
+	input_shoot = Input.is_action_just_pressed("act_shoot");
+	input_jump = Input.is_action_pressed("act_jump");
+	input_jump_press = Input.is_action_just_pressed("act_jump");
+	
+func handle_gravity(delta):
+	# Add the gravity.
+	if not is_on_floor():
+		velocity.y += gravity * delta
+
+func handle_shoot():
+	if(shoot_cooldown != 0): return
+	if(input_shoot):
+		# shoot projectile
+		var bullet_ = bulletSource.instantiate()
+		bullet_.set_velocity(facing)
+		bullet_.position = position + Vector2(facing * bullet_offset.x, bullet_offset.y)
+		World.add_child(bullet_)
+		shoot_cooldown = shoot_cooldown_MAX;
+		shoot_anim_timer = shoot_anim_timer_max;
+		
+		# shoot projectile
+		
+func handle_jump():
+	# Handle jump.
+	if(jump_cooldown): return;
+	if is_on_floor():
+		if input_jump_press: 
+			velocity.y = JUMP_VELOCITY
+	else: #this sucks, work on better conditional
+		if Input.is_action_just_released("act_jump") and velocity.y < JUMP_VELOCITY / 2: 
+			velocity.y = JUMP_VELOCITY / 2
+			
+func handle_cooldowns():
+	if(INVINCIBILITY): INVINCIBILITY -= 1;
+	if(shoot_cooldown > 0): shoot_cooldown -= 1;
+	if(shoot_anim_timer): shoot_anim_timer -= 1;
+	if(jump_cooldown): jump_cooldown -= 1;
+	pass
+
+			
+func update_animation():
+	sprite_2d.scale.x = facing
+	match(anim_state):
+		ANIM.IDLE:
+			if(shoot_anim_timer): animation_player.play("idle_shoot")
+			else: animation_player.play("idle")
+		ANIM.RUN:
+			if(shoot_anim_timer): animation_player.play("run_shoot")
+			else: animation_player.play("run")
+		ANIM.AIR:
+			if(shoot_anim_timer): animation_player.play("air_shoot")
+			else: animation_player.play("air_neutral")
+		ANIM.LADDER:
+			if(shoot_anim_timer): animation_player.play("ladder_shoot")
+			else: animation_player.play("ladder")
+		ANIM.SLIDE:
+			animation_player.play("slide")
+		ANIM.TELEPORT:
+			animation_player.play("teleport")
+		ANIM.DAMAGE:
+			animation_player.play("damage")
+		ANIM.STUN:
+			animation_player.play("stun")
+		_:
+			animation_player.play("idle")
+
 func stateInit():
 	#STATE EXAMPLES
 	state_Idle = func():
@@ -124,6 +238,7 @@ func stateInit():
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.IDLE;
+			bullet_offset = Vector2(21,-13)
 			return
 				
 		mainFunc	= func(): # run continuously
@@ -147,6 +262,7 @@ func stateInit():
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.RUN;
+			bullet_offset = Vector2(21,-13)
 			return
 				
 		mainFunc	= func(): # run continuously
@@ -169,6 +285,7 @@ func stateInit():
 		stateNext	= null; # normal exit
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.AIR;
+			bullet_offset = Vector2(18,-16)
 			return
 				
 		mainFunc	= func(): # run continuously
@@ -189,6 +306,7 @@ func stateInit():
 
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.LADDER;
+			bullet_offset = Vector2(18,-16)
 			return
 				
 		mainFunc	= func(): # run continuously
@@ -290,112 +408,3 @@ func stateInit():
 		exitFunctions = func():
 			return
 		
-
-func _ready():
-	stateInit();
-	state = state_Idle;
-	state.call()
-	pass
-
-
-func _physics_process(delta: float) -> void:
-	handle_cooldowns();
-	
-	get_input()
-	stateDriver(stateTime);
-	
-	handle_gravity(delta)
-	handle_movement()
-	handle_friction()
-	handle_jump()
-	handle_shoot()
-	
-
-	update_animation()
-	
-	move_and_slide()
-	queue_redraw(); # necessary for updating draws calls in-script
-
-func _draw():
-	pass
-	
-func handle_movement():
-	if input_move.x:
-		facing = input_move.x
-		if(stateID == "Slide"): return
-		velocity.x = facing * SPEED
-		
-func handle_friction():
-	if(ignore_friction): return
-	if(input_move.x): return	
-	velocity.x = move_toward(velocity.x, 0, FRICTION)
-
-func get_input():
-	input_move.x = Input.get_axis("move_left", "move_right")
-	input_move.y = Input.get_axis("move_down", "move_up")
-	input_shoot = Input.is_action_just_pressed("act_shoot");
-	input_jump = Input.is_action_pressed("act_jump");
-	input_jump_press = Input.is_action_just_pressed("act_jump");
-	
-func handle_gravity(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += gravity * delta
-
-func handle_shoot():
-	if(shoot_cooldown != 0): return
-	if(input_shoot):
-		print("shoot")
-		# shoot projectile
-		var bullet_ = bulletSource.instantiate()
-		bullet_.set_velocity(facing)
-		bullet_.position = position + Vector2(facing*13,-13)
-		World.add_child(bullet_)
-		shoot_cooldown = shoot_cooldown_MAX;
-		shoot_anim_timer = shoot_anim_timer_max;
-		
-		# shoot projectile
-		
-func handle_jump():
-	# Handle jump.
-	if(jump_cooldown): return;
-	if is_on_floor():
-		if input_jump_press: 
-			velocity.y = JUMP_VELOCITY
-	else: #this sucks, work on better conditional
-		if Input.is_action_just_released("act_jump") and velocity.y < JUMP_VELOCITY / 2: 
-			velocity.y = JUMP_VELOCITY / 2
-			
-func handle_cooldowns():
-	if(INVINCIBILITY): INVINCIBILITY -= 1;
-	if(shoot_cooldown > 0): shoot_cooldown -= 1;
-	if(shoot_anim_timer): shoot_anim_timer -= 1;
-	if(jump_cooldown): jump_cooldown -= 1;
-	pass
-
-			
-func update_animation():
-	animated_sprite_2d.scale.x = facing
-	match(anim_state):
-		ANIM.IDLE:
-			if(shoot_anim_timer): animated_sprite_2d.play("idle_shoot")
-			else: animated_sprite_2d.play("idle")
-		ANIM.RUN:
-			if(shoot_anim_timer): animated_sprite_2d.play("run_shoot")
-			else: animated_sprite_2d.play("run")
-		ANIM.AIR:
-			if(shoot_anim_timer): animated_sprite_2d.play("air_shoot")
-			else: animated_sprite_2d.play("air_neutral")
-		ANIM.LADDER:
-			if(shoot_anim_timer): animated_sprite_2d.play("ladder_shoot")
-			else: animated_sprite_2d.play("ladder")
-		ANIM.SLIDE:
-			animated_sprite_2d.play("slide")
-		ANIM.TELEPORT:
-			animated_sprite_2d.play("teleport")
-		ANIM.DAMAGE:
-			animated_sprite_2d.play("damage")
-		ANIM.STUN:
-			animated_sprite_2d.play("stun")
-		_:
-			animated_sprite_2d.play("idle")
