@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cds1nk0736cs4"]
+
+[sub_resource type="SystemFont" id="SystemFont_vawu4"]
+
+[resource]
+font = SubResource("SystemFont_vawu4")
+font_size = 8

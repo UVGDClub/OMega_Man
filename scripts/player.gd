@@ -5,7 +5,8 @@ extends CharacterBody2D
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
 
-@onready var bulletSource = preload("res://bullet_small.tscn")
+const bulletSource = preload("res://bullet_small.tscn")
+const LADDER_ZONE = preload("res://ladder_zone.tscn")
 @onready var World = $"../.."
 
 #ANIMATION STATE
@@ -15,26 +16,34 @@ enum ANIM {
 	AIR, 
 	LADDER, 
 	SLIDE, 
-	TELEPORT, 
+	TELEPORT,
+	TELEPORT_FINISH,
 	DAMAGE, 
 	STUN
 }
-
 var anim_state = ANIM.IDLE;
 
 #CONSTANTS
 const SPEED = 100.0
-const JUMP_VELOCITY = -350.0
+const SPEED_LADDER = 1.0
+const JUMP_VELOCITY = -300.0
 const FRICTION = 45.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+#stats
+var health = 24;
+
 # State Related Variables
 var facing = 1;
 var ignore_friction = false;
+var ignore_gravity = false;
+var ignore_movement = false;
 var can_shoot = true;
 var shoot_anim_timer: int = 0;
 var shoot_anim_timer_max: int = 15;
+var detect_ladder = false;
+var ladder_inst = null;
 
 #INPUT RELATED
 var has_control = true;
@@ -60,7 +69,8 @@ var state_Run;
 var state_Air;
 var state_Ladder;
 var state_Slide;
-var state_Teleport;
+var state_Teleport_Enter;
+var state_Teleport_Exit;
 var state_Damage;
 var state_Stun;
 
@@ -123,7 +133,7 @@ func stateDriver(stateTime_):
 
 func _ready():
 	stateInit();
-	state = state_Idle;
+	state = state_Teleport_Enter;
 	state.call()
 	pass
 
@@ -150,6 +160,7 @@ func _draw():
 	pass
 	
 func handle_movement():
+	if(ignore_movement): return
 	if input_move.x:
 		facing = input_move.x
 		if(stateID == "Slide"): return
@@ -169,6 +180,7 @@ func get_input():
 	
 func handle_gravity(delta):
 	# Add the gravity.
+	if(ignore_gravity): return
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
@@ -194,6 +206,12 @@ func handle_jump():
 	else: #this sucks, work on better conditional
 		if Input.is_action_just_released("act_jump") and velocity.y < JUMP_VELOCITY / 2: 
 			velocity.y = JUMP_VELOCITY / 2
+
+func can_climb_ladder():
+	if(detect_ladder):
+		if(abs(input_move.y)): return true
+	return false
+	
 			
 func handle_cooldowns():
 	if(INVINCIBILITY): INVINCIBILITY -= 1;
@@ -222,6 +240,8 @@ func update_animation():
 			animation_player.play("slide")
 		ANIM.TELEPORT:
 			animation_player.play("teleport")
+		ANIM.TELEPORT_FINISH:
+			animation_player.play("teleport_finish")
 		ANIM.DAMAGE:
 			animation_player.play("damage")
 		ANIM.STUN:
@@ -252,6 +272,7 @@ func stateInit():
 			if(input_move.x != 0): state_forceExit(state_Run)
 			var slide = (input_move.y == -1) && input_jump_press
 			if(slide): state_forceExit(state_Slide)
+			if(can_climb_ladder()): state_forceExit(state_Ladder)
 			return
 		
 
@@ -276,6 +297,7 @@ func stateInit():
 			if(input_move.x == 0): state_forceExit(state_Idle)
 			var slide = (input_move.y == -1) && input_jump_press
 			if(slide): state_forceExit(state_Slide)
+			if(can_climb_ladder()): state_forceExit(state_Ladder)
 			return
 
 
@@ -296,6 +318,7 @@ func stateInit():
 			
 		exitFunctions = func():
 			if(is_on_floor()): state_forceExit(state_Idle)
+			if(can_climb_ladder()): state_forceExit(state_Ladder)
 			return
 			
 
@@ -307,15 +330,29 @@ func stateInit():
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.LADDER;
 			bullet_offset = Vector2(18,-16)
+			ignore_gravity = true;
+			ignore_movement = true;
+			position.x = ladder_inst.position.x + 8
 			return
 				
 		mainFunc	= func(): # run continuously
+			velocity = Vector2.ZERO
+			animation_player.speed_scale = 0
+			if(input_move != Vector2.ZERO):
+				#position.x += input_move.x * SPEED_LADDER # subtract cause up in grid is negative
+				position.y -= input_move.y * SPEED_LADDER # subtract cause up in grid is negative
+				animation_player.speed_scale = 1
 			return
 			
 		onLeaveFunc = func(): # run only when the state is changed. may not be necessary
+			animation_player.speed_scale = 1
+			ignore_gravity = false;
+			ignore_movement = false;
 			return
 			
 		exitFunctions = func():
+			if(input_jump_press): state_forceExit(state_Air)
+			if(!detect_ladder): state_forceExit(state_Air)
 			return
 			
 
@@ -344,22 +381,36 @@ func stateInit():
 			
 		exitFunctions = func():
 			var jump = Input.is_action_just_pressed("act_jump") && (jump_cooldown == 0)
-			if(jump): state_forceExit(state_Air)
+			if(jump || !is_on_floor()): state_forceExit(state_Air)
 			return;
 	
-	state_Teleport = func():
-		stateID		= "Teleport";
-		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= null; # normal exit
+	state_Teleport_Enter = func():
+		stateID		= "Teleport_Enter";
+		stateTime   = 4; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= state_Idle; # normal exit
 		
 		onEnterFunc = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.TELEPORT;
+			ignore_friction = true;
+			ignore_gravity = true;
+			ignore_movement = true;
 			return
 				
 		mainFunc	= func(): # run continuously
+			if(!is_on_floor()):
+				stateTime = 5;
+				velocity.y = 980;
+				velocity.x = 0;
+			else:
+				anim_state = ANIM.TELEPORT_FINISH
+				velocity.y = 0;
+				velocity.x = 0;
 			return
 			
 		onLeaveFunc = func(): # run only when the state is changed. may not be necessary
+			ignore_friction = false;
+			ignore_gravity = false;
+			ignore_movement = false;
 			return
 			
 		exitFunctions = func():

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccrc5o14x0kl7"]
+
+[ext_resource type="Texture2D" uid="uid://d3um836bgbxtq" path="res://sprites/ladder_end_icon.png" id="2_8bx1n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dglm7"]
+size = Vector2(16, 4)
+
+[node name="Ladder_zone_top" type="StaticBody2D"]
+
+[node name="LadderEndIcon" type="Sprite2D" parent="."]
+position = Vector2(8, 8)
+texture = ExtResource("2_8bx1n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 2)
+shape = SubResource("RectangleShape2D_dglm7")
+one_way_collision = true

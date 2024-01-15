@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://bv680owkqynm"]
 
-[ext_resource type="Script" path="res://bullet_small.gd" id="1_hec6l"]
-[ext_resource type="Texture2D" uid="uid://ci850lw1nn5po" path="res://lemon.png" id="1_xqxjx"]
+[ext_resource type="Script" path="res://scripts/bullet_small.gd" id="1_d5lkb"]
+[ext_resource type="Texture2D" uid="uid://ci850lw1nn5po" path="res://sprites/lemon.png" id="2_raw2i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6u7fm"]
 size = Vector2(6, 6)
 
 [node name="bullet_small" type="Area2D"]
-script = ExtResource("1_hec6l")
+script = ExtResource("1_d5lkb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_6u7fm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_xqxjx")
+texture = ExtResource("2_raw2i")
