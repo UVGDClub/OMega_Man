@@ -5,8 +5,8 @@ extends CharacterBody2D
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
 
-const bulletSource = preload("res://bullet_small.tscn")
-const LADDER_ZONE = preload("res://ladder_zone.tscn")
+const bulletSource = preload("res://scenes/bullet_small.tscn")
+const LADDER_ZONE = preload("res://scenes/ladder_zone.tscn")
 @onready var World = $"../.."
 
 #ANIMATION STATE
