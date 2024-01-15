@@ -1,20 +1,20 @@
+![Game Icon](project_system_files/icon.png)
 # OMega_Man
 Open Source Mega Man Clone
-![Game Icon](project_system_files/icon.png)
 Made by UVic Game Dev
-![Game Dev Logo](project_system_files/icon.png)
+![Game Dev Logo](project_system_files/UVGD logo pixel3.png)
 
 ## Foundation Team:
-	* Brendan "Sikowny"
-	* Your name here
+	- Brendan "Sikowny"
+	- Your name here
 
 ## Robot Master Team:
-	* Intro / Robot Master 1
-		** Brendan "Sikowny"
-		** Your name here
-	* Robot Master 2
-		** Your name here
+	- Intro / Robot Master 1
+		-- Brendan "Sikowny"
+		-- Your name here
+	- Robot Master 2
+		-- Your name here
 
 # Features
-	* 8 Robot Masters
-	* Final Stages
+	- 8 Robot Masters
+	- Final Stages
