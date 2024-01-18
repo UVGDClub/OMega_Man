@@ -64,7 +64,7 @@ var shoot_cooldown: int = 0
 var bullet_offset: Vector2 = Vector2.ZERO;
 
 #STATE INITIALIZE (godot needs this?)
-var state_Idle;
+var state_Idle = func(): return;
 var state_Run;
 var state_Air;
 var state_Ladder;
@@ -79,7 +79,7 @@ var state = func(): return
 var onEnterFunc = func(): return
 var mainFunc = func(): return
 var onLeaveFunc = func(): return
-var exitFunctions = func(): return
+var exitConditions = func(): return
 
 var stateNext = func(): return
 var stateChanged: bool = false
@@ -87,7 +87,7 @@ var stateTime: int = 0
 var stateID: String = "NULL";
 var statePrevID: String = "NULL";
 
-func state_onEnter(stateTimeNew):
+func state_run_onEnterFunc_once(stateTimeNew):
 	if (stateID != statePrevID):
 		stateChanged = true
 		statePrevID = stateID;
@@ -97,7 +97,7 @@ func state_onEnter(stateTimeNew):
 		onEnterFunc.call()
 		print("----PLAYER_STATE----: "+stateID);
 		
-func state_runToExit():
+func state_run_onLeaveFunc_whenStateDone():
 	if(stateTime == -1): return
 	if(stateChanged): return
 	if(stateTime == 0):
@@ -117,18 +117,24 @@ func state_forceExit(stateNextOverride):
 	state = stateNextOverride;
 	stateChanged = true;
 	state.call(); #update enter, main, leave and exit funcs
-	state_onEnter(stateTime) # force onEnter changes
+	state_run_onEnterFunc_once(stateTime) # force onEnter changes
 	
+func state_check_ExitConditions():
+	if(!stateChanged): 
+		exitConditions.call()
+
+# Runs the state Sandwich
 func stateDriver(stateTime_):
 	#onEnter
-	state_onEnter(stateTime_)
+	state_run_onEnterFunc_once(stateTime_) # runs onEnter once
 	#main
-	mainFunc.call()
+	mainFunc.call() 
 	#exiting
-	state_runToExit()
-	if(!stateChanged): 
-		exitFunctions.call()
-	stateChanged = false
+	state_run_onLeaveFunc_whenStateDone()
+	
+	state_check_ExitConditions()
+	
+	stateChanged = false # this must set it to false for both exitConditions and onEnter
 
 
 func _ready():
@@ -153,7 +159,7 @@ func _physics_process(delta: float) -> void:
 
 	update_animation()
 	
-	move_and_slide()
+	move_and_slide() # necessary to update the character body
 	queue_redraw(); # necessary for updating draws calls in-script
 
 func _draw():
@@ -212,6 +218,12 @@ func can_climb_ladder():
 		if(abs(input_move.y)): return true
 	return false
 	
+func handle_weapon_switch():
+	#switch weapons with shouler buttons
+	
+	pass
+	
+	
 			
 func handle_cooldowns():
 	if(INVINCIBILITY): INVINCIBILITY -= 1;
@@ -267,7 +279,7 @@ func stateInit():
 		onLeaveFunc = func(): # run only when the state is changed. may not be necessary
 			return
 			
-		exitFunctions = func():
+		exitConditions = func():
 			if(!is_on_floor()): state_forceExit(state_Air)
 			if(input_move.x != 0): state_forceExit(state_Run)
 			var slide = (input_move.y == -1) && input_jump_press
@@ -292,7 +304,7 @@ func stateInit():
 		onLeaveFunc = func(): # run only when the state is changed. may not be necessary
 			return
 			
-		exitFunctions = func():
+		exitConditions = func():
 			if(!is_on_floor()): state_forceExit(state_Air)
 			if(input_move.x == 0): state_forceExit(state_Idle)
 			var slide = (input_move.y == -1) && input_jump_press
@@ -316,7 +328,7 @@ func stateInit():
 		onLeaveFunc = func(): # run only when the state is changed. may not be necessary
 			return
 			
-		exitFunctions = func():
+		exitConditions = func():
 			if(is_on_floor()): state_forceExit(state_Idle)
 			if(can_climb_ladder()): state_forceExit(state_Ladder)
 			return
@@ -350,7 +362,7 @@ func stateInit():
 			ignore_movement = false;
 			return
 			
-		exitFunctions = func():
+		exitConditions = func():
 			if(input_jump_press): state_forceExit(state_Air)
 			if(!detect_ladder): state_forceExit(state_Air)
 			return
@@ -379,7 +391,7 @@ func stateInit():
 			ignore_friction = false;
 			return
 			
-		exitFunctions = func():
+		exitConditions = func():
 			var jump = Input.is_action_just_pressed("act_jump") && (jump_cooldown == 0)
 			if(jump || !is_on_floor()): state_forceExit(state_Air)
 			return;
@@ -413,7 +425,7 @@ func stateInit():
 			ignore_movement = false;
 			return
 			
-		exitFunctions = func():
+		exitConditions = func():
 			return
 		
 
@@ -435,7 +447,7 @@ func stateInit():
 			has_control = true;
 			return
 			
-		exitFunctions = func():
+		exitConditions = func():
 			return
 		
 		
@@ -456,6 +468,6 @@ func stateInit():
 			has_control = true;
 			return
 			
-		exitFunctions = func():
+		exitConditions = func():
 			return
 		
