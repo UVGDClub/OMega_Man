@@ -878,3 +878,10 @@ offset_right = 40.0
 offset_bottom = 39.0
 text = "STATE: "
 label_settings = ExtResource("4_irm5t")
+
+[node name="stateTime" type="Label" parent="Debug_HUD"]
+offset_top = 32.0
+offset_right = 49.0
+offset_bottom = 55.0
+text = "STATE TIME: "
+label_settings = ExtResource("4_irm5t")
