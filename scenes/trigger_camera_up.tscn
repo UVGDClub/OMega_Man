@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://crel0ora2qqes"]
+
+[ext_resource type="Script" path="res://scenes/trigger_camera_up.gd" id="1_x3mrd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_471yr"]
+
+[node name="trigger_camera_up" type="Area2D"]
+script = ExtResource("1_x3mrd")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -2.0
+offset_right = 41.0
+offset_bottom = 21.0
+text = "CAM UP"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_471yr")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

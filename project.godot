@@ -11,10 +11,14 @@ config_version=5
 [application]
 
 config/name="OMega_Man"
-run/main_scene="res://scenes/world.tscn"
+run/main_scene="res://scenes/level_test.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/image="res://project_system_files/icon.png"
 config/icon="res://project_system_files/icon.png"
+
+[autoload]
+
+Global="*res://global.gd"
 
 [display]
 
@@ -22,7 +26,7 @@ window/size/viewport_width=256
 window/size/viewport_height=240
 window/size/window_width_override=1024
 window/size/window_height_override=960
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 
 [input]
 

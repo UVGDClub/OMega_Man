@@ -1,9 +1,7 @@
-[gd_scene load_steps=45 format=3 uid="uid://cwo6seha311se"]
+[gd_scene load_steps=43 format=3 uid="uid://cwo6seha311se"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_jkyx8"]
 [ext_resource type="Texture2D" uid="uid://3aixhpcyl60a" path="res://sprites/megaMan_Sprites_sheet1.png" id="2_o7uap"]
-[ext_resource type="Script" path="res://scripts/player_debug_hud.gd" id="3_r6mfj"]
-[ext_resource type="LabelSettings" uid="uid://cds1nk0736cs4" path="res://project_system_files/label_debug_settings.tres" id="4_irm5t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j4h83"]
 atlas = ExtResource("2_o7uap")
@@ -854,34 +852,3 @@ shape = SubResource("RectangleShape2D_446pv")
 libraries = {
 "": SubResource("AnimationLibrary_7merl")
 }
-
-[node name="Debug_HUD" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
-script = ExtResource("3_r6mfj")
-
-[node name="positionX" type="Label" parent="Debug_HUD"]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "X: -"
-label_settings = ExtResource("4_irm5t")
-
-[node name="positionY" type="Label" parent="Debug_HUD"]
-offset_left = 40.0
-offset_right = 80.0
-offset_bottom = 23.0
-text = "Y: -"
-label_settings = ExtResource("4_irm5t")
-
-[node name="state_label" type="Label" parent="Debug_HUD"]
-offset_top = 16.0
-offset_right = 40.0
-offset_bottom = 39.0
-text = "STATE: "
-label_settings = ExtResource("4_irm5t")
-
-[node name="stateTime" type="Label" parent="Debug_HUD"]
-offset_top = 32.0
-offset_right = 49.0
-offset_bottom = 55.0
-text = "STATE TIME: "
-label_settings = ExtResource("4_irm5t")

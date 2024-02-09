@@ -145,8 +145,8 @@ func _ready():
 	stateInit();
 	state = state_Teleport_Enter;
 	state.call()
+	Global.player_spawn.emit(self)
 	pass
-
 
 func _physics_process(delta: float) -> void:
 	debug_handle_slowmo();
@@ -170,6 +170,7 @@ func _physics_process(delta: float) -> void:
 	queue_redraw(); # necessary for updating draws calls in-script
 
 func _draw():
+	draw_circle(Vector2.ZERO,50,Color.RED);
 	pass
 	
 func handle_movement():
