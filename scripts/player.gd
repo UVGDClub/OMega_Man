@@ -79,6 +79,8 @@ var state_Stun;
 var state_Special;
 var state_Special2;
 
+#region STATE MACHINE BACK END
+
 #STATE DRIVERS
 var state = func(): return
 var onEnter = func(): return
@@ -93,11 +95,9 @@ var _stateID: String = "NULL";
 var _statePrevID: String = "NULL";
 
 func state_run_onEnter_once(stateTimeNew):
-	if (_stateID != _statePrevID):
+	if(_stateID != _statePrevID):
 		stateChanged = true
 		_statePrevID = _stateID;
-		
-	if(stateChanged):
 		stateTime = stateTimeNew
 		onEnter.call()
 		print("----PLAYER_STATE----: "+_stateID);
@@ -117,6 +117,7 @@ func state_run_onLeave_whenStateDone():
 		
 
 func state_forceExit(stateNextOverride):
+	if(stateNextOverride == state): return
 	onLeave.call();
 	_statePrevID = _stateID;
 	state = stateNextOverride;
@@ -140,6 +141,7 @@ func stateDriver(stateTime_):
 	state_run_onLeave_whenStateDone()
 	stateChanged = false # this must set it to false for both exitConditions and onEnter
 
+#endregion
 
 func _ready():
 	stateInit();
@@ -170,7 +172,7 @@ func _physics_process(delta: float) -> void:
 	queue_redraw(); # necessary for updating draws calls in-script
 
 func _draw():
-	draw_circle(Vector2.ZERO,50,Color.RED);
+	#draw_circle(Vector2.ZERO,50,Color.RED);
 	pass
 	
 func handle_movement():
