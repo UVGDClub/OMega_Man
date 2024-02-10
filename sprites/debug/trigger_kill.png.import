@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfbqyalc7cyf3"
-path="res://.godot/imported/ladder_icon.png-56d1b0fc1d12c61def86c7be5cddec3e.ctex"
+uid="uid://c7an8uu1741xu"
+path="res://.godot/imported/trigger_kill.png-d4c7f72a9a87e274a46afe42424a7d7a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/ladder_icon.png"
-dest_files=["res://.godot/imported/ladder_icon.png-56d1b0fc1d12c61def86c7be5cddec3e.ctex"]
+source_file="res://sprites/debug/trigger_kill.png"
+dest_files=["res://.godot/imported/trigger_kill.png-d4c7f72a9a87e274a46afe42424a7d7a.ctex"]
 
 [params]
 

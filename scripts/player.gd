@@ -78,6 +78,7 @@ var state_Teleport_Enter;
 var state_Teleport_Exit;
 var state_Damage;
 var state_Stun;
+var state_Death;
 var state_Special;
 var state_Special2;
 
@@ -495,6 +496,26 @@ func stateInit():
 		_stateID		= "Stun";
 		stateTime   = 30; # how long should the state run for. set to -1 if the state does not have a timed end
 		stateNext	= state_Idle; # normal exit
+		
+		onEnter = func(): # run once, on entering the state. may not be necessary
+			anim_state = ANIM.STUN;
+			has_control = false;
+			return
+				
+		main	= func(): # run continuously
+			return
+			
+		onLeave = func(): # run only when the state is changed. may not be necessary
+			has_control = true;
+			return
+			
+		exitConditions = func():
+			return
+	
+	state_Death = func():
+		_stateID		= "Death";
+		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= null; # normal exit
 		
 		onEnter = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.STUN;

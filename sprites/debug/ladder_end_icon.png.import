@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbyj81jy0olnf"
-path="res://.godot/imported/collision_wall.png-bd4ba4c60ef3c4298d5de03eccfe220c.ctex"
+uid="uid://d3um836bgbxtq"
+path="res://.godot/imported/ladder_end_icon.png-dafd6213a8899d050672b2b4b9c24a97.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/collision_wall.png"
-dest_files=["res://.godot/imported/collision_wall.png-bd4ba4c60ef3c4298d5de03eccfe220c.ctex"]
+source_file="res://sprites/debug/ladder_end_icon.png"
+dest_files=["res://.godot/imported/ladder_end_icon.png-dafd6213a8899d050672b2b4b9c24a97.ctex"]
 
 [params]
 
