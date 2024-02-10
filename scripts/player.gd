@@ -47,6 +47,8 @@ var shoot_anim_timer: int = 0;
 var shoot_anim_timer_max: int = 15;
 var detect_ladder = false;
 var ladder_inst = null;
+var camera_lerp_target: Vector2 = Vector2.ZERO;
+var camera_scroll_active: bool = false;
 
 #INPUT RELATED
 var has_control = true;
@@ -152,9 +154,10 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	debug_handle_slowmo();
+	if(handle_camera_scroll() == true): return; #dont update if camera transition
 	handle_cooldowns();
 	
-	get_input()
+	get_input();
 	stateDriver(stateTime);
 	
 	#print(state.hash())
@@ -240,6 +243,18 @@ func can_climb_ladder():
 	if(detect_ladder):
 		if(abs(input_move.y)): return true
 	return false
+	
+func event_camera_scroll(new_lerp_target):
+	camera_lerp_target = position + new_lerp_target;
+	#camera_scroll_active = true;
+	
+func handle_camera_scroll():
+	camera_scroll_active = Global.camera.camera_scroll_active;
+	if(camera_scroll_active == false): return false;
+	#position.x = move_toward(position.x,camera_lerp_target.x,1);
+	#position.y = move_toward(position.y,camera_lerp_target.y,1);
+	return true;
+	
 	
 func handle_weapon_switch():
 	#switch weapons with shouler buttons

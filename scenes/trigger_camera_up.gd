@@ -19,6 +19,6 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if(!body.is_in_group("group_player")): return;
 	if(activated): return;
-	Global.camera.camera_move_up();
+	Global.camera.camera_lerp_up();
 	
 		

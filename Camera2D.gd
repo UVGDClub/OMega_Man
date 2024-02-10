@@ -2,43 +2,72 @@ extends Camera2D
 
 
 var follow = null;
-var lerpToY;
+var lerp_target: Vector2 = Vector2.ZERO;
+var lerp_speed = 4;
+var camera_scroll_active: bool = false;
 
 @onready var World = $"../.."
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	lerpToY = position.y;
-	Global.camera_spawn.emit(self)
+#TODO:
+# 1 Refactor camera transition lerping to take advantage of the follow point
+	# just have the trigger create a follow point for the camera that moves
+	# better than the garbage implemented right now!
+# 2 Create a volume that restricts the camera movement 
+# so it doesnt go out of the level geo
 	
 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	lerp_target = position;
+	Global.camera_spawn.emit(self)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	find_player();
+	handle_camera_transition_lerp();
 	follow_instance_x();
-	move_camera_vertical();
 
 
-func move_camera_vertical():
-	if(position.y == lerpToY): return;
+
+func handle_camera_transition_lerp():
+	if(!camera_scroll_active): return false;
+	if(position == lerp_target): 
+		camera_scroll_active = false; 
+		return false;
 	#Global.player.has_control = false;
-	position.y = move_toward(position.y,lerpToY,2);
-	pass
+	position.x = move_toward(position.x,lerp_target.x,lerp_speed);
+	position.y = move_toward(position.y,lerp_target.y,lerp_speed);
+	return true;
 	
 func set_camera_position(newX,newY):
 	position.x = newX;
 	position.y = newY;
-	lerpToY = position.y
+	lerp_target = position;
 	
-func camera_move_up():
-	lerpToY = position.y - 240;	
+func camera_lerp_up():
+	lerp_target.y = position.y - 240;
+	camera_scroll_active = true;
+	if(follow == Global.player): follow.event_camera_scroll(Vector2(0,-24))
+func camera_lerp_down():
+	lerp_target.y = position.y + 240;
+	camera_scroll_active = true;
+	if(follow == Global.player): follow.event_camera_scroll(Vector2(0,+24))
+func camera_lerp_left():
+	lerp_target.x = position.x - 256;
+	camera_scroll_active = true;
+	if(follow == Global.player): follow.event_camera_scroll(Vector2(-25,0))
+func camera_lerp_right():
+	lerp_target.x = position.x + 256;
+	camera_scroll_active = true;
+	if(follow == Global.player): follow.event_camera_scroll(Vector2(25,0))
 	
 func follow_instance_x():
 	if(follow == null): return;
+	if(camera_scroll_active): return;
 	position.x = follow.position.x;
-	print("follow:" + str(follow));
+	lerp_target = follow.position;
+	#print("follow:" + str(follow));
 	
 func find_player():
 	if(follow != null): return;
