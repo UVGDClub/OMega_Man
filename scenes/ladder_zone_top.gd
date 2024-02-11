@@ -1,6 +1,5 @@
 extends StaticBody2D
 
-@export var ladder_inst: Area2D = null;
 @onready var platform = $platform
 @onready var player_top_detection = $playerTopDetection
 
@@ -25,8 +24,6 @@ func check_player_climb_down():
 	if(player_inst.state == player_inst.state_Ladder): return
 	if(player_inst.input_move.y == -1):
 		platform.disabled = true;
-		#player_inst.detect_ladder = true;
-		#player_inst.ladder_inst = self; #pass a reference to this ladder so the player can snap to its center
 	
 
 func _on_player_top_detection_body_entered(body):
