@@ -12,12 +12,27 @@ const LADDER_ZONE = preload("res://scenes/ladder_zone.tscn")
 #debug
 var debug_slowMo = 1
 
+#WEAPON STATE
+enum WEAPON {
+	NORMAL, #0
+	POWER1, #1
+	POWER2, #2...
+	POWER3, 
+	POWER4, 
+	POWER5,
+	POWER6,
+	POWER7, 
+	POWER8 #8
+}
+var weapon_state = WEAPON.NORMAL;
+
 #ANIMATION STATE
 enum ANIM {
 	IDLE, 
 	RUN, 
 	AIR, 
 	LADDER, 
+	LADDER_TOP, 
 	SLIDE, 
 	TELEPORT,
 	TELEPORT_FINISH,
@@ -162,18 +177,17 @@ func _physics_process(delta: float) -> void:
 	stateDriver(stateTime);
 	
 	#print(state.hash())
-	
+	handle_weapon_swtich()
 	handle_gravity(delta)
 	handle_movement()
 	handle_friction()
 	handle_jump()
 	handle_shoot()
-	
 
 	update_animation()
 	
 	move_and_slide() # necessary to update the character body
-	queue_redraw(); # necessary for updating draws calls in-script
+	queue_redraw() # necessary for updating draws calls in-script
 
 func _draw():
 	#draw_circle(Vector2.ZERO,50,Color.RED);
@@ -216,19 +230,40 @@ func handle_gravity(delta):
 	if(ignore_gravity): return
 	if not is_on_floor():
 		velocity.y += gravity * delta
+		
+func handle_weapon_swtich(menuTarget = null):
+	if(menuTarget != null):
+		if(menuTarget < 0 || menuTarget > 8):
+			weapon_state = menuTarget;
+			return
 
+	var input_switch = (int(Input.is_action_just_pressed("weapon_switch_right")) 
+						- int(Input.is_action_just_pressed("weapon_switch_left")));
+						
+	if(input_switch == 0): return;
+	# TODO 
+	# use a while loop to scroll the next available unlocked weapon
+	# not all weapons will be available
+	weapon_state += input_switch;
+	if(weapon_state > 8): weapon_state = 0;
+	if(weapon_state < 0): weapon_state = 8;
+	
 func handle_shoot():
 	if(shoot_cooldown != 0): return
-	if(input_shoot):
-		# shoot projectile
-		var bullet_ = bulletSource.instantiate()
-		bullet_.set_velocity(facing)
-		bullet_.position = position + Vector2(facing * bullet_offset.x, bullet_offset.y)
-		World.add_child(bullet_)
-		shoot_cooldown = shoot_cooldown_MAX;
-		shoot_anim_timer = shoot_anim_timer_max;
-		
-		# shoot projectile
+	if(!input_shoot): return;
+	
+	#note: for all other weapons, check ammo.
+	match(weapon_state):
+		WEAPON.NORMAL:
+			# shoot projectile
+			var bullet_ = bulletSource.instantiate()
+			bullet_.set_velocity(facing)
+			bullet_.position = position + Vector2(facing * bullet_offset.x, bullet_offset.y)
+			World.add_child(bullet_)
+			shoot_cooldown = shoot_cooldown_MAX;
+			shoot_anim_timer = shoot_anim_timer_max;
+		_:
+			print("Missed me again 'Number 1 Son!'");
 		
 func handle_jump():
 	# Handle jump.
@@ -242,6 +277,9 @@ func handle_jump():
 
 func can_climb_ladder():
 	if(detect_ladder):
+		if(is_on_floor()):
+			if(input_move.y == 1): return true
+			return false;
 		if(abs(input_move.y)): return true
 	return false
 	
@@ -249,19 +287,18 @@ func event_camera_scroll(new_lerp_target):
 	camera_lerp_target = position + new_lerp_target;
 	#camera_scroll_active = true;
 	
+#kill player
+func event_death():
+	#TODO 
+	# spawn some particle system to get the same death effect
+	state_forceExit(state_Death);
+	
 func handle_camera_scroll():
 	camera_scroll_active = Global.camera.camera_scroll_active;
 	if(camera_scroll_active == false): return false;
 	#position.x = move_toward(position.x,camera_lerp_target.x,1);
 	#position.y = move_toward(position.y,camera_lerp_target.y,1);
 	return true;
-	
-	
-func handle_weapon_switch():
-	#switch weapons with shouler buttons
-	
-	pass
-	
 	
 			
 func handle_cooldowns():
@@ -287,6 +324,8 @@ func update_animation():
 		ANIM.LADDER:
 			if(shoot_anim_timer): animation_player.play("ladder_shoot")
 			else: animation_player.play("ladder")
+		ANIM.LADDER_TOP:
+			animation_player.play("ladder_top")
 		ANIM.SLIDE:
 			animation_player.play("slide")
 		ANIM.TELEPORT:
@@ -324,7 +363,6 @@ func stateInit():
 			var slide = (input_move.y == -1) && input_jump_press
 			if(slide): state_forceExit(state_Slide)
 			if(can_climb_ladder()): state_forceExit(state_Ladder)
-			if(Input.is_action_just_pressed("ui_down")): state_forceExit(state_Special)
 			return
 		
 
@@ -384,16 +422,26 @@ func stateInit():
 			bullet_offset = Vector2(18,-16)
 			ignore_gravity = true;
 			ignore_movement = true;
+			if(is_on_floor()): position.y -= 4
 			position.x = ladder_inst.position.x + 8
 			return
 				
 		main	= func(): # run continuously
 			velocity = Vector2.ZERO
+			if(abs(input_move.x)): facing = input_move.x #for shooting
+				
 			animation_player.speed_scale = 0
+			anim_state = ANIM.LADDER;
 			if(input_move != Vector2.ZERO):
 				#position.x += input_move.x * SPEED_LADDER # subtract cause up in grid is negative
 				position.y -= input_move.y * SPEED_LADDER # subtract cause up in grid is negative
 				animation_player.speed_scale = 1
+			
+			if(ladder_inst != null):
+				var top_dist = abs(position.y - ladder_inst.position.y);
+				if(top_dist < 16):
+					anim_state = ANIM.LADDER_TOP;
+
 			return
 			
 		onLeave = func(): # run only when the state is changed. may not be necessary
@@ -403,6 +451,7 @@ func stateInit():
 			return
 			
 		exitConditions = func():
+			if(is_on_floor() && (input_move.y == -1)): state_forceExit(state_Idle);
 			if(input_jump_press): state_forceExit(state_Air)
 			if(!detect_ladder): state_forceExit(state_Air)
 			return
@@ -514,8 +563,8 @@ func stateInit():
 	
 	state_Death = func():
 		_stateID		= "Death";
-		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= null; # normal exit
+		stateTime   = 180; # how long should the state run for. set to -1 if the state does not have a timed end
+		stateNext	= state_Idle; # normal exit
 		
 		onEnter = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.STUN;
@@ -526,12 +575,14 @@ func stateInit():
 			return
 			
 		onLeave = func(): # run only when the state is changed. may not be necessary
+			get_tree().reload_current_scene();
 			has_control = true;
 			return
 			
 		exitConditions = func():
 			return
 			
+	
 	state_Special = func():
 		_stateID	= "Special";
 		stateTime   = 61; # how long should the state run for. set to -1 if the state does not have a timed end

@@ -1,7 +1,10 @@
 [gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cds1nk0736cs4"]
 
 [sub_resource type="SystemFont" id="SystemFont_vawu4"]
+subpixel_positioning = 0
 
 [resource]
 font = SubResource("SystemFont_vawu4")
 font_size = 8
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)

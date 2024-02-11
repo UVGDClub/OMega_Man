@@ -45,22 +45,16 @@ func set_camera_position(newX,newY):
 	position.y = newY;
 	lerp_target = position;
 	
-func camera_lerp_up():
-	lerp_target.y = position.y - 240;
+func camera_lerp_Y(dir = -1):
+	#default up
+	lerp_target.y = position.y + 240 * dir;
 	camera_scroll_active = true;
-	if(follow == Global.player): follow.event_camera_scroll(Vector2(0,-24))
-func camera_lerp_down():
-	lerp_target.y = position.y + 240;
+	if(follow == Global.player): follow.event_camera_scroll(Vector2(0,24*dir))
+func camera_lerp_X(dir = 1):
+	#default right
+	lerp_target.x = position.x + 256 * dir;
 	camera_scroll_active = true;
-	if(follow == Global.player): follow.event_camera_scroll(Vector2(0,+24))
-func camera_lerp_left():
-	lerp_target.x = position.x - 256;
-	camera_scroll_active = true;
-	if(follow == Global.player): follow.event_camera_scroll(Vector2(-25,0))
-func camera_lerp_right():
-	lerp_target.x = position.x + 256;
-	camera_scroll_active = true;
-	if(follow == Global.player): follow.event_camera_scroll(Vector2(25,0))
+	if(follow == Global.player): follow.event_camera_scroll(Vector2(25*dir,0))
 	
 func follow_instance_x():
 	if(follow == null): return;

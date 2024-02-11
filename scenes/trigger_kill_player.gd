@@ -14,4 +14,4 @@ func _on_body_entered(body):
 	print("Body: " + str(body))
 	if(body.is_in_group("group_player")):
 		print("kill player")
-		body.state_forceExit(body.state_death)
+		body.event_death();

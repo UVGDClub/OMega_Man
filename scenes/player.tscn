@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://cwo6seha311se"]
+[gd_scene load_steps=44 format=3 uid="uid://cwo6seha311se"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_jkyx8"]
 [ext_resource type="Texture2D" uid="uid://3aixhpcyl60a" path="res://sprites/megaMan_Sprites_sheet1.png" id="2_o7uap"]
@@ -810,6 +810,21 @@ tracks/0/keys = {
 "values": [2, 1, 0]
 }
 
+[sub_resource type="Animation" id="Animation_5fi6j"]
+resource_name = "ladder_top"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [23]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7merl"]
 _data = {
 "RESET": SubResource("Animation_phr5w"),
@@ -820,6 +835,7 @@ _data = {
 "idle_shoot": SubResource("Animation_6hmt6"),
 "ladder": SubResource("Animation_0wgm2"),
 "ladder_shoot": SubResource("Animation_5vmfj"),
+"ladder_top": SubResource("Animation_5fi6j"),
 "run": SubResource("Animation_4x7r8"),
 "run_inch": SubResource("Animation_kubrq"),
 "run_shoot": SubResource("Animation_jy13u"),

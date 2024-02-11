@@ -35,9 +35,25 @@ label_settings = ExtResource("3_qjuc7")
 metadata/_edit_use_anchors_ = true
 
 [node name="stateTime" type="Label" parent="Debug_HUD"]
-offset_top = 32.0
+offset_top = 24.0
 offset_right = 49.0
-offset_bottom = 55.0
+offset_bottom = 47.0
 text = "STATE TIME: "
+label_settings = ExtResource("3_qjuc7")
+metadata/_edit_use_anchors_ = true
+
+[node name="hp" type="Label" parent="Debug_HUD"]
+offset_top = 47.0
+offset_right = 49.0
+offset_bottom = 70.0
+text = "HP: "
+label_settings = ExtResource("3_qjuc7")
+metadata/_edit_use_anchors_ = true
+
+[node name="weapon" type="Label" parent="Debug_HUD"]
+offset_top = 39.0
+offset_right = 49.0
+offset_bottom = 62.0
+text = "WEAPON: "
 label_settings = ExtResource("3_qjuc7")
 metadata/_edit_use_anchors_ = true
