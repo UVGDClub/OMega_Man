@@ -5,10 +5,10 @@ const LADDER_ZONE_TOP = preload("res://scenes/ladder_zone_top.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var ladder_top = LADDER_ZONE_TOP.instantiate()
-	add_child(ladder_top) # inherits scale and looks like shit but add_sibling doesnt work???
-	#ladder_top.position = position
-	#print(ladder_top.position)
-	#assert(ladder_top.position == position)
+	#note: call_deferred necessary otherwise it fails
+	add_sibling.call_deferred(ladder_top)
+	ladder_top.position = position
+	assert(ladder_top.position == position)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
