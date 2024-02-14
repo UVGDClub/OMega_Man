@@ -5,6 +5,7 @@ var SPEED_DEFAULT = 200;
 var SPEED = 0;
 var velocity := Vector2.ZERO
 var direction = 1;
+var damage = 1;
 var deathTimer = 120; # how long the instance will last in frames
 
 
@@ -32,3 +33,11 @@ func handle_lifetime():
 
 func handle_movement(delta):
 	position += velocity * delta;
+
+
+func _on_body_entered(body):
+	if(body.is_in_group("group_enemy")):
+		if(body.try_damage(damage)):
+			queue_free();
+	#apply damage to enemy
+	

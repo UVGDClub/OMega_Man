@@ -251,6 +251,8 @@ func handle_weapon_swtich(menuTarget = null):
 func handle_shoot():
 	if(shoot_cooldown != 0): return
 	if(!input_shoot): return;
+	shoot_cooldown = shoot_cooldown_MAX;
+	shoot_anim_timer = shoot_anim_timer_max;
 	
 	#note: for all other weapons, check ammo.
 	match(weapon_state):
@@ -260,8 +262,6 @@ func handle_shoot():
 			bullet_.set_velocity(facing)
 			bullet_.position = position + Vector2(facing * bullet_offset.x, bullet_offset.y)
 			World.add_child(bullet_)
-			shoot_cooldown = shoot_cooldown_MAX;
-			shoot_anim_timer = shoot_anim_timer_max;
 		_:
 			print("Missed me again 'Number 1 Son!'");
 		
@@ -313,16 +313,31 @@ func update_animation():
 	sprite_2d.scale.x = facing
 	match(anim_state):
 		ANIM.IDLE:
-			if(shoot_anim_timer): animation_player.play("idle_shoot")
+			if(shoot_anim_timer): 
+				match(weapon_state):
+					WEAPON.NORMAL:
+						animation_player.play("idle_shoot")
+					_:
+						animation_player.play("idle_shoot_palm")
 			else: animation_player.play("idle")
 		ANIM.RUN:
 			if(shoot_anim_timer): animation_player.play("run_shoot")
 			else: animation_player.play("run")
 		ANIM.AIR:
-			if(shoot_anim_timer): animation_player.play("air_shoot")
+			if(shoot_anim_timer):
+				match(weapon_state):
+					WEAPON.NORMAL:
+						animation_player.play("air_shoot")
+					_:
+						animation_player.play("air_shoot_palm")
 			else: animation_player.play("air_neutral")
 		ANIM.LADDER:
-			if(shoot_anim_timer): animation_player.play("ladder_shoot")
+			if(shoot_anim_timer): 
+				match(weapon_state):
+					WEAPON.NORMAL:
+						animation_player.play("ladder_shoot")
+					_:
+						animation_player.play("ladder_shoot_palm")
 			else: animation_player.play("ladder")
 		ANIM.LADDER_TOP:
 			animation_player.play("ladder_top")

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbpe8ar3ru21p"]
+
+[ext_resource type="Texture2D" uid="uid://mxgiudc81pdn" path="res://sprites/explosion_1_sheet.png" id="1_1eexo"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ub8li"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_puyw8"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 6.0
+anim_speed_max = 6.0
+
+[node name="explosion_particle" type="GPUParticles2D"]
+material = SubResource("CanvasItemMaterial_ub8li")
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_puyw8")
+texture = ExtResource("1_1eexo")
