@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dlx67ty00ecj7"]
+
+[ext_resource type="FontFile" uid="uid://dnm31l7x5h2ej" path="res://project_system_files/MMRock9.ttf" id="1_ijk38"]
+
+[resource]
+font = ExtResource("1_ijk38")
+font_size = 8
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
