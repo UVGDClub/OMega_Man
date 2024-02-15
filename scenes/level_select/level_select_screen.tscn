@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b25cosue1pex7"]
 
-[ext_resource type="Script" path="res://scenes/level_select_screen.gd" id="1_a354p"]
+[ext_resource type="Script" path="res://scenes/level_select/level_select_screen.gd" id="1_a354p"]
 [ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://project_system_files/label_level_select_settings.tres" id="1_flhxi"]
-[ext_resource type="PackedScene" uid="uid://bd7r18pbt78c0" path="res://scenes/level_select_boss_choice_margin_container.tscn" id="2_usr0s"]
+[ext_resource type="PackedScene" uid="uid://bd7r18pbt78c0" path="res://scenes/level_select/level_select_boss_choice_margin_container.tscn" id="2_usr0s"]
 
 [node name="LevelSelectScreen" type="Control"]
 layout_mode = 3
