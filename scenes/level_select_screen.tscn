@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://b25cosue1pex7"]
+
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://project_system_files/label_level_select_settings.tres" id="1_flhxi"]
+[ext_resource type="PackedScene" uid="uid://bd7r18pbt78c0" path="res://scenes/level_select_boss_choice_margin_container.tscn" id="2_usr0s"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PressStartLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.0
+offset_top = 4.0
+offset_right = 44.0
+offset_bottom = 13.0
+grow_horizontal = 2
+text = "PRESS START"
+label_settings = ExtResource("1_flhxi")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -118.0
+offset_top = -210.0
+offset_right = 118.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3
+
+[node name="LevelSelectBossChoiceMarginContainer" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[node name="LevelSelectBossChoiceMarginContainer9" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[node name="LevelSelectBossChoiceMarginContainer2" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[node name="LevelSelectBossChoiceMarginContainer3" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[node name="LevelSelectBossChoiceMarginContainer4" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[node name="LevelSelectBossChoiceMarginContainer5" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[node name="LevelSelectBossChoiceMarginContainer6" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[node name="LevelSelectBossChoiceMarginContainer7" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[node name="LevelSelectBossChoiceMarginContainer8" parent="GridContainer" instance=ExtResource("2_usr0s")]
+layout_mode = 2
+
+[editable path="GridContainer/LevelSelectBossChoiceMarginContainer"]
