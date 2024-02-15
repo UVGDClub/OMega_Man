@@ -1,12 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c54u32vepwbuj"]
+[gd_scene load_steps=5 format=3 uid="uid://clijcmla0ks20"]
 
 [ext_resource type="Script" path="res://enemy_test.gd" id="1_dvsxt"]
 [ext_resource type="Texture2D" uid="uid://wwvu3bjgriqv" path="res://sprites/debug/temp_guy.png" id="2_oy64c"]
+[ext_resource type="PackedScene" uid="uid://cbpl4l7efysx5" path="res://scenes/enemy_hitbox.tscn" id="3_i2eio"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m6ua8"]
 size = Vector2(16, 16)
 
 [node name="enemy_test" type="CharacterBody2D" groups=["group_enemy"]]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_dvsxt")
 
 [node name="TempGuy" type="Sprite2D" parent="."]
@@ -16,5 +19,11 @@ texture = ExtResource("2_oy64c")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_m6ua8")
+
+[node name="enemy_hitbox" parent="." instance=ExtResource("3_i2eio")]
+visible = false
+position = Vector2(0, -8)
+scale = Vector2(1.1, 1.1)
+collision_layer = 2
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/trigger_camera_up.tscn" id="5_ublae"]
 [ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://scenes/player_camera.tscn" id="6_dvwfu"]
 [ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://scenes/trigger_kill_player.tscn" id="7_267oo"]
-[ext_resource type="PackedScene" uid="uid://c54u32vepwbuj" path="res://scenes/enemy_test.tscn" id="8_85r6m"]
+[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://scenes/enemy_test.tscn" id="8_85r6m"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6ymrq"]
 texture = ExtResource("1_qwbqn")
@@ -28,7 +28,7 @@ texture = ExtResource("1_qwbqn")
 1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_w6t1r"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
 sources/1 = SubResource("TileSetAtlasSource_6ymrq")
 
 [node name="level_test" type="Node2D"]

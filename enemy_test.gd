@@ -10,6 +10,9 @@ const EXPLOSION_PARTICLE = preload("res://scenes/explosion_particle.tscn")
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var ignore_gravity = false;
 
+func _ready():
+	pass
+
 func _physics_process(delta):
 	# Add the gravity.
 	handle_gravity(delta);
@@ -23,8 +26,8 @@ func handle_death():
 		explode.one_shot = true;
 		explode.position.y -= 8
 		
-		add_child(explode)
-		explode.reparent(get_parent()) #this is fucking stupid
+		add_sibling(explode)
+		explode.position = position + Vector2(0,-8)
 		
 		queue_free();
 func handle_gravity(delta):

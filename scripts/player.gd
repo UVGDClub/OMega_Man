@@ -54,6 +54,7 @@ var health = 24;
 
 # State Related Variables
 var facing = 1;
+var damage_angle = 0; #radians
 var ignore_friction = false;
 var ignore_gravity = false;
 var ignore_movement = false;
@@ -73,7 +74,7 @@ var input_jump : bool;
 var input_jump_press : bool;
 
 #COOLDOWNS
-var INVINCIBILITY: int = 0;
+var I_FRAMES: int = 0;
 var dash_cooldown_MAX: int = 30;
 var dash_cooldown: int = 0;
 var jump_cooldown : int = 0;
@@ -190,6 +191,10 @@ func _physics_process(delta: float) -> void:
 	queue_redraw() # necessary for updating draws calls in-script
 
 func _draw():
+	sprite_2d.visible = true;
+	if(I_FRAMES > 0):
+		if(I_FRAMES % 2):
+			sprite_2d.visible = false;
 	#draw_circle(Vector2.ZERO,50,Color.RED);
 	pass
 	
@@ -219,11 +224,18 @@ func handle_friction():
 	velocity.x = move_toward(velocity.x, 0, FRICTION)
 
 func get_input():
-	input_move.x = Input.get_axis("move_left", "move_right")
-	input_move.y = Input.get_axis("move_down", "move_up")
-	input_shoot = Input.is_action_just_pressed("act_shoot");
-	input_jump = Input.is_action_pressed("act_jump");
-	input_jump_press = Input.is_action_just_pressed("act_jump");
+	if(has_control):
+		input_move.x = Input.get_axis("move_left", "move_right")
+		input_move.y = Input.get_axis("move_down", "move_up")
+		input_shoot = Input.is_action_just_pressed("act_shoot");
+		input_jump = Input.is_action_pressed("act_jump");
+		input_jump_press = Input.is_action_just_pressed("act_jump");
+	else:
+		input_move.x = 0
+		input_move.y = 0
+		input_shoot = false
+		input_jump = false
+		input_jump_press = false
 	
 func handle_gravity(delta):
 	# Add the gravity.
@@ -283,6 +295,13 @@ func can_climb_ladder():
 		if(abs(input_move.y)): return true
 	return false
 	
+func try_damage(dmg,angle = 0):
+	if(I_FRAMES != 0): return;
+	print("+++ player took damage +++")
+	damage_angle = PI * facing * -1;
+	health -= dmg
+	state_forceExit(state_Damage)
+	
 func event_camera_scroll(new_lerp_target):
 	camera_lerp_target = position + new_lerp_target;
 	#camera_scroll_active = true;
@@ -302,7 +321,7 @@ func handle_camera_scroll():
 	
 			
 func handle_cooldowns():
-	if(INVINCIBILITY): INVINCIBILITY -= 1;
+	if(I_FRAMES): I_FRAMES -= 1;
 	if(shoot_cooldown > 0): shoot_cooldown -= 1;
 	if(shoot_anim_timer): shoot_anim_timer -= 1;
 	if(jump_cooldown): jump_cooldown -= 1;
@@ -541,8 +560,13 @@ func stateInit():
 		
 		onEnter = func(): # run once, on entering the state. may not be necessary
 			anim_state = ANIM.DAMAGE;
-			INVINCIBILITY = 90;
 			has_control = false;
+			ignore_friction = true;
+			
+			I_FRAMES = 90;
+			velocity.y = 0;
+			var angle = Vector2(1,0).rotated(damage_angle)
+			velocity.x = SPEED/2 * angle.x;
 			return
 				
 		main	= func(): # run continuously
@@ -550,6 +574,8 @@ func stateInit():
 			
 		onLeave = func(): # run only when the state is changed. may not be necessary
 			has_control = true;
+			ignore_friction = false;
+			damage_angle = 0;
 			return
 			
 		exitConditions = func():
