@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/level_script.gd" id="1_ybnjm"]
 [ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://scenes/ladder_zone.tscn" id="2_8ipmb"]
 [ext_resource type="PackedScene" uid="uid://cwo6seha311se" path="res://scenes/player.tscn" id="4_anymk"]
-[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/trigger_camera_up.tscn" id="5_ublae"]
+[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/trigger_camera_pan.tscn" id="5_ublae"]
 [ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://scenes/player_camera.tscn" id="6_dvwfu"]
 [ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://scenes/trigger_kill_player.tscn" id="7_267oo"]
 [ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://scenes/enemy_test.tscn" id="8_85r6m"]
@@ -63,10 +63,18 @@ floor_snap_length = 4.0
 [node name="triggers" type="Node2D" parent="."]
 position = Vector2(144, -256)
 
-[node name="trigger_camera_up" parent="triggers" instance=ExtResource("5_ublae")]
+[node name="TriggerCameraUp1" parent="triggers" instance=ExtResource("5_ublae")]
 position = Vector2(112, 240)
 
-[node name="trigger_camera_up2" parent="triggers" instance=ExtResource("5_ublae")]
+[node name="TriggerCameraDown1" parent="triggers" instance=ExtResource("5_ublae")]
+position = Vector2(112, 256)
+direction_move = 2
+
+[node name="TriggerCameraUp2" parent="triggers" instance=ExtResource("5_ublae")]
+
+[node name="TriggerCameraDown2" parent="triggers" instance=ExtResource("5_ublae")]
+position = Vector2(0, 16)
+direction_move = 2
 
 [node name="trigger_kill_player2" parent="triggers" instance=ExtResource("7_267oo")]
 position = Vector2(400, 112)
