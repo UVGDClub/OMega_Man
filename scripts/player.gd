@@ -1,9 +1,11 @@
 extends CharacterBody2D
-
+class_name Player
 #REFERENCES
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var sprite_2d = $Sprite2D
+@onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation_player = $AnimationPlayer
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
 
 const bulletSource = preload("res://scenes/bullet_small.tscn")
 const LADDER_ZONE = preload("res://scenes/ladder_zone.tscn")
@@ -72,6 +74,7 @@ var input_move : Vector2;
 var input_shoot : bool;
 var input_jump : bool;
 var input_jump_press : bool;
+var locked_directional_input := Vector2.ZERO
 
 #COOLDOWNS
 var I_FRAMES: int = 0;
@@ -230,6 +233,18 @@ func get_input():
 		input_shoot = Input.is_action_just_pressed("act_shoot");
 		input_jump = Input.is_action_pressed("act_jump");
 		input_jump_press = Input.is_action_just_pressed("act_jump");
+		# Objects such as the Camera Panner may lock one input temporarily
+		# to prevent bugs from occuring.
+		if (locked_directional_input != Vector2.ZERO):
+			match locked_directional_input:
+				Vector2.UP:
+					if input_move.y > 0: input_move.y = 0
+				Vector2.DOWN:
+					if input_move.y < 0: input_move.y = 0
+				Vector2.LEFT:
+					if input_move.x < 0: input_move.x = 0
+				Vector2.RIGHT:
+					if input_move.x > 0: input_move.x = 0
 	else:
 		input_move.x = 0
 		input_move.y = 0
