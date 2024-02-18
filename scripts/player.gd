@@ -65,8 +65,6 @@ var shoot_anim_timer: int = 0;
 var shoot_anim_timer_max: int = 15;
 var detect_ladder = false;
 var ladder_inst = null;
-var camera_lerp_target: Vector2 = Vector2.ZERO;
-var camera_page_screen_active: bool = false;
 
 #INPUT RELATED
 var has_control = true;
@@ -316,10 +314,6 @@ func try_damage(dmg,angle = 0):
 	damage_angle = PI * facing * -1;
 	health -= dmg
 	state_forceExit(state_Damage)
-	
-func event_camera_scroll(new_lerp_target: Vector2) -> void: 
-	camera_lerp_target = position + new_lerp_target;
-	#camera_page_screen_active = true;
 	
 #kill player
 func event_death():

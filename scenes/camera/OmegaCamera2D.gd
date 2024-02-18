@@ -47,13 +47,11 @@ func set_camera_position(newX: float, newY: float):
 func camera_page_screen_vertically(dir := -1):
 	lerp_target.y = position.y + 240 * dir
 	camera_page_screen_active = true
-	if follow == Global.player: (follow as Player).event_camera_scroll(Vector2(0,24*dir))
 	
 # Pan camera one screen width, -1=LEFT, 1=RIGHT	
 func camera_page_screen_horizontally(dir := 1):
 	lerp_target.x = position.x + 256 * dir
 	camera_page_screen_active = true
-	if follow == Global.player: (follow as Player).event_camera_scroll(Vector2(25*dir,0))
 
 # Lerp camera horizontally toward the follow target
 func follow_instance_horizontally():
