@@ -1,5 +1,5 @@
-extends CharacterBody2D
 class_name Player
+extends CharacterBody2D
 #REFERENCES
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -317,7 +317,7 @@ func try_damage(dmg,angle = 0):
 	health -= dmg
 	state_forceExit(state_Damage)
 	
-func event_camera_scroll(new_lerp_target):
+func event_camera_scroll(new_lerp_target: Vector2) -> void: 
 	camera_lerp_target = position + new_lerp_target;
 	#camera_scroll_active = true;
 	

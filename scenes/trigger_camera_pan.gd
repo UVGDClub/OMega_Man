@@ -27,16 +27,16 @@ func _on_body_entered(body: Node2D) -> void:
 	# by locking their back tracking control input
 	match direction_move:
 		DIRECTION.UP:
-			Global.camera.camera_lerp_Y(-1)
+			Global.camera.camera_page_screen_vertically(-1)
 			Global.player.locked_directional_input = Vector2.DOWN
 		DIRECTION.DOWN:
-			Global.camera.camera_lerp_Y(1)
-			Global.player.locked_directional_input = Vector2.UP			
+			Global.camera.camera_page_screen_vertically(1)
+			Global.player.locked_directional_input = Vector2.UP	
 		DIRECTION.LEFT:
-			Global.camera.camera_lerp_X(-1)
+			Global.camera.camera_page_screen_horizontally(-1)
 			Global.player.locked_directional_input = Vector2.RIGHT
 		DIRECTION.RIGHT:
-			Global.camera.camera_lerp_X(1)
+			Global.camera.camera_page_screen_horizontally(1)
 			Global.player.locked_directional_input = Vector2.LEFT
 	activated = true
 

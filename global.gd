@@ -1,6 +1,6 @@
 extends Node
 
-var player;
+var player: Player;
 signal player_spawn(player);
 
 var camera;
