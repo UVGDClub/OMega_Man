@@ -33,10 +33,9 @@ func process_camera_page_screen():
 	if not camera_page_screen_active: return false
 	if position == lerp_target:
 		camera_page_screen_active = false 
-		return false
+		return
 	position.x = move_toward(position.x,lerp_target.x,lerp_speed)
 	position.y = move_toward(position.y,lerp_target.y,lerp_speed)
-	return true
 
 # Immediately snap camera to a position
 func set_camera_position(newX: float, newY: float):
