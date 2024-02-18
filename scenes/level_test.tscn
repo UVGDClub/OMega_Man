@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://scenes/level_script.gd" id="1_ybnjm"]
 [ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://scenes/ladder_zone.tscn" id="2_8ipmb"]
 [ext_resource type="PackedScene" uid="uid://cwo6seha311se" path="res://scenes/player.tscn" id="4_anymk"]
-[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/trigger_camera_pan.tscn" id="5_ublae"]
-[ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://scenes/player_camera.tscn" id="6_dvwfu"]
-[ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://scenes/trigger_kill_player.tscn" id="7_267oo"]
+[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/triggers/trigger_camera_pan.tscn" id="5_ublae"]
+[ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://scenes/camera/omega_camera_2D.tscn" id="6_dvwfu"]
+[ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://scenes/triggers/trigger_kill_player.tscn" id="7_267oo"]
 [ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://scenes/enemy_test.tscn" id="8_85r6m"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6ymrq"]
@@ -84,7 +84,7 @@ scale = Vector2(11, 1)
 position = Vector2(104, 520)
 scale = Vector2(53.691, 1.35723)
 
-[node name="Camera2D" parent="." instance=ExtResource("6_dvwfu")]
+[node name="OmegaCamera2D" parent="." instance=ExtResource("6_dvwfu")]
 position = Vector2(-240, 120)
 
 [node name="enemy_test" parent="." instance=ExtResource("8_85r6m")]

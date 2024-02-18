@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://2v3msm41kp16"]
 
-[ext_resource type="Script" path="res://Camera2D.gd" id="1_4xuqo"]
+[ext_resource type="Script" path="res://scenes/camera/omega_camera_2D.gd" id="1_4xuqo"]
 [ext_resource type="Script" path="res://scripts/player_debug_hud.gd" id="2_bvgga"]
 [ext_resource type="LabelSettings" uid="uid://cds1nk0736cs4" path="res://project_system_files/label_debug_settings.tres" id="3_qjuc7"]
 
-[node name="Camera2D" type="Camera2D"]
+[node name="OmegaCamera2D" type="Camera2D"]
 script = ExtResource("1_4xuqo")
 
 [node name="Debug_HUD" type="CanvasLayer" parent="."]

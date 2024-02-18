@@ -1,5 +1,5 @@
-extends CharacterBody2D
 class_name Player
+extends CharacterBody2D
 #REFERENCES
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -65,8 +65,6 @@ var shoot_anim_timer: int = 0;
 var shoot_anim_timer_max: int = 15;
 var detect_ladder = false;
 var ladder_inst = null;
-var camera_lerp_target: Vector2 = Vector2.ZERO;
-var camera_scroll_active: bool = false;
 
 #INPUT RELATED
 var has_control = true;
@@ -174,7 +172,7 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	debug_handle_slowmo();
-	if(handle_camera_scroll() == true): return; #dont update if camera transition
+	if camera_is_scrolling(): return; #dont update if camera transition
 	handle_cooldowns();
 	
 	get_input();
@@ -317,23 +315,14 @@ func try_damage(dmg,angle = 0):
 	health -= dmg
 	state_forceExit(state_Damage)
 	
-func event_camera_scroll(new_lerp_target):
-	camera_lerp_target = position + new_lerp_target;
-	#camera_scroll_active = true;
-	
 #kill player
 func event_death():
 	#TODO 
 	# spawn some particle system to get the same death effect
 	state_forceExit(state_Death);
 	
-func handle_camera_scroll():
-	camera_scroll_active = Global.camera.camera_scroll_active;
-	if(camera_scroll_active == false): return false;
-	#position.x = move_toward(position.x,camera_lerp_target.x,1);
-	#position.y = move_toward(position.y,camera_lerp_target.y,1);
-	return true;
-	
+func camera_is_scrolling():
+	return Global.camera.camera_page_screen_active
 			
 func handle_cooldowns():
 	if(I_FRAMES): I_FRAMES -= 1;
