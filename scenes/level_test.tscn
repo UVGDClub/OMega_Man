@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://scenes/ladder_zone.tscn" id="2_8ipmb"]
 [ext_resource type="PackedScene" uid="uid://cwo6seha311se" path="res://scenes/player.tscn" id="4_anymk"]
 [ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/triggers/trigger_camera_pan.tscn" id="5_ublae"]
-[ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://scenes/camera/OmegaCamera2D.tscn" id="6_dvwfu"]
+[ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://scenes/camera/omega_camera_2D.tscn" id="6_dvwfu"]
 [ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://scenes/triggers/trigger_kill_player.tscn" id="7_267oo"]
 [ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://scenes/enemy_test.tscn" id="8_85r6m"]
 
