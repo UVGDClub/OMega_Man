@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://8gg6bue8fg0q"]
+
+[ext_resource type="Script" path="res://scenes/camera/tilemap_camera_limiter_component.gd" id="1_llj6j"]
+
+[node name="TilemapCameraLimiterComponent" type="Node"]
+script = ExtResource("1_llj6j")

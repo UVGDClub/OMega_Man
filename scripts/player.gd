@@ -171,6 +171,7 @@ func _ready():
 	pass
 
 func _physics_process(delta: float) -> void:
+	print(sprite_2d.get_rect())
 	debug_handle_slowmo();
 	if camera_is_scrolling(): return; #dont update if camera transition
 	handle_cooldowns();

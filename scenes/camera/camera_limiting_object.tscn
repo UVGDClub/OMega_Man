@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c30d1kro4j0jq"]
+
+[ext_resource type="Script" path="res://scenes/camera/camera_limiting_object.gd" id="1_i7rqq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nifnr"]
+size = Vector2(16, 16)
+
+[node name="CameraLimitingObject" type="Area2D"]
+script = ExtResource("1_i7rqq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_nifnr")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="ColorRect" type="ColorRect" parent="CollisionShape2D"]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(0.164706, 0.294118, 1, 0.384314)
