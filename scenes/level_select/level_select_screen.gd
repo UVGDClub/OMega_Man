@@ -1,5 +1,5 @@
 extends Control
-@onready var moog_man: MarginContainer = $GridContainer/MoogMan
+@onready var omega = $GridContainer/Omega
 
 func _ready():
-	moog_man.grab_focus()
+	omega.grab_focus()

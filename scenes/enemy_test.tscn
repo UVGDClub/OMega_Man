@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://clijcmla0ks20"]
+[gd_scene load_steps=6 format=3 uid="uid://clijcmla0ks20"]
 
 [ext_resource type="Script" path="res://enemy_test.gd" id="1_dvsxt"]
 [ext_resource type="Texture2D" uid="uid://wwvu3bjgriqv" path="res://sprites/debug/temp_guy.png" id="2_oy64c"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m6ua8"]
 size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sayh7"]
+radius = 1.0
 
 [node name="enemy_test" type="CharacterBody2D" groups=["group_enemy"]]
 collision_layer = 2
@@ -21,9 +24,14 @@ position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_m6ua8")
 
 [node name="enemy_hitbox" parent="." instance=ExtResource("3_i2eio")]
-visible = false
 position = Vector2(0, -8)
 scale = Vector2(1.1, 1.1)
 collision_layer = 2
+
+[node name="detection_range" type="Area2D" parent="."]
+
+[node name="detection_circle" type="CollisionShape2D" parent="detection_range"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_sayh7")
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b25cosue1pex7"]
+[gd_scene load_steps=5 format=3 uid="uid://b25cosue1pex7"]
 
 [ext_resource type="Script" path="res://scenes/level_select/level_select_screen.gd" id="1_a354p"]
 [ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://project_system_files/label_level_select_settings.tres" id="1_flhxi"]
 [ext_resource type="PackedScene" uid="uid://bd7r18pbt78c0" path="res://scenes/level_select/level_select_boss_choice_margin_container.tscn" id="2_usr0s"]
+[ext_resource type="Texture2D" uid="uid://cwlgov4wd5l7c" path="res://sprites/level_select/level_omega.png" id="4_h1v3e"]
 
 [node name="LevelSelectScreen" type="Control"]
 layout_mode = 3
@@ -45,7 +46,7 @@ theme_override_constants/h_separation = -3
 theme_override_constants/v_separation = -5
 columns = 3
 
-[node name="WoodMan" parent="GridContainer" instance=ExtResource("2_usr0s")]
+[node name="LethalMan" parent="GridContainer" instance=ExtResource("2_usr0s")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../MoodMan")
 focus_neighbor_top = NodePath("../NiceGuy")
@@ -53,12 +54,15 @@ focus_neighbor_right = NodePath("../GoodMan")
 focus_neighbor_bottom = NodePath("../DoomMan")
 focus_mode = 2
 
+[node name="Label" parent="GridContainer/LethalMan/VBoxContainer" index="2"]
+text = "LETHA"
+
 [node name="GoodMan" parent="GridContainer" instance=ExtResource("2_usr0s")]
 layout_mode = 2
-focus_neighbor_left = NodePath("../WoodMan")
+focus_neighbor_left = NodePath("../LethalMan")
 focus_neighbor_top = NodePath("../DeadMan")
 focus_neighbor_right = NodePath("../MoodMan")
-focus_neighbor_bottom = NodePath("../MoogMan")
+focus_neighbor_bottom = NodePath("../Omega")
 focus_mode = 2
 
 [node name="Label" parent="GridContainer/GoodMan/VBoxContainer" index="2"]
@@ -68,7 +72,7 @@ text = "GOOD"
 layout_mode = 2
 focus_neighbor_left = NodePath("../GoodMan")
 focus_neighbor_top = NodePath("../DamnDude")
-focus_neighbor_right = NodePath("../WoodMan")
+focus_neighbor_right = NodePath("../LethalMan")
 focus_neighbor_bottom = NodePath("../CoolWoman")
 focus_mode = 2
 
@@ -78,15 +82,15 @@ text = "MOOD"
 [node name="DoomMan" parent="GridContainer" instance=ExtResource("2_usr0s")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../CoolWoman")
-focus_neighbor_top = NodePath("../WoodMan")
-focus_neighbor_right = NodePath("../MoogMan")
+focus_neighbor_top = NodePath("../LethalMan")
+focus_neighbor_right = NodePath("../Omega")
 focus_neighbor_bottom = NodePath("../NiceGuy")
 focus_mode = 2
 
 [node name="Label" parent="GridContainer/DoomMan/VBoxContainer" index="2"]
 text = "DOOM"
 
-[node name="MoogMan" parent="GridContainer" instance=ExtResource("2_usr0s")]
+[node name="Omega" parent="GridContainer" instance=ExtResource("2_usr0s")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../DoomMan")
 focus_neighbor_top = NodePath("../GoodMan")
@@ -94,12 +98,18 @@ focus_neighbor_right = NodePath("../CoolWoman")
 focus_neighbor_bottom = NodePath("../DeadMan")
 focus_mode = 2
 
-[node name="Label" parent="GridContainer/MoogMan/VBoxContainer" index="2"]
-text = "MOOG"
+[node name="Portrait" parent="GridContainer/Omega/VBoxContainer" index="0"]
+texture = ExtResource("4_h1v3e")
+
+[node name="Label" parent="GridContainer/Omega/VBoxContainer" index="2"]
+text = ""
+
+[node name="Label2" parent="GridContainer/Omega/VBoxContainer" index="3"]
+text = ""
 
 [node name="CoolWoman" parent="GridContainer" instance=ExtResource("2_usr0s")]
 layout_mode = 2
-focus_neighbor_left = NodePath("../MoogMan")
+focus_neighbor_left = NodePath("../Omega")
 focus_neighbor_top = NodePath("../MoodMan")
 focus_neighbor_right = NodePath("../DoomMan")
 focus_neighbor_bottom = NodePath("../DamnDude")
@@ -116,7 +126,7 @@ layout_mode = 2
 focus_neighbor_left = NodePath("../DamnDude")
 focus_neighbor_top = NodePath("../DoomMan")
 focus_neighbor_right = NodePath("../DeadMan")
-focus_neighbor_bottom = NodePath("../WoodMan")
+focus_neighbor_bottom = NodePath("../LethalMan")
 focus_mode = 2
 
 [node name="Label" parent="GridContainer/NiceGuy/VBoxContainer" index="2"]
@@ -128,7 +138,7 @@ text = "GUY"
 [node name="DeadMan" parent="GridContainer" instance=ExtResource("2_usr0s")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../NiceGuy")
-focus_neighbor_top = NodePath("../MoogMan")
+focus_neighbor_top = NodePath("../Omega")
 focus_neighbor_right = NodePath("../DamnDude")
 focus_neighbor_bottom = NodePath("../GoodMan")
 focus_mode = 2
@@ -151,11 +161,11 @@ text = "DAMN"
 [node name="Label2" parent="GridContainer/DamnDude/VBoxContainer" index="3"]
 text = "DUDE"
 
-[editable path="GridContainer/WoodMan"]
+[editable path="GridContainer/LethalMan"]
 [editable path="GridContainer/GoodMan"]
 [editable path="GridContainer/MoodMan"]
 [editable path="GridContainer/DoomMan"]
-[editable path="GridContainer/MoogMan"]
+[editable path="GridContainer/Omega"]
 [editable path="GridContainer/CoolWoman"]
 [editable path="GridContainer/NiceGuy"]
 [editable path="GridContainer/DeadMan"]
