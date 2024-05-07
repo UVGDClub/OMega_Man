@@ -1,12 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://b25cosue1pex7"]
+[gd_scene load_steps=10 format=3 uid="uid://b25cosue1pex7"]
 
 [ext_resource type="Script" path="res://scenes/level_select/level_select_screen.gd" id="1_a354p"]
 [ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://project_system_files/label_level_select_settings.tres" id="1_flhxi"]
+[ext_resource type="Texture2D" uid="uid://b0sa0v4rcpk1w" path="res://scenes/level_select/select_concept_bg.png" id="2_kd108"]
 [ext_resource type="PackedScene" uid="uid://bd7r18pbt78c0" path="res://scenes/level_select/level_select_boss_choice_margin_container.tscn" id="2_usr0s"]
-[ext_resource type="Texture2D" uid="uid://b07wlbqa0k8tf" path="res://sprites/level_select/level1.png" id="4_5e258"]
 [ext_resource type="Texture2D" uid="uid://cwlgov4wd5l7c" path="res://sprites/level_select/level_omega.png" id="4_h1v3e"]
+[ext_resource type="Texture2D" uid="uid://dsct5ktbfgr80" path="res://sprites/level_select/level1_temp.png" id="5_orikt"]
+[ext_resource type="Shader" path="res://shaders/fill_white.gdshader" id="6_6you0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_076d1"]
+shader = ExtResource("6_6you0")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eu6l6"]
 
 [node name="LevelSelectScreen" type="Control"]
+custom_minimum_size = Vector2(256, 240)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +22,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a354p")
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(128, 120)
+texture = ExtResource("2_kd108")
 
 [node name="PressStartLabel" type="Label" parent="."]
 layout_mode = 1
@@ -29,22 +41,23 @@ text = "PRESS START"
 label_settings = ExtResource("1_flhxi")
 
 [node name="GridContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(256, 0)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -118.0
-offset_top = -210.0
-offset_right = 118.0
-offset_bottom = -4.0
+offset_left = -88.0
+offset_top = -216.0
+offset_right = 185.0
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/h_separation = -3
-theme_override_constants/v_separation = -5
+theme_override_constants/h_separation = 64
+theme_override_constants/v_separation = 64
 columns = 3
 
 [node name="Level1" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
@@ -57,11 +70,11 @@ focus_mode = 2
 menuMaster = NodePath("../..")
 level = 1
 
-[node name="Portrait" parent="GridContainer/Level1/VBoxContainer" index="0"]
-texture = ExtResource("4_5e258")
+[node name="Portrait" parent="GridContainer/Level1" index="0"]
+texture = ExtResource("5_orikt")
 
-[node name="Label" parent="GridContainer/Level1/VBoxContainer" index="2"]
-text = "LETHA"
+[node name="Name" parent="GridContainer/Level1" index="1"]
+text = "LETHAL"
 
 [node name="Level2" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
 layout_mode = 2
@@ -72,9 +85,6 @@ focus_neighbor_bottom = NodePath("../Omega")
 focus_mode = 2
 menuMaster = NodePath("../..")
 
-[node name="Label" parent="GridContainer/Level2/VBoxContainer" index="2"]
-text = "GOOD"
-
 [node name="Level3" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Level2")
@@ -83,9 +93,6 @@ focus_neighbor_right = NodePath("../Level1")
 focus_neighbor_bottom = NodePath("../Level5")
 focus_mode = 2
 menuMaster = NodePath("../..")
-
-[node name="Label" parent="GridContainer/Level3/VBoxContainer" index="2"]
-text = "MOOD"
 
 [node name="Level4" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
 layout_mode = 2
@@ -96,9 +103,6 @@ focus_neighbor_bottom = NodePath("../Level6")
 focus_mode = 2
 menuMaster = NodePath("../..")
 
-[node name="Label" parent="GridContainer/Level4/VBoxContainer" index="2"]
-text = "DOOM"
-
 [node name="Omega" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Level4")
@@ -108,13 +112,13 @@ focus_neighbor_bottom = NodePath("../Level7")
 focus_mode = 2
 menuMaster = NodePath("../..")
 
-[node name="Portrait" parent="GridContainer/Omega/VBoxContainer" index="0"]
+[node name="Portrait" parent="GridContainer/Omega" index="0"]
 texture = ExtResource("4_h1v3e")
 
-[node name="Label" parent="GridContainer/Omega/VBoxContainer" index="2"]
+[node name="Name" parent="GridContainer/Omega" index="1"]
 text = ""
 
-[node name="Label2" parent="GridContainer/Omega/VBoxContainer" index="3"]
+[node name="Mr_Ms" parent="GridContainer/Omega" index="2"]
 text = ""
 
 [node name="Level5" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
@@ -126,12 +130,6 @@ focus_neighbor_bottom = NodePath("../Level8")
 focus_mode = 2
 menuMaster = NodePath("../..")
 
-[node name="Label" parent="GridContainer/Level5/VBoxContainer" index="2"]
-text = "COOL"
-
-[node name="Label2" parent="GridContainer/Level5/VBoxContainer" index="3"]
-text = "WOMAN"
-
 [node name="Level6" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Level8")
@@ -140,12 +138,6 @@ focus_neighbor_right = NodePath("../Level7")
 focus_neighbor_bottom = NodePath("../Level1")
 focus_mode = 2
 menuMaster = NodePath("../..")
-
-[node name="Label" parent="GridContainer/Level6/VBoxContainer" index="2"]
-text = "NICE"
-
-[node name="Label2" parent="GridContainer/Level6/VBoxContainer" index="3"]
-text = "GUY"
 
 [node name="Level7" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
 layout_mode = 2
@@ -156,10 +148,6 @@ focus_neighbor_bottom = NodePath("../Level2")
 focus_mode = 2
 menuMaster = NodePath("../..")
 
-[node name="Label" parent="GridContainer/Level7/VBoxContainer" index="2"]
-text = "DEAD
-"
-
 [node name="Level8" parent="GridContainer" node_paths=PackedStringArray("menuMaster") instance=ExtResource("2_usr0s")]
 layout_mode = 2
 focus_neighbor_left = NodePath("../Level7")
@@ -169,11 +157,12 @@ focus_neighbor_bottom = NodePath("../Level3")
 focus_mode = 2
 menuMaster = NodePath("../..")
 
-[node name="Label" parent="GridContainer/Level8/VBoxContainer" index="2"]
-text = "DAMN"
-
-[node name="Label2" parent="GridContainer/Level8/VBoxContainer" index="3"]
-text = "DUDE"
+[node name="WhiteFlash" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_076d1")
+position = Vector2(127.75, 119.75)
+scale = Vector2(256.5, 240.5)
+texture = SubResource("PlaceholderTexture2D_eu6l6")
 
 [editable path="GridContainer/Level1"]
 [editable path="GridContainer/Level2"]

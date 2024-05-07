@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="OMega_Man"
-run/main_scene="res://scenes/level_test.tscn"
+run/main_scene="res://scenes/Title Screen/title_screen.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/image="res://project_system_files/icon.png"
 config/icon="res://project_system_files/icon.png"
