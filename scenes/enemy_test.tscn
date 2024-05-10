@@ -34,4 +34,7 @@ collision_layer = 2
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_sayh7")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="handle_despawn"]

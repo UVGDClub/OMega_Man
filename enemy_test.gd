@@ -13,6 +13,7 @@ const detection_range_scale = 32
 
 var health = 3;
 var facing = -1;
+var SPAWNER_INSTANCE:int = -1;
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -124,7 +125,7 @@ func handle_death():
 			add_sibling(item);
 			item.position = position + Vector2(0,-8);
 			
-		queue_free();
+		handle_despawn();
 		
 
 func handle_gravity(delta):
@@ -145,6 +146,23 @@ func detect_player():
 func try_damage(dmg):
 	health -= dmg;
 	return true;
+	
+func connect_with_spawner(spawner_ID):
+	#called by enemy_spawner
+	#at the moment this connection is superfluous
+	SPAWNER_INSTANCE = spawner_ID;
+	var test = instance_from_id(SPAWNER_INSTANCE);
+	assert(test.ENEMY_INST_ID == self.get_instance_id())
+	pass
+	
+func handle_despawn():
+	#when off screen
+	#handle any spawner communication if needed
+	if(is_instance_id_valid(SPAWNER_INSTANCE)):
+		var spawner = instance_from_id(SPAWNER_INSTANCE);
+		assert(is_instance_valid(spawner))
+		#spawner.ENEMY_INST_ID = -1; #not needed
+	queue_free();
 
 func _on_tree_exiting():
 	pass

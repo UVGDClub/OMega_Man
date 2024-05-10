@@ -21,13 +21,13 @@ shape = SubResource("RectangleShape2D_y26u7")
 
 [node name="ItemPickup" type="Area2D" parent="."]
 
+[node name="Sprite" type="Sprite2D" parent="ItemPickup"]
+position = Vector2(0, -8)
+texture = ExtResource("2_ymfab")
+
 [node name="pickupArea" type="CollisionShape2D" parent="ItemPickup"]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_xu1oc")
 debug_color = Color(0, 0.639216, 0.392157, 0.419608)
-
-[node name="Sprite" type="Sprite2D" parent="ItemPickup"]
-position = Vector2(0, -8)
-texture = ExtResource("2_ymfab")
 
 [connection signal="body_entered" from="ItemPickup" to="." method="_on_item_pickup_body_entered"]

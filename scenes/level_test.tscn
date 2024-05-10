@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bg7y1iajpp82d"]
+[gd_scene load_steps=13 format=3 uid="uid://bg7y1iajpp82d"]
 
 [ext_resource type="Texture2D" uid="uid://bssh5ec5w7qkc" path="res://sprites/debug/tile_test.png" id="1_qwbqn"]
 [ext_resource type="Script" path="res://scenes/level_script.gd" id="1_ybnjm"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://scenes/triggers/trigger_kill_player.tscn" id="7_267oo"]
 [ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://scenes/enemy_test.tscn" id="8_85r6m"]
 [ext_resource type="PackedScene" uid="uid://c7ohlnpe6tuq0" path="res://scenes/item_pickup.tscn" id="9_ssyyr"]
+[ext_resource type="PackedScene" uid="uid://cyd4f0t114ceq" path="res://scenes/enemy_spawner.tscn" id="10_xfuy2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6ymrq"]
 texture = ExtResource("1_qwbqn")
@@ -91,12 +92,6 @@ position = Vector2(-240, 120)
 [node name="enemy_test" parent="." instance=ExtResource("8_85r6m")]
 position = Vector2(-208, 64)
 
-[node name="enemy_test2" parent="." instance=ExtResource("8_85r6m")]
-position = Vector2(-184, 40)
-
-[node name="enemy_test3" parent="." instance=ExtResource("8_85r6m")]
-position = Vector2(-160, 64)
-
 [node name="ItemPickup" parent="." instance=ExtResource("9_ssyyr")]
 position = Vector2(-336, 64)
 size = 1
@@ -116,3 +111,7 @@ size = 1
 [node name="ItemPickup5" parent="." instance=ExtResource("9_ssyyr")]
 position = Vector2(-288, 96)
 item_type = 2
+
+[node name="EnemySpawner" parent="." instance=ExtResource("10_xfuy2")]
+position = Vector2(-184, 40)
+enemy_to_spawn = ExtResource("8_85r6m")
