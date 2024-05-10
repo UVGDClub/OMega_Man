@@ -4,6 +4,7 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 const EXPLOSION_PARTICLE = preload("res://scenes/explosion_particle.tscn")
+const ITEM_PICKUP = preload("res://scenes/item_pickup.tscn")
 const detection_range_scale = 32
 @onready var detection_range = $detection_range
 @onready var detection_circle = $detection_range/detection_circle
@@ -103,13 +104,26 @@ func _physics_process(delta):
 
 func handle_death():
 	if(health <= 0): 
+		#do explosion
 		var explode: GPUParticles2D = EXPLOSION_PARTICLE.instantiate()
 		explode.one_shot = true;
 		explode.position.y -= 8
-		
 		add_sibling(explode)
 		explode.position = position + Vector2(0,-8)
 		
+		#drop item maybe
+		var item_chance = randi_range(1,100);
+		#if(item_chance <= 25):
+		if(true):
+			var item_type = randi_range(0,2);
+			var size = randi_range(0,1);
+			var item = ITEM_PICKUP.instantiate()
+			item.item_type = item_type;
+			item.size = size;
+			item.onTimer = true;
+			add_sibling(item);
+			item.position = position + Vector2(0,-8);
+			
 		queue_free();
 		
 
