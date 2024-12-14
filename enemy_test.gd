@@ -158,9 +158,9 @@ func connect_with_spawner(spawner_ID):
 func handle_despawn():
 	#when off screen
 	#handle any spawner communication if needed
-	if(is_instance_id_valid(SPAWNER_INSTANCE)):
-		var spawner = instance_from_id(SPAWNER_INSTANCE);
-		assert(is_instance_valid(spawner))
+	#if(is_instance_id_valid(SPAWNER_INSTANCE)):
+		#var spawner = instance_from_id(SPAWNER_INSTANCE);
+		#assert(is_instance_valid(spawner))
 		#spawner.ENEMY_INST_ID = -1; #not needed
 	queue_free();
 
