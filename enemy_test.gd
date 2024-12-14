@@ -113,8 +113,8 @@ func handle_death():
 		explode.position = position + Vector2(0,-8)
 		
 		#drop item maybe
-		var item_chance = randi_range(1,100);
-		#if(item_chance <= 25):
+		var _item_chance = randi_range(1,100);
+		#if(_item_chance <= 25):
 		if(true):
 			var item_type = randi_range(0,2);
 			var size = randi_range(0,1);

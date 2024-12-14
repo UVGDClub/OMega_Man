@@ -308,7 +308,7 @@ func can_climb_ladder():
 		if(abs(input_move.y)): return true
 	return false
 	
-func try_damage(dmg,angle = 0):
+func try_damage(dmg, _angle = 0):
 	if(I_FRAMES != 0): return;
 	print("+++ player took damage +++")
 	damage_angle = PI * facing * -1;

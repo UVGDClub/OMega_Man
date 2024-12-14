@@ -16,7 +16,7 @@ func _ready():
 	omega.grab_focus()
 	white_flash.visible = false;
 	
-func _process(delta):
+func _process(_delta):
 	if(!level_selected): return
 	flash_screen();
 	if(flash_timer == 0): goto_boss_intro();

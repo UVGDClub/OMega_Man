@@ -6,7 +6,7 @@ Made by UVic Game Dev
 
 ## Foundation Team:
 * Brendan "Sikowny"
-* Your name here
+* Colton Molton Bolton
 
 ## Robot Master Team:
 ### Intro / Robot Master 1

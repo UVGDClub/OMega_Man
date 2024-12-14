@@ -12,7 +12,7 @@ var hover_timer_max = 8;
 func _ready():
 	hovering_sprite.visible = false;
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(inputLock): grab_focus() #really bad way of doing this
 	
 	if (!has_focus()):
@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 	modulate = Color.WHITE
 	flash_border();
 	if(input_accept()):
-		signal_enter_level(level);
+		signal_enter_level();
 	
 func flash_border():
 	if(hover_timer == 0):
@@ -36,7 +36,7 @@ func flash_border():
 func input_accept():
 	return Input.is_action_pressed("act_jump")
 	
-func signal_enter_level(level):
+func signal_enter_level():
 	#check if level valid
 	if level < 1 or level > 9: return;
 	#signal level transition

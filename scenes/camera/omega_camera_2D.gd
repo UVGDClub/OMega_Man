@@ -19,7 +19,7 @@ func _ready() -> void:
 	Global.camera_spawn.emit(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	find_player()
 	process_camera_page_screen()
 	follow_instance_horizontally()
