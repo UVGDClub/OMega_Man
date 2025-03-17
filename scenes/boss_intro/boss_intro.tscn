@@ -68,7 +68,7 @@ position = Vector2(128, 128)
 gizmo_extents = 50.0
 
 [node name="BossSprite" type="Sprite2D" parent="."]
-position = Vector2(128, 24)
+position = Vector2(128, -32)
 texture = ExtResource("7_w8px3")
 
 [node name="Timer" type="Timer" parent="."]
