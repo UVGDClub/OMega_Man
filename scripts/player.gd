@@ -1,10 +1,11 @@
 class_name Player
-extends CharacterBody2D
+extends StateEntity2D
 #REFERENCES
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var animation_player = $AnimationPlayer
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var center = $center
 
 
 const bulletSource = preload("res://scenes/bullet_small.tscn")
@@ -28,9 +29,23 @@ enum WEAPON {
 }
 var weapon_state = WEAPON.NORMAL;
 
+# format -- NAME:[MAX AMMOUNT, WEAPON COST]
+var weapon_stats: Dictionary = {
+	WEAPON.NORMAL:[24,0],
+	WEAPON.POWER1:[24,1],
+	WEAPON.POWER2:[24,1],
+	WEAPON.POWER3:[24,1],
+	WEAPON.POWER4:[24,1],
+	WEAPON.POWER5:[24,1],
+	WEAPON.POWER6:[24,1],
+	WEAPON.POWER7:[24,1],
+	WEAPON.POWER8:[24,1]
+}
+
 #ANIMATION STATE
 enum ANIM {
-	IDLE, 
+	IDLE,
+	INCH,
 	RUN, 
 	AIR, 
 	LADDER, 
@@ -52,10 +67,17 @@ const FRICTION = 45.0
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 #stats
-var health = 24;
+var max_health = 24;
+var max_ammo = 24;
+var health = max_health;
+var ammo = 24;
 
 # State Related Variables
 var facing = 1;
+var inch_timer_max = 7
+var inch_timer = inch_timer_max;
+var jump_height_timer_max = 15;
+var jump_height_timer = jump_height_timer_max
 var damage_angle = 0; #radians
 var ignore_friction = false;
 var ignore_gravity = false;
@@ -65,6 +87,7 @@ var shoot_anim_timer: int = 0;
 var shoot_anim_timer_max: int = 15;
 var detect_ladder = false;
 var ladder_inst = null;
+var in_camera_transition_trigger:Area2D = null;
 
 #INPUT RELATED
 var has_control = true;
@@ -85,86 +108,7 @@ var shoot_cooldown: int = 0
 #OFFSETS
 var bullet_offset: Vector2 = Vector2.ZERO;
 
-#STATE INITIALIZE (godot needs this?)
-var state_Idle = func(): return;
-var state_Run;
-var state_Air;
-var state_Ladder;
-var state_Slide;
-var state_Teleport_Enter;
-var state_Teleport_Exit;
-var state_Damage;
-var state_Stun;
-var state_Death;
-var state_Special;
-var state_Special2;
-
-#region STATE MACHINE BACK END
-
-#STATE DRIVERS
-var state = func(): return
-var onEnter = func(): return
-var main = func(): return
-var onLeave = func(): return
-var exitConditions = func(): return
-
-var stateNext = func(): return
-var stateChanged: bool = false
-var stateTime: int = 0
-var _stateID: String = "NULL";
-var _statePrevID: String = "NULL";
-
-func state_run_onEnter_once(stateTimeNew):
-	if(_stateID != _statePrevID):
-		stateChanged = true
-		_statePrevID = _stateID;
-		stateTime = stateTimeNew
-		onEnter.call()
-		print("----PLAYER_STATE----: "+_stateID);
-		
-func state_run_onLeave_whenStateDone():
-	if(stateTime == -1): return
-	if(stateChanged): return
-	if(stateTime == 0):
-		onLeave.call()
-		_statePrevID = _stateID;
-		state = stateNext;
-		stateChanged = true;
-		state.call() # update enter, main, leave and exit funcs
-		#state_onEnter(stateTime) # force onEnter changes?
-	else:
-		stateTime -= 1;
-		
-
-func state_forceExit(stateNextOverride):
-	if(stateNextOverride == state): return
-	onLeave.call();
-	_statePrevID = _stateID;
-	state = stateNextOverride;
-	stateChanged = true;
-	state.call(); #update enter, main, leave and exit funcs
-	state_run_onEnter_once(stateTime) # force onEnter changes
-	
-func state_check_ExitConditions():
-	if(!stateChanged): 
-		exitConditions.call()
-
-# Runs the state Sandwich
-func stateDriver(stateTime_):
-	#onEnter
-	state_run_onEnter_once(stateTime_) # runs onEnter once
-	#main
-	main.call() 
-	#exiting
-	state_check_ExitConditions() #doesnt run if stateTime == 0
-	
-	state_run_onLeave_whenStateDone()
-	stateChanged = false # this must set it to false for both exitConditions and onEnter
-
-#endregion
-
 func _ready():
-	stateInit();
 	state = state_Teleport_Enter;
 	state.call()
 	Global.player_spawn.emit(self)
@@ -176,19 +120,20 @@ func _physics_process(delta: float) -> void:
 	handle_cooldowns();
 	
 	get_input();
-	stateDriver(stateTime);
+	stateDriver();
 	
 	#print(state.hash())
 	handle_weapon_swtich()
 	handle_gravity(delta)
 	handle_movement()
 	handle_friction()
-	handle_jump()
+	handle_jump(delta)
 	handle_shoot()
 
 	update_animation()
 	
 	move_and_slide() # necessary to update the character body
+	#position = position.round()
 	queue_redraw() # necessary for updating draws calls in-script
 
 func _draw():
@@ -198,11 +143,17 @@ func _draw():
 			sprite_2d.visible = false;
 	#draw_circle(Vector2.ZERO,50,Color.RED);
 	pass
-	
+
+func update_facing(override:int = 0):
+	if(override != 0):
+		facing = override;
+		return
+	facing = input_move.x
+
 func handle_movement():
 	if(ignore_movement): return
 	if input_move.x:
-		facing = input_move.x
+		update_facing();
 		if(_stateID == "Slide"): return
 		velocity.x = facing * SPEED
 
@@ -269,9 +220,17 @@ func handle_weapon_swtich(menuTarget = null):
 	# TODO 
 	# use a while loop to scroll the next available unlocked weapon
 	# not all weapons will be available
+	
+	#save current ammo
+	weapon_stats[weapon_state][0] = ammo;
 	weapon_state += input_switch;
+	
+	#roll_over
 	if(weapon_state > 8): weapon_state = 0;
 	if(weapon_state < 0): weapon_state = 8;
+	
+	#load new weapon ammo
+	ammo = weapon_stats[weapon_state][0];
 	
 func handle_shoot():
 	if(shoot_cooldown != 0): return
@@ -279,7 +238,6 @@ func handle_shoot():
 	shoot_cooldown = shoot_cooldown_MAX;
 	shoot_anim_timer = shoot_anim_timer_max;
 	
-	#note: for all other weapons, check ammo.
 	match(weapon_state):
 		WEAPON.NORMAL:
 			# shoot projectile
@@ -288,19 +246,26 @@ func handle_shoot():
 			bullet_.position = position + Vector2(facing * bullet_offset.x, bullet_offset.y)
 			World.add_child(bullet_)
 		_:
-			print("Missed me again 'Number 1 Son!'");
+			if(ammo == 0): return
+			ammo -= weapon_stats[weapon_state][1];
+			#TODO shoot whatever weapon projectile is needed
 		
-func handle_jump():
+func handle_jump(delta):
 	# Handle jump.
 	if(jump_cooldown): return;
-	if is_on_floor():
-		if input_jump_press: 
-			velocity.y = JUMP_VELOCITY
-	else: #this sucks, work on better conditional
-		if Input.is_action_just_released("act_jump") and velocity.y < JUMP_VELOCITY / 2: 
-			velocity.y = JUMP_VELOCITY / 2
+	if is_on_floor() && input_jump_press:
+		jump_height_timer = jump_height_timer_max;
+		velocity.y = JUMP_VELOCITY
+	#if(jump_height_timer > jump_height_timer_max-5):
+		#velocity.y = JUMP_VELOCITY * (jump_height_timer_max-jump_height_timer+9)/jump_height_timer_max
+	if !is_on_floor() && jump_height_timer:
+		#if jumped, and released the jump button quick enough, stop ascending
+		if Input.is_action_just_released("act_jump"):
+			velocity.y = 0
+			jump_height_timer = 0;
+			return
 
-func can_climb_ladder():
+func try_climb_ladder() -> bool:
 	if(detect_ladder):
 		if(is_on_floor()):
 			if(input_move.y == 1): return true
@@ -314,6 +279,22 @@ func try_damage(dmg,angle = 0):
 	damage_angle = PI * facing * -1;
 	health -= dmg
 	state_forceExit(state_Damage)
+
+#TODO make the health and ammo gain incremental like classic megaman
+func try_gain_health(amt):
+	if(health == max_health): return
+	health += amt
+	if(health > max_health):
+		health = max_health
+	
+func try_gain_ammo(amt):
+	if(ammo == max_ammo): return
+	ammo += amt
+	if(ammo > max_ammo):
+		ammo = max_ammo
+	
+func gain_extra_life():
+	Global.playerLives += 1;
 	
 #kill player
 func event_death():
@@ -329,6 +310,7 @@ func handle_cooldowns():
 	if(shoot_cooldown > 0): shoot_cooldown -= 1;
 	if(shoot_anim_timer): shoot_anim_timer -= 1;
 	if(jump_cooldown): jump_cooldown -= 1;
+	if(jump_height_timer): jump_height_timer -= 1;
 	pass
 
 			
@@ -336,12 +318,13 @@ func update_animation():
 	sprite_2d.scale.x = facing
 	match(anim_state):
 		ANIM.IDLE:
-			if(shoot_anim_timer): 
+			if(shoot_anim_timer):
 				match(weapon_state):
 					WEAPON.NORMAL:
 						animation_player.play("idle_shoot")
 					_:
 						animation_player.play("idle_shoot_palm")
+			elif(input_move.x != 0): animation_player.play("run_inch")
 			else: animation_player.play("idle")
 		ANIM.RUN:
 			if(shoot_anim_timer): animation_player.play("run_shoot")
@@ -377,301 +360,315 @@ func update_animation():
 		_:
 			animation_player.play("idle")
 
-func stateInit():
-	#STATE EXAMPLES
-	state_Idle = func():
-		_stateID		= "Idle";
-		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= null; # normal exit
+#region STATE LIST
+var state_Idle = func():
+	_stateID		= "Idle";
+	stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= null; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.IDLE;
+		ignore_movement = true;
+		bullet_offset = Vector2(21,-13)
+		return
+			
+	main	= func(): # run continuously
+		if(input_move.x != 0): 
+			if(inch_timer == inch_timer_max):
+				position.x += input_move.x
+				update_facing();
+			inch_timer -= 1;
+		else:
+			inch_timer = inch_timer_max;
+		return
 		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.IDLE;
-			bullet_offset = Vector2(21,-13)
-			return
-				
-		main	= func(): # run continuously
-			return
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		ignore_movement = false;
+		inch_timer = inch_timer_max;
+		return
+		
+	exitConditions = func():
+		if(!is_on_floor()): state_forceExit(state_Air)
+		if(inch_timer == 0): state_forceExit(state_Run)
+		var slide = (input_move.y == -1) && input_jump_press
+		if(slide): state_forceExit(state_Slide)
+		if(try_climb_ladder()): state_forceExit(state_Ladder)
+		return
+
+var state_Run = func():
+	_stateID		= "Run";
+	stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= null; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.RUN;
+		bullet_offset = Vector2(21,-13)
+		return
 			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			return
+	main	= func(): # run continuously
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		return
+		
+	exitConditions = func():
+		if(!is_on_floor()): state_forceExit(state_Air)
+		if(input_move.x == 0): state_forceExit(state_Idle)
+		var slide = (input_move.y == -1) && input_jump_press
+		if(slide): state_forceExit(state_Slide)
+		if(try_climb_ladder()): state_forceExit(state_Ladder)
+		return
+
+
+var state_Air = func():
+	_stateID		= "Air";
+	stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= null; # normal exit
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.AIR;
+		bullet_offset = Vector2(18,-16)
+		return
 			
-		exitConditions = func():
-			if(!is_on_floor()): state_forceExit(state_Air)
+	main	= func(): # run continuously
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		return
+		
+	exitConditions = func():
+		if(is_on_floor()): 
 			if(input_move.x != 0): state_forceExit(state_Run)
-			var slide = (input_move.y == -1) && input_jump_press
-			if(slide): state_forceExit(state_Slide)
-			if(can_climb_ladder()): state_forceExit(state_Ladder)
-			return
+			else: state_forceExit(state_Idle)
+		if(try_climb_ladder()): state_forceExit(state_Ladder)
+		return
 		
 
-	state_Run = func():
-		_stateID		= "Run";
-		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= null; # normal exit
-		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.RUN;
-			bullet_offset = Vector2(21,-13)
-			return
-				
-		main	= func(): # run continuously
-			return
-			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			return
-			
-		exitConditions = func():
-			if(!is_on_floor()): state_forceExit(state_Air)
-			if(input_move.x == 0): state_forceExit(state_Idle)
-			var slide = (input_move.y == -1) && input_jump_press
-			if(slide): state_forceExit(state_Slide)
-			if(can_climb_ladder()): state_forceExit(state_Ladder)
-			return
+var state_Ladder = func():
+	_stateID		= "Ladder";
+	stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= null; # normal exit
 
-
-	state_Air = func():
-		_stateID		= "Air";
-		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= null; # normal exit
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.AIR;
-			bullet_offset = Vector2(18,-16)
-			return
-				
-		main	= func(): # run continuously
-			return
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.LADDER;
+		bullet_offset = Vector2(18,-16)
+		ignore_gravity = true;
+		ignore_movement = true;
+		if(is_on_floor()): position.y -= 4
+		position.x = ladder_inst.position.x + 8
+		return
 			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			return
+	main	= func(): # run continuously
+		velocity = Vector2.ZERO
+		if(abs(input_move.x)): facing = input_move.x #for shooting
 			
-		exitConditions = func():
-			if(is_on_floor()): state_forceExit(state_Idle)
-			if(can_climb_ladder()): state_forceExit(state_Ladder)
-			return
-			
-
-	state_Ladder = func():
-		_stateID		= "Ladder";
-		stateTime   = -1; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= null; # normal exit
-
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.LADDER;
-			bullet_offset = Vector2(18,-16)
-			ignore_gravity = true;
-			ignore_movement = true;
-			if(is_on_floor()): position.y -= 4
-			position.x = ladder_inst.position.x + 8
-			return
-				
-		main	= func(): # run continuously
-			velocity = Vector2.ZERO
-			if(abs(input_move.x)): facing = input_move.x #for shooting
-				
-			animation_player.speed_scale = 0
-			anim_state = ANIM.LADDER;
-			if(input_move != Vector2.ZERO):
-				#position.x += input_move.x * SPEED_LADDER # subtract cause up in grid is negative
-				position.y -= input_move.y * SPEED_LADDER # subtract cause up in grid is negative
-				animation_player.speed_scale = 1
-			
-			if(ladder_inst != null):
-				var top_dist = abs(position.y - ladder_inst.position.y);
-				if(top_dist < 16):
-					anim_state = ANIM.LADDER_TOP;
-
-			return
-			
-		onLeave = func(): # run only when the state is changed. may not be necessary
+		animation_player.speed_scale = 0
+		anim_state = ANIM.LADDER;
+		if(input_move != Vector2.ZERO):
+			#position.x += input_move.x * SPEED_LADDER # subtract cause up in grid is negative
+			position.y -= input_move.y * SPEED_LADDER # subtract cause up in grid is negative
 			animation_player.speed_scale = 1
-			ignore_gravity = false;
-			ignore_movement = false;
-			return
-			
-		exitConditions = func():
-			if(is_on_floor() && (input_move.y == -1)): state_forceExit(state_Idle);
-			if(input_jump_press): state_forceExit(state_Air)
-			if(!detect_ladder): state_forceExit(state_Air)
-			return
-			
-
-	state_Slide = func():
-		_stateID		= "Slide";
-		stateTime   = 20; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= state_Idle; # normal exit
 		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.SLIDE;
-			input_jump_press = false; #reset input
-			ignore_friction = true;
-			jump_cooldown = 5;
-			return
-				
-		main	= func(): # run continuously
-			velocity.x = facing * SPEED * 2
-			if(stateTime == 1):
-				#if there is a ceiling above us
-					#increase state time by 1
-				pass
-			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			ignore_friction = false;
-			return
-			
-		exitConditions = func():
-			var jump = Input.is_action_just_pressed("act_jump") && (jump_cooldown == 0)
-			if(jump || !is_on_floor()): state_forceExit(state_Air)
-			if(Input.is_action_just_pressed("act_shoot")): state_forceExit(state_Damage)
-			return;
+		if(ladder_inst != null):
+			var top_dist = abs(position.y - ladder_inst.position.y);
+			if(top_dist < 16):
+				anim_state = ANIM.LADDER_TOP;
+
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		animation_player.speed_scale = 1
+		ignore_gravity = false;
+		ignore_movement = false;
+		return
+		
+	exitConditions = func():
+		if(is_on_floor() && (input_move.y == -1)): state_forceExit(state_Idle);
+		if(input_jump_press): state_forceExit(state_Air)
+		if(!detect_ladder): state_forceExit(state_Air)
+		return
+		
+
+var state_Slide = func():
+	_stateID		= "Slide";
+	stateTime   = 20; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= state_Idle; # normal exit
 	
-	state_Teleport_Enter = func():
-		_stateID		= "Teleport_Enter";
-		stateTime   = 4; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= state_Idle; # normal exit
-		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.TELEPORT;
-			ignore_friction = true;
-			ignore_gravity = true;
-			ignore_movement = true;
-			return
-				
-		main	= func(): # run continuously
-			if(!is_on_floor()):
-				stateTime = 5;
-				velocity.y = 980;
-				velocity.x = 0;
-			else:
-				anim_state = ANIM.TELEPORT_FINISH
-				velocity.y = 0;
-				velocity.x = 0;
-			return
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.SLIDE;
+		input_jump_press = false; #reset input
+		ignore_friction = true;
+		ignore_movement = true;
+		jump_cooldown = 5;
+		return
 			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			ignore_friction = false;
-			ignore_gravity = false;
-			ignore_movement = false;
-			return
-			
-		exitConditions = func():
-			return
+	main	= func(): # run continuously
+		velocity.x = facing * SPEED * 2
+		if(stateTime == 1):
+			#if there is a ceiling above us
+				#increase state time by 1
+			pass
 		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		ignore_friction = false;
+		ignore_movement = false;
+		return
+		
+	exitConditions = func():
+		var jump = Input.is_action_just_pressed("act_jump") && (jump_cooldown == 0)
+		if(jump || !is_on_floor()): state_forceExit(state_Air)
+		if(Input.is_action_just_pressed("act_shoot")): state_forceExit(state_Damage)
+		return;
 
-	state_Damage = func():
-		_stateID		= "Damage";
-		stateTime   = 20; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= state_Idle; # normal exit
-		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.DAMAGE;
-			has_control = false;
-			ignore_friction = true;
+var state_Teleport_Enter = func():
+	_stateID		= "Teleport_Enter";
+	stateTime   = 4; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= state_Idle; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.TELEPORT;
+		ignore_friction = true;
+		ignore_gravity = true;
+		ignore_movement = true;
+		return
 			
-			I_FRAMES = 90;
+	main	= func(): # run continuously
+		if(!is_on_floor()):
+			stateTime = 5;
+			velocity.y = 980;
+			velocity.x = 0;
+		else:
+			anim_state = ANIM.TELEPORT_FINISH
 			velocity.y = 0;
-			var angle = Vector2(1,0).rotated(damage_angle)
-			velocity.x = SPEED/2 * angle.x;
-			return
-				
-		main	= func(): # run continuously
-			return
-			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			has_control = true;
-			ignore_friction = false;
-			damage_angle = 0;
-			return
-			
-		exitConditions = func():
-			return
+			velocity.x = 0;
+		return
 		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		ignore_friction = false;
+		ignore_gravity = false;
+		ignore_movement = false;
+		return
 		
-	state_Stun = func():
-		_stateID		= "Stun";
-		stateTime   = 30; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= state_Idle; # normal exit
-		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.STUN;
-			has_control = false;
-			return
-				
-		main	= func(): # run continuously
-			return
-			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			has_control = true;
-			return
-			
-		exitConditions = func():
-			return
+	exitConditions = func():
+		return
 	
-	state_Death = func():
-		_stateID		= "Death";
-		stateTime   = 180; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= state_Idle; # normal exit
-		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.STUN;
-			has_control = false;
-			return
-				
-		main	= func(): # run continuously
-			return
-			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			get_tree().reload_current_scene();
-			has_control = true;
-			return
-			
-		exitConditions = func():
-			return
-			
-	
-	state_Special = func():
-		_stateID	= "Special";
-		stateTime   = 61; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= state_Idle; # normal exit
-		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.STUN;
-			has_control = false;
-			return
-				
-		main	= func(): # run continuously
-			rotation += 15;
-			return
-			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			has_control = true;
-			rotation = 0;
-			return
-			
-		exitConditions = func():
-			if(stateTime == 1):
-				if(position.y > 150):
-					state_forceExit(state_Stun)
-				else:
-					state_forceExit(state_Special2)
-			return
 
-	state_Special2 = func():
-		_stateID	= "Special";
-		stateTime   = 20; # how long should the state run for. set to -1 if the state does not have a timed end
-		stateNext	= state_Idle; # normal exit
+var state_Damage = func():
+	_stateID		= "Damage";
+	stateTime   = 20; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= state_Idle; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.DAMAGE;
+		has_control = false;
+		ignore_friction = true;
 		
-		onEnter = func(): # run once, on entering the state. may not be necessary
-			anim_state = ANIM.STUN;
-			has_control = false;
-			return
-				
-		main	= func(): # run continuously
-			position.y -= 15;
-			return
+		I_FRAMES = 90;
+		velocity.y = 0;
+		var angle = Vector2(1,0).rotated(damage_angle)
+		velocity.x = SPEED/2 * angle.x;
+		return
 			
-		onLeave = func(): # run only when the state is changed. may not be necessary
-			has_control = true;
-			return
+	main	= func(): # run continuously
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		has_control = true;
+		ignore_friction = false;
+		damage_angle = 0;
+		return
+		
+	exitConditions = func():
+		if(health <= 0): state_forceExit(state_Death)
+		return
+	
+	
+var state_Stun = func():
+	_stateID		= "Stun";
+	stateTime   = 30; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= state_Idle; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.STUN;
+		has_control = false;
+		return
 			
-		exitConditions = func():
-			return
+	main	= func(): # run continuously
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		has_control = true;
+		return
+		
+	exitConditions = func():
+		return
+
+var state_Death = func():
+	_stateID		= "Death";
+	stateTime   = 180; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= state_Idle; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.STUN;
+		has_control = false;
+		return
+			
+	main	= func(): # run continuously
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		Global.handle_player_death()
+		has_control = true;
+		return
+		
+	exitConditions = func():
+		return
+		
+
+var state_Special = func():
+	_stateID	= "Special";
+	stateTime   = 61; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= state_Idle; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.STUN;
+		has_control = false;
+		return
+			
+	main	= func(): # run continuously
+		rotation += 15;
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		has_control = true;
+		rotation = 0;
+		return
+		
+	exitConditions = func():
+		if(stateTime == 1):
+			if(position.y > 150):
+				state_forceExit(state_Stun)
+			else:
+				state_forceExit(state_Special2)
+		return
+
+var state_Special2 = func():
+	_stateID	= "Special";
+	stateTime   = 20; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= state_Idle; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.STUN;
+		has_control = false;
+		return
+			
+	main	= func(): # run continuously
+		position.y -= 15;
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		has_control = true;
+		return
+		
+	exitConditions = func():
+		return
+#endregion

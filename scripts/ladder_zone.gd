@@ -18,12 +18,12 @@ func _process(_delta):
 
 func _on_body_entered(body):
 	print("Body: " + str(body))
-	if(body.is_in_group("group_player")):
+	if(body.is_in_group("player")):
 		print("laddur")
 		body.detect_ladder = true;
 		body.ladder_inst = self; #pass a reference to this ladder so the player can snap to its center
 		
 func _on_body_exited(body):
-	if(body.is_in_group("group_player")):
+	if(body.is_in_group("player")):
 		body.detect_ladder = false;
 		body.ladder_inst = null;

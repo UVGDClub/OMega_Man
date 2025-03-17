@@ -3,6 +3,9 @@ extends Control
 @export var menuMaster: Node = null;
 @export var level: int = 0;
 @onready var hovering_sprite = $Portrait/Selected
+@onready var boss_name = $Name
+@onready var mr_ms = $Mr_Ms
+
 
 var inputLock: bool = false;
 var selection_hover = false;
@@ -34,14 +37,15 @@ func flash_border():
 	hover_timer = (hover_timer + 1) % hover_timer_max
 	
 func input_accept():
-	return Input.is_action_pressed("act_jump")
+	return Input.is_action_just_pressed("act_jump")
 	
 func signal_enter_level(level):
 	#check if level valid
-	if level < 1 or level > 9: return;
+	if level < 1 or level > 10: return;
 	#signal level transition
 	if (menuMaster == null): return
 	print("signal_enter_level");
 	inputLock = true;
-	menuMaster.enter_level(level);
+	var fullname = boss_name.text + " " + mr_ms.text
+	menuMaster.enter_level(level, fullname);
 	

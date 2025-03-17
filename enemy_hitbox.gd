@@ -24,7 +24,7 @@ func handle_death():
 	timer -= 1;
 
 func _on_body_entered(body: Node2D) -> void:
-	if(body.is_in_group("group_player")):
+	if(body.is_in_group("player")):
 		print("attempt to hit player");
 		body.try_damage(damage)
 		#body.state_forceExit(body.state_Damage)

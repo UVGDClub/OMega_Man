@@ -4,21 +4,23 @@
 [ext_resource type="LabelSettings" uid="uid://cds1nk0736cs4" path="res://project_system_files/label_debug_settings.tres" id="2_65h5q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_471yr"]
-size = Vector2(16, 8)
+size = Vector2(16, 32)
 
 [node name="TriggerCameraPan" type="Area2D"]
 script = ExtResource("1_x3mrd")
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="."]
-offset_left = -16.0
-offset_right = 46.0
-offset_bottom = 23.0
+offset_left = -24.0
+offset_top = 8.0
+offset_right = 38.0
+offset_bottom = 31.0
+size_flags_horizontal = 0
 text = "CAM"
 label_settings = ExtResource("2_65h5q")
+horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(8, 4)
+position = Vector2(8, 16)
 shape = SubResource("RectangleShape2D_471yr")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

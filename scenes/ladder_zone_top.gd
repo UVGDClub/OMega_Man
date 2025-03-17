@@ -27,7 +27,7 @@ func check_player_climb_down():
 	
 
 func _on_player_top_detection_body_entered(body):
-	if(body.is_in_group("group_player")):
+	if(body.is_in_group("player")):
 		player_inst = body;
 		print("laddur Top")
 	

@@ -36,7 +36,7 @@ func handle_movement(delta):
 
 
 func _on_body_entered(body):
-	if(body.is_in_group("group_enemy")):
+	if(body.is_in_group("enemy")):
 		if(body.try_damage(damage)):
 			queue_free();
 	#apply damage to enemy

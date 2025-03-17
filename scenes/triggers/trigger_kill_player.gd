@@ -12,6 +12,6 @@ func _process(delta):
 
 func _on_body_entered(body):
 	print("Body: " + str(body))
-	if(body.is_in_group("group_player")):
+	if(body.is_in_group("player")):
 		print("kill player")
 		body.event_death();

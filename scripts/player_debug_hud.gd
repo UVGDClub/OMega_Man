@@ -4,8 +4,10 @@ extends CanvasLayer
 @onready var position_x = $positionX
 @onready var position_y = $positionY
 @onready var state_time: Label = $stateTime
-@onready var hp = $hp
 @onready var weapon = $weapon
+@onready var hp = $hp
+@onready var lives = $lives
+@onready var ammo = $ammo
 
 @onready var player = Global.player;
 
@@ -23,9 +25,10 @@ func _process(delta):
 	position_y.text = "Y: " + str(snapped(player.position.y,0.01))
 	state.text = "STATE: " + player._stateID
 	state_time.text = "STATE TIME: " + str(player.stateTime)
-	hp.text = "HP: " + str(player.health)
 	weapon.text = "WEAPON: " + str(player.weapon_state)
-	
+	hp.text = "HP: " + str(player.health)
+	ammo.text = "AMMO: " + str(player.ammo)
+	lives.text = "LIVES: " + str(Global.playerLives)
 	
 	
 	pass

@@ -28,21 +28,10 @@ func flash_screen():
 	flash_timer -= 1;
 
 func goto_boss_intro():
-	#TODO do intro
-	#just warps to level for now
-	get_tree().change_scene_to_packed(next_level)
+	get_tree().change_scene_to_file("res://scenes/boss_intro/boss_intro.tscn")
 
-func enter_level(level):
-	#this assumes it's passed good input!!
+#used by level containers
+func enter_level(level, boss_name):
 	level_selected = true;
-	match(level):
-		1: next_level = load("res://scenes/level_1.tscn");
-		2: pass;
-		3: pass;
-		4: pass;
-		5: pass;
-		6: pass;
-		7: pass;
-		8: pass;
-		9: pass;
-	
+	Global.next_level_warp = level;
+	Global.next_level_name = boss_name;

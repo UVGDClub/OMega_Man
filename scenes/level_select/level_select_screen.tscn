@@ -111,12 +111,13 @@ focus_neighbor_right = NodePath("../Level5")
 focus_neighbor_bottom = NodePath("../Level7")
 focus_mode = 2
 menuMaster = NodePath("../..")
+level = 10
 
 [node name="Portrait" parent="GridContainer/Omega" index="0"]
 texture = ExtResource("4_h1v3e")
 
 [node name="Name" parent="GridContainer/Omega" index="1"]
-text = ""
+text = "DEBUG"
 
 [node name="Mr_Ms" parent="GridContainer/Omega" index="2"]
 text = ""

@@ -967,7 +967,7 @@ _data = {
 "teleport_finish": SubResource("Animation_qvtkx")
 }
 
-[node name="Player" type="CharacterBody2D" groups=["group_player"]]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_jkyx8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -992,3 +992,6 @@ shape = SubResource("RectangleShape2D_446pv")
 libraries = {
 "": SubResource("AnimationLibrary_7merl")
 }
+
+[node name="center" type="Marker2D" parent="." groups=["player"]]
+position = Vector2(0, -12)

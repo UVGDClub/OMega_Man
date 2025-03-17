@@ -47,31 +47,29 @@ func handle_timer():
 func handle_animation():
 	#the frame in mm2 actually blinks 2, 3, 2, 3, ...
 	#but im keeping it simple
+	if(sprite.hframes * sprite.vframes == 1): return;
 	if(anim_timer == 0):
 		sprite.frame = (sprite.frame + 1) % 2
 	anim_timer = (anim_timer + 1) % 4
 
-func _on_item_pickup_body_entered(body):
-	if(!body.is_in_group("group_player")): return;
+func _on_item_pickup_body_entered(player):
+	if(!player.is_in_group("player")): return;
 	#pick up item
 	match(item_type):
 		0:
 			#gain health
-			#if(size == 0):
-				#player.try_gain_health(2)
-			#else 
-				#player.try_gain_health(10)
-			pass
+			if(size == 0):
+				player.try_gain_health(2)
+			else:
+				player.try_gain_health(10)
 		1:
 			#get ammo
-			#if(size == 0):
-				#player.try_gain_ammo(2)
-			#else 
-				#player.try_gain_ammo(10)
+			if(size == 0):
+				player.try_gain_ammo(2)
+			else:
+				player.try_gain_ammo(10)
 			
-			pass
 		2:
 			#get extra life
-			#player.gain_extra_life()
-			pass
+			player.gain_extra_life()
 	queue_free()
