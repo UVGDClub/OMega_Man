@@ -14,7 +14,7 @@ func _ready():
 	debug_visual.visible = false;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if(enemy_to_spawn == null): return
 	handle_enemy_spawn();
 

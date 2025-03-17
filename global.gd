@@ -14,7 +14,7 @@ func _ready() -> void:
 	player_spawn.connect(on_player_spawn)
 	camera_spawn.connect(on_camera_spawn)
 
-func _process(delta):
+func _process(_delta):
 	handle_pause()
 		
 func handle_pause():

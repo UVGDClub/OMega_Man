@@ -44,8 +44,7 @@ func handle_death():
 		
 		#drop item maybe
 		var item_chance = randi_range(1,100);
-		#if(item_chance <= 25):
-		if(true):
+		if(item_chance <= 25):
 			var item_type = randi_range(0,2);
 			var size = randi_range(0,1);
 			var item = ITEM_PICKUP.instantiate()

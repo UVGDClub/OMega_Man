@@ -18,7 +18,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	#TODO how does this thing follow palyer???
 	
 	position_x.text = "X: " + str(snapped(player.position.x,0.01))

@@ -15,7 +15,7 @@ var hover_timer_max = 8;
 func _ready():
 	hovering_sprite.visible = false;
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(inputLock): grab_focus() #really bad way of doing this
 	
 	if (!has_focus()):
@@ -39,13 +39,13 @@ func flash_border():
 func input_accept():
 	return Input.is_action_just_pressed("act_jump")
 	
-func signal_enter_level(level):
+func signal_enter_level(level_num):
 	#check if level valid
-	if level < 1 or level > 10: return;
+	if level_num < 1 or level_num > 10: return;
 	#signal level transition
 	if (menuMaster == null): return
 	print("signal_enter_level");
 	inputLock = true;
 	var fullname = boss_name.text + " " + mr_ms.text
-	menuMaster.enter_level(level, fullname);
+	menuMaster.enter_level(level_num, fullname);
 	
