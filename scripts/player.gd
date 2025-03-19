@@ -482,6 +482,10 @@ var state_Ladder = func():
 			
 		animation_player.speed_scale = 0
 		anim_state = ANIM.LADDER;
+		
+		#dont climb when shooting
+		if(shoot_anim_timer): input_move = Vector2.ZERO
+		
 		if(input_move != Vector2.ZERO):
 			#position.x += input_move.x * SPEED_LADDER # subtract cause up in grid is negative
 			position.y -= input_move.y * SPEED_LADDER # subtract cause up in grid is negative
