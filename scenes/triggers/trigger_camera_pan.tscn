@@ -10,9 +10,8 @@ size = Vector2(16, 32)
 script = ExtResource("1_x3mrd")
 
 [node name="Label" type="Label" parent="."]
-offset_left = -24.0
 offset_top = 8.0
-offset_right = 38.0
+offset_right = 18.0
 offset_bottom = 31.0
 size_flags_horizontal = 0
 text = "CAM"

@@ -98,20 +98,14 @@ func follow_instance_horizontally():
 	#lerp_target = follow.position
 
 #doesnt let the camera's center go past the boundaries set
+#cant use things like limit_left because it doesnt actually prevent position from moving
 func _restrict_camera_x():
 	if camera_page_screen_active: return
-	if(restrict_x[0] == restrict_x[1]): 
-		limit_left = -10000000000
-		limit_right = 10000000000
-		return
-	#limit_left = restrict_x[0]
-	#limit_right = restrict_x[1]
+	if(restrict_x[0] == restrict_x[1]): return
 	var leftBoundary = position.x - 128
 	var rightBoundary = position.x + 128
 	if(leftBoundary < restrict_x[0]): 
-		print(position)
 		position.x = restrict_x[0] + 128
-		print(position)
 	if(rightBoundary > restrict_x[1]): 
 		position.x = restrict_x[1] - 128
 	

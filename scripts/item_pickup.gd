@@ -1,5 +1,5 @@
 extends RigidBody2D
-@export_enum("Health", "Ammo", "1up") var item_type: int
+@export_enum("Health", "Ammo", "1up", "Goal") var item_type: int
 @export_enum("small", "big") var size: int
 @export var onTimer: bool = false;
 @onready var sprite = $ItemPickup/Sprite
@@ -72,4 +72,6 @@ func _on_item_pickup_body_entered(player):
 		2:
 			#get extra life
 			player.gain_extra_life()
+		3:
+			player.leave_stage();
 	queue_free()

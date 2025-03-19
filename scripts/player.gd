@@ -312,6 +312,13 @@ func handle_cooldowns():
 	if(jump_cooldown): jump_cooldown -= 1;
 	if(jump_height_timer): jump_height_timer -= 1;
 	pass
+	
+func leave_stage():
+	has_control = false;
+	await get_tree().create_timer(2.0).timeout
+	state_forceExit(state_Teleport_Leave)
+	await get_tree().create_timer(2.0).timeout
+	get_tree().change_scene_to_file("res://scenes/level_select/level_select_screen.tscn");
 
 			
 func update_animation():
@@ -532,17 +539,50 @@ var state_Teleport_Enter = func():
 		return
 			
 	main	= func(): # run continuously
+		velocity.x = 0;
 		if(!is_on_floor()):
 			stateTime = 5;
-			velocity.y = 980;
-			velocity.x = 0;
+			velocity.y = 490;
 		else:
 			anim_state = ANIM.TELEPORT_FINISH
 			velocity.y = 0;
-			velocity.x = 0;
 		return
 		
 	onLeave = func(): # run only when the state is changed. may not be necessary
+		ignore_friction = false;
+		ignore_gravity = false;
+		ignore_movement = false;
+		return
+		
+	exitConditions = func():
+		return
+		
+
+var state_Teleport_Leave = func():
+	_stateID		= "Teleport_Leave";
+	stateTime   = 6; # how long should the state run for. set to -1 if the state does not have a timed end
+	stateNext	= state_Idle; # normal exit
+	
+	onEnter = func(): # run once, on entering the state. may not be necessary
+		anim_state = ANIM.TELEPORT_FINISH
+		ignore_friction = true;
+		ignore_gravity = true;
+		ignore_movement = true;
+		return
+			
+	main	= func(): # run continuously
+		velocity.y = 0;
+		velocity.x = 0;
+		if(stateTime > 2):
+			anim_state = ANIM.TELEPORT_FINISH
+		else:
+			stateTime += 1;
+			anim_state = ANIM.TELEPORT
+			position.y -= 20;
+		return
+		
+	onLeave = func(): # run only when the state is changed. may not be necessary
+		#should never get here
 		ignore_friction = false;
 		ignore_gravity = false;
 		ignore_movement = false;
