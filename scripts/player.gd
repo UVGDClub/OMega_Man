@@ -29,17 +29,17 @@ enum WEAPON {
 }
 var weapon_state = WEAPON.NORMAL;
 
-# format -- NAME:[MAX AMMOUNT, WEAPON COST]
+# format -- NAME:[MAX AMMOUNT, WEAPON COST, LIMIT]
 var weapon_stats: Dictionary = {
-	WEAPON.NORMAL:[24,0],
-	WEAPON.POWER1:[24,1],
-	WEAPON.POWER2:[24,1],
-	WEAPON.POWER3:[24,1],
-	WEAPON.POWER4:[24,1],
-	WEAPON.POWER5:[24,1],
-	WEAPON.POWER6:[24,1],
-	WEAPON.POWER7:[24,1],
-	WEAPON.POWER8:[24,1]
+	WEAPON.NORMAL:[24,0,3],
+	WEAPON.POWER1:[24,1,1],
+	WEAPON.POWER2:[24,1,1],
+	WEAPON.POWER3:[24,1,1],
+	WEAPON.POWER4:[24,1,1],
+	WEAPON.POWER5:[24,1,1],
+	WEAPON.POWER6:[24,1,1],
+	WEAPON.POWER7:[24,1,1],
+	WEAPON.POWER8:[24,1,1]
 }
 
 #ANIMATION STATE
@@ -72,6 +72,7 @@ var max_ammo = 24;
 var health = max_health;
 var ammo = 24;
 var bullets_left = 3;
+var bullet_limit = bullets_left;
 
 # State Related Variables
 var facing = 1;
@@ -230,8 +231,10 @@ func handle_weapon_swtich(menuTarget = null):
 	if(weapon_state > 8): weapon_state = 0;
 	if(weapon_state < 0): weapon_state = 8;
 	
-	#load new weapon ammo
+	#load new weapon ammo and limit
 	ammo = weapon_stats[weapon_state][0];
+	bullet_limit = weapon_stats[weapon_state][2];
+	bullets_left = bullet_limit;
 	
 func handle_shoot():
 	if(shoot_cooldown != 0): return
@@ -295,6 +298,12 @@ func try_gain_ammo(amt):
 	ammo += amt
 	if(ammo > max_ammo):
 		ammo = max_ammo
+
+## used by projectiles when they destroy themselves
+func try_restock_bullet(type:WEAPON):
+	if(type != weapon_state): return;
+	if(bullets_left == bullet_limit): return
+	bullets_left += 1;
 	
 func gain_extra_life():
 	Global.playerLives += 1;

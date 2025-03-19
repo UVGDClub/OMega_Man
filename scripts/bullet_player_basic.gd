@@ -33,7 +33,7 @@ func handle_movement(delta):
 	position += velocity * delta;
 
 func handle_queue_free():
-	Global.player.bullets_left += 1; 
+	Global.player.try_restock_bullet(Player.WEAPON.NORMAL)
 	queue_free();
 	
 
