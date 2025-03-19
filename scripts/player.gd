@@ -8,7 +8,7 @@ extends StateEntity2D
 @onready var center = $center
 
 
-const bulletSource = preload("res://scenes/bullet_small.tscn")
+const bulletSource = preload("res://scenes/bullet_player_basic.tscn")
 const LADDER_ZONE = preload("res://scenes/ladder_zone.tscn")
 @onready var World = $"../.."
 
@@ -71,6 +71,7 @@ var max_health = 24;
 var max_ammo = 24;
 var health = max_health;
 var ammo = 24;
+var bullets_left = 3;
 
 # State Related Variables
 var facing = 1;
@@ -235,6 +236,7 @@ func handle_weapon_swtich(menuTarget = null):
 func handle_shoot():
 	if(shoot_cooldown != 0): return
 	if(!input_shoot): return;
+	if(bullets_left <= 0): return 
 	shoot_cooldown = shoot_cooldown_MAX;
 	shoot_anim_timer = shoot_anim_timer_max;
 	
@@ -242,6 +244,7 @@ func handle_shoot():
 		WEAPON.NORMAL:
 			# shoot projectile
 			var bullet_ = bulletSource.instantiate()
+			bullets_left -= 1;
 			bullet_.set_velocity(facing)
 			bullet_.position = position + Vector2(facing * bullet_offset.x, bullet_offset.y)
 			World.add_child(bullet_)
