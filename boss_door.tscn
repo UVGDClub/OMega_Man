@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcpf0ch86xj0m"]
+
+[ext_resource type="Script" path="res://scripts/boss_door.gd" id="1_137la"]
+[ext_resource type="Texture2D" uid="uid://c2r3abalrihhq" path="res://sprites/door_defualt.png" id="1_gi5ox"]
+[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/triggers/trigger_camera_pan.tscn" id="2_vmfie"]
+
+[node name="boss_door" type="Node2D"]
+script = ExtResource("1_137la")
+
+[node name="DoorDefualt" type="Sprite2D" parent="."]
+position = Vector2(16, 32)
+texture = ExtResource("1_gi5ox")
+
+[node name="TriggerCameraPan" parent="." instance=ExtResource("2_vmfie")]
+position = Vector2(-2, 0)
+scale = Vector2(2.2, 2)
+direction_move = 1
+boss_door = true
+
+[connection signal="player_entered" from="TriggerCameraPan" to="." method="_on_trigger_camera_pan_player_entered"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bltiyh5uvi30t"]
+
+[ext_resource type="Script" path="res://camera_restricter.gd" id="1_2wvdc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hmvc3"]
+size = Vector2(32, 32)
+
+[sub_resource type="SystemFont" id="SystemFont_vawu4"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_xf0u6"]
+font = SubResource("SystemFont_vawu4")
+font_size = 8
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Camera_Restricter" type="Area2D"]
+script = ExtResource("1_2wvdc")
+restrict_to_area = Vector2(-1e+07, 1e+07)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_hmvc3")
+debug_color = Color(0, 0.637722, 0.388331, 0.42)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 211.0
+offset_bottom = 34.0
+text = "CAM
+RESTRICT"
+label_settings = SubResource("LabelSettings_xf0u6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

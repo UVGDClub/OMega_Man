@@ -5,8 +5,8 @@ extends Camera2D
 # 1 Refactor camera transition lerping to take advantage of the follow point
 	# just have the trigger create a follow point for the camera that moves
 	# better than the garbage implemented right now!
-# 2 Create a volume that restricts the camera movement 
-# so it doesnt go out of the level geo
+
+@onready var camera_collision = $camera_collision
 
 var follow: Node2D = null
 var camera_page_screen_active := false
@@ -16,44 +16,46 @@ var screenSize = Vector2(ProjectSettings.get_setting("display/window/size/viewpo
 var lerp_speed := 4
 var player_nudge_direction = Vector2.ZERO
 var player_nudge_dim = Vector2.ZERO
+var restrict_x := Vector2(-1,-1);
+
+var newPos : Vector2;
+
 @onready var lerp_target := position
 @onready var World = $"../.."
+
+signal start_pan
+signal end_pan
 
 func _ready() -> void:
 	Global.camera_spawn.emit(self)
 	print(screenSize)
+	#newPos = position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	find_player()
 	
-	process_camera_page_screen()
+	_process_camera_page_screen()
 	follow_instance_horizontally()
-	auto_pan_vertical()
+	_restrict_camera_x()
+	#position = newPos
 
 # Set target as player
 func find_player():
 	if follow != null: return
 	if Global.player != null: follow = Global.player
 	else: printerr("Camera: could not find player!!")
-	
-func auto_pan_vertical():
-	if(camera_page_screen_active): return
-	if(Global.player.in_camera_transition_trigger == null): return
-	player_nudge_dim = Global.player.in_camera_transition_trigger.collision_shape_2d.shape.size
-	player_nudge_dim.y = 8 #this allows for any size trigger and still clear the threshold
-	var upperBound = get_screen_center_position().y - 120
-	var lowerBound = get_screen_center_position().y  + 120
-	if(Global.player.center.global_position.y > lowerBound):
-		camera_page_screen_vertically(1)
-	if(Global.player.center.global_position.y < upperBound):
-		camera_page_screen_vertically(-1)
-	
 
-func process_camera_page_screen():
+#TODO: refactor this so that the trigger asks the camera to move, 
+#not the camera checking if it should move
+
+## incrementally processes the movement of the camera and player
+## done every frame
+func _process_camera_page_screen():
 	if not camera_page_screen_active: return
 	if position == lerp_target:
-		camera_page_screen_active = false 
+		camera_page_screen_active = false
+		end_pan.emit()
 		return
 	position.x = move_toward(position.x,lerp_target.x,lerp_speed)
 	position.y = move_toward(position.y,lerp_target.y,lerp_speed)
@@ -69,21 +71,47 @@ func set_camera_position(newX: float, newY: float):
 	lerp_target = position
 	
 # Pan camera one screen height, -1=UP, 1=DOWN
-func camera_page_screen_vertically(dir := -1):
+func camera_page_screen_vertically(dir:int, nudgeY: float):
+	start_pan.emit()
+	player_nudge_dim.y = 8 #this allows for any size trigger and still clear the threshold
+	lerp_target.x = position.x
 	lerp_target.y = position.y + screenSize.y * dir
 	camera_page_screen_active = true
 	player_nudge_direction = Vector2(0,dir)
 	
 # Pan camera one screen width, -1=LEFT, 1=RIGHT	
-func camera_page_screen_horizontally(dir := 1):
+func camera_page_screen_horizontally(dir:int, nudgeX: float):
+	start_pan.emit()
+	player_nudge_dim.x = nudgeX;
 	lerp_target.x = position.x + screenSize.x * dir
+	lerp_target.y = position.y
 	camera_page_screen_active = true
 	player_nudge_direction = Vector2(dir,0)
+	restrict_x += Vector2(256,256)*dir; #adjust restrictions automatically
+	
 
 # Lerp camera horizontally toward the follow target
 func follow_instance_horizontally():
 	if follow == null: return
 	if camera_page_screen_active: return
-	
 	position.x = follow.position.x
-	lerp_target = follow.position
+	#lerp_target = follow.position
+
+#doesnt let the camera's center go past the boundaries set
+func _restrict_camera_x():
+	if camera_page_screen_active: return
+	if(restrict_x[0] == restrict_x[1]): 
+		limit_left = -10000000000
+		limit_right = 10000000000
+		return
+	#limit_left = restrict_x[0]
+	#limit_right = restrict_x[1]
+	var leftBoundary = position.x - 128
+	var rightBoundary = position.x + 128
+	if(leftBoundary < restrict_x[0]): 
+		print(position)
+		position.x = restrict_x[0] + 128
+		print(position)
+	if(rightBoundary > restrict_x[1]): 
+		position.x = restrict_x[1] - 128
+	

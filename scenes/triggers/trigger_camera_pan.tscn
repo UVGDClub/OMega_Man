@@ -22,3 +22,5 @@ horizontal_alignment = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(8, 16)
 shape = SubResource("RectangleShape2D_471yr")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
