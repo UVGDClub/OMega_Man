@@ -164,6 +164,11 @@ position = Vector2(-256, 0)
 scale = Vector2(1, 5.5)
 restrict_to_area = Vector2(-384, 272)
 
+[node name="Camera_Restrictor_spawn3" parent="triggers" instance=ExtResource("12_hs32p")]
+position = Vector2(224, 24)
+scale = Vector2(1.5, 1)
+restrict_to_area = Vector2(-384, 272)
+
 [node name="Camera_Restrictor_spawn2" parent="triggers" instance=ExtResource("12_hs32p")]
 position = Vector2(-432, 144)
 restrict_to_area = Vector2(-640, -384)
