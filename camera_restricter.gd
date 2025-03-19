@@ -1,9 +1,10 @@
 extends Area2D
 
-
+@onready var label = $Label
 @export var restrict_to_area:= Vector2(-1,-1);
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	label.visible = get_tree().debug_collisions_hint
 	pass # Replace with function body.
 
 

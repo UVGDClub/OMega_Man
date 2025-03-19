@@ -11,6 +11,7 @@ enum DIRECTION {PAN_Y, PAN_X}
 signal player_entered(direction)
 
 func _ready() -> void:
+	label.visible = get_tree().debug_collisions_hint
 	match direction_move:
 		DIRECTION.PAN_X:
 			label.text = "PAN_X"
