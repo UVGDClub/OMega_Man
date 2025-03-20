@@ -70,7 +70,7 @@ focus_mode = 2
 menuMaster = NodePath("../..")
 level = 1
 
-[node name="Portrait" parent="GridContainer/Level1" index="0"]
+[node name="Boss_Face" parent="GridContainer/Level1/Portrait" index="0"]
 texture = ExtResource("5_orikt")
 
 [node name="Name" parent="GridContainer/Level1" index="1"]
@@ -113,7 +113,7 @@ focus_mode = 2
 menuMaster = NodePath("../..")
 level = 10
 
-[node name="Portrait" parent="GridContainer/Omega" index="0"]
+[node name="Boss_Face" parent="GridContainer/Omega/Portrait" index="0"]
 texture = ExtResource("4_h1v3e")
 
 [node name="Name" parent="GridContainer/Omega" index="1"]

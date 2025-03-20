@@ -3,6 +3,7 @@ extends Control
 @export var menuMaster: Node = null;
 @export var level: int = 0;
 @onready var hovering_sprite = $Portrait/Selected
+@onready var boss_face = $Portrait/Boss_Face
 @onready var boss_name = $Name
 @onready var mr_ms = $Mr_Ms
 
@@ -14,6 +15,9 @@ var hover_timer_max = 8;
 
 func _ready():
 	hovering_sprite.visible = false;
+	if(level > 0 && level < 9): 
+		if(Global.player_weapon_unlocks[level] == true): 
+			boss_face.visible = false;
 
 func _process(_delta: float) -> void:
 	if(inputLock): grab_focus() #really bad way of doing this
