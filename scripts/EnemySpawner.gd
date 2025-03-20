@@ -21,7 +21,7 @@ func _process(_delta):
 func handle_enemy_spawn():
 	if(!is_on_screen()): SPAWN_TRIGGER = true; return; #reload the spawner when off screen
 	if(!SPAWN_TRIGGER): return;
-	if(is_instance_id_valid(ENEMY_INST_ID)): return
+	#if(is_instance_id_valid(ENEMY_INST_ID)): return
 	#spawn enemy if an enemy has not been spawned yet.
 	ENEMY_INST = ENEMY_RESOURCE.instantiate()
 	ENEMY_INST.position = position

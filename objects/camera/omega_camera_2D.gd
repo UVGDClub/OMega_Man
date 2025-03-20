@@ -6,8 +6,6 @@ extends Camera2D
 	# just have the trigger create a follow point for the camera that moves
 	# better than the garbage implemented right now!
 
-@onready var camera_collision = $camera_collision
-
 var follow: Node2D = null
 var camera_page_screen_active := false
 var screenSize = Vector2(ProjectSettings.get_setting("display/window/size/viewport_width"),
@@ -71,9 +69,9 @@ func set_camera_position(newX: float, newY: float):
 	lerp_target = position
 	
 # Pan camera one screen height, -1=UP, 1=DOWN
-func camera_page_screen_vertically(dir:int, nudgeY: float):
+func camera_page_screen_vertically(dir:int, nudgeY: float = 8.0):
 	start_pan.emit()
-	player_nudge_dim.y = 8 #this allows for any size trigger and still clear the threshold
+	player_nudge_dim.y = nudgeY
 	lerp_target.x = position.x
 	lerp_target.y = position.y + screenSize.y * dir
 	camera_page_screen_active = true
