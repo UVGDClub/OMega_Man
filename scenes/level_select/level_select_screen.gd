@@ -33,5 +33,5 @@ func goto_boss_intro():
 #used by level containers
 func enter_level(level, boss_name):
 	level_selected = true;
-	Global.next_level_warp = level;
+	Global.curr_level = level;
 	Global.next_level_name = boss_name;

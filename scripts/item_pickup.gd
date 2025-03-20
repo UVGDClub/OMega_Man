@@ -6,6 +6,8 @@ extends RigidBody2D
 
 var death_timer: int = 300;
 var anim_timer: int = 0;
+#HACK automatically choose weapon of the current levels' boss
+var unlock_weapon: int = Global.curr_level; 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -73,5 +75,6 @@ func _on_item_pickup_body_entered(player):
 			#get extra life
 			player.gain_extra_life()
 		3:
+			Global.player_unlock_weapon(unlock_weapon)
 			player.leave_stage();
 	queue_free()

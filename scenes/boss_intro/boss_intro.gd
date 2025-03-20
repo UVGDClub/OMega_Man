@@ -83,7 +83,7 @@ func load_level(level):
 
 #go to level
 func _on_timer_timeout():
-	load_level(Global.next_level_warp)
+	load_level(Global.curr_level)
 	if(next_level == null):
 		printerr("next_level is INVALID!")
 		return;

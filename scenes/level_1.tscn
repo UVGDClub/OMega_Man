@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b0g8iwxn7nyci"]
+[gd_scene load_steps=14 format=3 uid="uid://b0g8iwxn7nyci"]
 
 [ext_resource type="Script" path="res://scripts/level_script.gd" id="1_te07g"]
 [ext_resource type="Texture2D" uid="uid://b78w02kw7v05e" path="res://sprites/Level_1/tile_set_1.png" id="2_eim75"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://objects/triggers/trigger_kill_player.tscn" id="6_vvxiq"]
 [ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://objects/camera/omega_camera_2D.tscn" id="7_pg7yi"]
 [ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/enemy_test.tscn" id="8_tj5wo"]
+[ext_resource type="PackedScene" uid="uid://c7ohlnpe6tuq0" path="res://objects/item_pickup.tscn" id="10_c75ym"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k665v"]
 texture = ExtResource("2_eim75")
@@ -91,3 +92,7 @@ position = Vector2(-240, 120)
 
 [node name="enemy_test" parent="." instance=ExtResource("8_tj5wo")]
 position = Vector2(-208, 64)
+
+[node name="Item" parent="." instance=ExtResource("10_c75ym")]
+position = Vector2(-352, 192)
+item_type = 3

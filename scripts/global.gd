@@ -18,7 +18,7 @@ var player_weapon_unlocks:Dictionary = {
 var camera: OmegaCamera2D;
 signal camera_spawn(camera);
 
-var next_level_warp: int;
+var curr_level: int;
 var next_level_name: String;
 
 func _ready() -> void:
@@ -40,6 +40,12 @@ func handle_player_death():
 		get_tree().reload_current_scene();
 		#restart current level
 	playerLives -= 1;
+	
+func player_unlock_weapon(weapon:Player.WEAPON):
+	if(weapon < 0 || weapon > 8): weapon = 0;
+	print("weapon unlock:" + str(weapon))
+	player_weapon_unlocks[weapon] = true;
+	pass
 	
 func on_player_spawn(p: Player) -> void:
 	player = p
