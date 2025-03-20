@@ -19,7 +19,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	#TODO how does this thing follow palyer???
+	if(player == null): return
 	
 	position_x.text = "X: " + str(snapped(player.position.x,0.01))
 	position_y.text = "Y: " + str(snapped(player.position.y,0.01))

@@ -44,9 +44,6 @@ func find_player():
 	if Global.player != null: follow = Global.player
 	else: printerr("Camera: could not find player!!")
 
-#TODO: refactor this so that the trigger asks the camera to move, 
-#not the camera checking if it should move
-
 ## incrementally processes the movement of the camera and player
 ## done every frame
 func _process_camera_page_screen():
