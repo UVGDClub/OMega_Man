@@ -1,6 +1,6 @@
 extends Area2D
 
-const LADDER_ZONE_TOP = preload("res://scenes/ladder_zone_top.tscn")
+const LADDER_ZONE_TOP = preload("res://objects/ladder_zone_top.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

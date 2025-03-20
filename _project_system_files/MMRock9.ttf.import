@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://dnm31l7x5h2ej"
-path="res://.godot/imported/MMRock9.ttf-64e6f9b918874007ac91ad51724146ba.fontdata"
+path="res://.godot/imported/MMRock9.ttf-b46508f222b01d44b55c24951fb5aa7f.fontdata"
 
 [deps]
 
-source_file="res://project_system_files/MMRock9.ttf"
-dest_files=["res://.godot/imported/MMRock9.ttf-64e6f9b918874007ac91ad51724146ba.fontdata"]
+source_file="res://_project_system_files/MMRock9.ttf"
+dest_files=["res://.godot/imported/MMRock9.ttf-b46508f222b01d44b55c24951fb5aa7f.fontdata"]
 
 [params]
 

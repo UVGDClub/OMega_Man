@@ -3,8 +3,8 @@ class_name Enemy extends StateEntity2D
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
-const EXPLOSION_PARTICLE = preload("res://scenes/explosion_particle.tscn")
-const ITEM_PICKUP = preload("res://scenes/item_pickup.tscn")
+const EXPLOSION_PARTICLE = preload("res://objects/explosion_particle.tscn")
+const ITEM_PICKUP = preload("res://objects/item_pickup.tscn")
 const detection_range_scale = 32
 @onready var detection_range = $detection_range
 @onready var detection_circle = $detection_range/detection_circle

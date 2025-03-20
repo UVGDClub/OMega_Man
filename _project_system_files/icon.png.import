@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mcg6j8o6qois"
-path="res://.godot/imported/UVGD_logo_pixel3.png-ef1e1b73fca2c495e0a150a931cfd96b.ctex"
+uid="uid://ce5tbwekkhrx8"
+path="res://.godot/imported/icon.png-c2fa9390207d79ca0d1a8451d858120f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://project_system_files/UVGD_logo_pixel3.png"
-dest_files=["res://.godot/imported/UVGD_logo_pixel3.png-ef1e1b73fca2c495e0a150a931cfd96b.ctex"]
+source_file="res://_project_system_files/icon.png"
+dest_files=["res://.godot/imported/icon.png-c2fa9390207d79ca0d1a8451d858120f.ctex"]
 
 [params]
 

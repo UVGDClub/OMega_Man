@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/boss_door.gd" id="1_137la"]
 [ext_resource type="Texture2D" uid="uid://c2r3abalrihhq" path="res://sprites/door_defualt.png" id="1_gi5ox"]
-[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/triggers/trigger_camera_pan.tscn" id="2_vmfie"]
+[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://objects/triggers/trigger_camera_pan.tscn" id="2_vmfie"]
 
 [node name="boss_door" type="Node2D"]
 script = ExtResource("1_137la")

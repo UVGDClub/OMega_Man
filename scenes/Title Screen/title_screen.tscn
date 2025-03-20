@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/Title Screen/title_screen.gd" id="1_85fp5"]
 [ext_resource type="Texture2D" uid="uid://cdo03tbix16fo" path="res://scenes/Title Screen/title_bg.png" id="1_427p6"]
-[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://project_system_files/label_level_select_settings.tres" id="2_15umc"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="2_15umc"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3

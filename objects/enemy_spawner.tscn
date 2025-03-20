@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cyd4f0t114ceq"]
 
-[ext_resource type="Script" path="res://EnemySpawner.gd" id="1_mtowf"]
+[ext_resource type="Script" path="res://scripts/EnemySpawner.gd" id="1_mtowf"]
 [ext_resource type="Texture2D" uid="uid://c4rkvob6bcjer" path="res://sprites/debug/enemy_spawner.png" id="2_fmlnf"]
 
 [node name="EnemySpawner" type="VisibleOnScreenNotifier2D"]

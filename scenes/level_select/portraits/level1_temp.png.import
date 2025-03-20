@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwlgov4wd5l7c"
-path="res://.godot/imported/level_omega.png-406e1f532bf8c3347a1bb56cef7a2ce6.ctex"
+uid="uid://dsct5ktbfgr80"
+path="res://.godot/imported/level1_temp.png-00fcd155c11d87c347d0c55f9c57915f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/level_select/level_omega.png"
-dest_files=["res://.godot/imported/level_omega.png-406e1f532bf8c3347a1bb56cef7a2ce6.ctex"]
+source_file="res://scenes/level_select/portraits/level1_temp.png"
+dest_files=["res://.godot/imported/level1_temp.png-00fcd155c11d87c347d0c55f9c57915f.ctex"]
 
 [params]
 

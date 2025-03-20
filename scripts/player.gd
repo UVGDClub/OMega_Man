@@ -8,8 +8,8 @@ extends StateEntity2D
 @onready var center = $center
 
 
-const bulletSource = preload("res://scenes/bullet_player_basic.tscn")
-const LADDER_ZONE = preload("res://scenes/ladder_zone.tscn")
+const bulletSource = preload("res://objects/bullet_player_basic.tscn")
+const LADDER_ZONE = preload("res://objects/ladder_zone.tscn")
 @onready var World = $"../.."
 
 #debug

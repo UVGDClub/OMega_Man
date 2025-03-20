@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bebjn6ox8soc1" path="res://scenes/boss_intro/stars3.png" id="1_rw0g7"]
 [ext_resource type="Script" path="res://scenes/boss_intro/boss_intro.gd" id="1_xt1c0"]
 [ext_resource type="Texture2D" uid="uid://bx8id0bs05lom" path="res://scenes/boss_intro/stars2.png" id="2_ilbau"]
-[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://project_system_files/label_level_select_settings.tres" id="2_pia28"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="2_pia28"]
 [ext_resource type="Texture2D" uid="uid://bnknermfgvp6o" path="res://scenes/boss_intro/stars1.png" id="3_nculk"]
 [ext_resource type="Texture2D" uid="uid://wwvu3bjgriqv" path="res://sprites/debug/temp_guy.png" id="7_w8px3"]
 

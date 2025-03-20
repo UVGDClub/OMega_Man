@@ -13,12 +13,12 @@ config_version=5
 config/name="OMega_Man"
 run/main_scene="res://scenes/Title Screen/title_screen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-boot_splash/image="res://project_system_files/icon.png"
-config/icon="res://project_system_files/icon.png"
+boot_splash/image="res://_project_system_files/icon.png"
+config/icon="res://_project_system_files/icon.png"
 
 [autoload]
 
-Global="*res://global.gd"
+Global="*res://scripts/global.gd"
 
 [display]
 

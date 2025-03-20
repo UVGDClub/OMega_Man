@@ -1,14 +1,14 @@
 [gd_scene load_steps=13 format=3 uid="uid://b0g8iwxn7nyci"]
 
-[ext_resource type="Script" path="res://scenes/level_script.gd" id="1_te07g"]
+[ext_resource type="Script" path="res://scripts/level_script.gd" id="1_te07g"]
 [ext_resource type="Texture2D" uid="uid://b78w02kw7v05e" path="res://sprites/Level_1/tile_set_1.png" id="2_eim75"]
 [ext_resource type="Texture2D" uid="uid://bssh5ec5w7qkc" path="res://sprites/debug/tile_test.png" id="2_nvfg1"]
-[ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://scenes/ladder_zone.tscn" id="3_6da0v"]
-[ext_resource type="PackedScene" uid="uid://cwo6seha311se" path="res://scenes/player.tscn" id="4_2p47n"]
-[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://scenes/triggers/trigger_camera_pan.tscn" id="5_ovnmg"]
-[ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://scenes/triggers/trigger_kill_player.tscn" id="6_vvxiq"]
-[ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://scenes/camera/omega_camera_2D.tscn" id="7_pg7yi"]
-[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://scenes/enemy_test.tscn" id="8_tj5wo"]
+[ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://objects/ladder_zone.tscn" id="3_6da0v"]
+[ext_resource type="PackedScene" uid="uid://cwo6seha311se" path="res://objects/player.tscn" id="4_2p47n"]
+[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://objects/triggers/trigger_camera_pan.tscn" id="5_ovnmg"]
+[ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://objects/triggers/trigger_kill_player.tscn" id="6_vvxiq"]
+[ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://objects/camera/omega_camera_2D.tscn" id="7_pg7yi"]
+[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/enemy_test.tscn" id="8_tj5wo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k665v"]
 texture = ExtResource("2_eim75")

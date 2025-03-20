@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b705vyf7sp6m6"
-path="res://.godot/imported/level_border_1.png-e728ecda515c6a2588a155393598d1f0.ctex"
+uid="uid://co7w4xok2v14a"
+path="res://.godot/imported/portrait_blank.png-57fd5b8a078ec80784c37ff972b828fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/level_select/level_border_1.png"
-dest_files=["res://.godot/imported/level_border_1.png-e728ecda515c6a2588a155393598d1f0.ctex"]
+source_file="res://scenes/level_select/portraits/portrait_blank.png"
+dest_files=["res://.godot/imported/portrait_blank.png-57fd5b8a078ec80784c37ff972b828fd.ctex"]
 
 [params]
 
