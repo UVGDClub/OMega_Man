@@ -3,6 +3,17 @@ extends Node
 var player: Player;
 var playerLives : int = 2;
 signal player_spawn(player);
+var player_weapon_unlocks:Dictionary = {
+	Player.WEAPON.NORMAL:true,
+	Player.WEAPON.POWER1:false,
+	Player.WEAPON.POWER2:false,
+	Player.WEAPON.POWER3:false,
+	Player.WEAPON.POWER4:false,
+	Player.WEAPON.POWER5:false,
+	Player.WEAPON.POWER6:false,
+	Player.WEAPON.POWER7:false,
+	Player.WEAPON.POWER8:false
+}
 
 var camera: OmegaCamera2D;
 signal camera_spawn(camera);

@@ -219,19 +219,28 @@ func handle_weapon_swtich(menuTarget = null):
 						- int(Input.is_action_just_pressed("weapon_switch_left")));
 						
 	if(input_switch == 0): return;
-	# TODO 
-	# use a while loop to scroll the next available unlocked weapon
-	# not all weapons will be available
 	
+	var next_weapon = weapon_state + input_switch;
+	#roll_over
+	if(next_weapon > 8): next_weapon = 0;
+	if(next_weapon < 0): next_weapon = 8;
 	#save current ammo
 	weapon_stats[weapon_state][0] = ammo;
-	weapon_state += input_switch;
 	
-	#roll_over
-	if(weapon_state > 8): weapon_state = 0;
-	if(weapon_state < 0): weapon_state = 8;
+	# use a while loop to scroll the next available unlocked weapon
+	while(Global.player_weapon_unlocks[next_weapon] == false):
+		next_weapon += input_switch
+		#roll_over
+		if(next_weapon > 8): next_weapon = 0;
+		if(next_weapon < 0): next_weapon = 8;
+		if(next_weapon == weapon_state): 
+			# edgecase: scrolled through every weapon, and we didnt find a new one
+			# should only happen when we have one weapon
+			print("you got nothing, son")
+			return
 	
 	#load new weapon ammo and limit
+	weapon_state = next_weapon;
 	ammo = weapon_stats[weapon_state][0];
 	bullet_limit = weapon_stats[weapon_state][2];
 	bullets_left = bullet_limit;
