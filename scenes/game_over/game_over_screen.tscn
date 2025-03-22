@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://drmrvblmcwtol"]
 
-[ext_resource type="Script" path="res://scenes/game_over/game_over_screen.gd" id="1_mn3ea"]
+[ext_resource type="Script" uid="uid://fiierlvohbt5" path="res://scenes/game_over/game_over_screen.gd" id="1_mn3ea"]
 [ext_resource type="Texture2D" uid="uid://b0sa0v4rcpk1w" path="res://scenes/level_select/select_concept_bg.png" id="2_q5j0u"]
 [ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="3_3cxlp"]
 
