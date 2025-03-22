@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bltiyh5uvi30t"]
 
-[ext_resource type="Script" path="res://scripts/trigger_camera_restricter.gd" id="1_2wvdc"]
+[ext_resource type="Script" uid="uid://dv8u7rea6t7pb" path="res://scripts/trigger_camera_restricter.gd" id="1_2wvdc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmvc3"]
 size = Vector2(32, 32)

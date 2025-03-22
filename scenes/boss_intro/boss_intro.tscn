@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bkf1n6p7msof2" path="res://scenes/boss_intro/cross_beam.png" id="1_opkk2"]
 [ext_resource type="Texture2D" uid="uid://bebjn6ox8soc1" path="res://scenes/boss_intro/stars3.png" id="1_rw0g7"]
-[ext_resource type="Script" path="res://scenes/boss_intro/boss_intro.gd" id="1_xt1c0"]
+[ext_resource type="Script" uid="uid://wwwj1ivi5pnl" path="res://scenes/boss_intro/boss_intro.gd" id="1_xt1c0"]
 [ext_resource type="Texture2D" uid="uid://bx8id0bs05lom" path="res://scenes/boss_intro/stars2.png" id="2_ilbau"]
 [ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="2_pia28"]
 [ext_resource type="Texture2D" uid="uid://bnknermfgvp6o" path="res://scenes/boss_intro/stars1.png" id="3_nculk"]

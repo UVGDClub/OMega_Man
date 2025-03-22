@@ -1,6 +1,6 @@
 [gd_scene load_steps=47 format=3 uid="uid://cwo6seha311se"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_jkyx8"]
+[ext_resource type="Script" uid="uid://ry7hhpv3oy54" path="res://scripts/player.gd" id="1_jkyx8"]
 [ext_resource type="Texture2D" uid="uid://3aixhpcyl60a" path="res://sprites/megaMan_Sprites_sheet1.png" id="2_o7uap"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j4h83"]
@@ -946,25 +946,25 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7merl"]
 _data = {
-"RESET": SubResource("Animation_phr5w"),
-"air_neutral": SubResource("Animation_0455m"),
-"air_shoot": SubResource("Animation_bp405"),
-"air_shoot_palm": SubResource("Animation_gs5fm"),
-"damage": SubResource("Animation_maaou"),
-"idle": SubResource("Animation_jk5sc"),
-"idle_shoot": SubResource("Animation_6hmt6"),
-"idle_shoot_palm": SubResource("Animation_7bum5"),
-"ladder": SubResource("Animation_0wgm2"),
-"ladder_shoot": SubResource("Animation_5vmfj"),
-"ladder_shoot_palm": SubResource("Animation_5kapp"),
-"ladder_top": SubResource("Animation_5fi6j"),
-"run": SubResource("Animation_4x7r8"),
-"run_inch": SubResource("Animation_kubrq"),
-"run_shoot": SubResource("Animation_jy13u"),
-"slide": SubResource("Animation_5sho3"),
-"stun": SubResource("Animation_pxlj0"),
-"teleport": SubResource("Animation_e6fv4"),
-"teleport_finish": SubResource("Animation_qvtkx")
+&"RESET": SubResource("Animation_phr5w"),
+&"air_neutral": SubResource("Animation_0455m"),
+&"air_shoot": SubResource("Animation_bp405"),
+&"air_shoot_palm": SubResource("Animation_gs5fm"),
+&"damage": SubResource("Animation_maaou"),
+&"idle": SubResource("Animation_jk5sc"),
+&"idle_shoot": SubResource("Animation_6hmt6"),
+&"idle_shoot_palm": SubResource("Animation_7bum5"),
+&"ladder": SubResource("Animation_0wgm2"),
+&"ladder_shoot": SubResource("Animation_5vmfj"),
+&"ladder_shoot_palm": SubResource("Animation_5kapp"),
+&"ladder_top": SubResource("Animation_5fi6j"),
+&"run": SubResource("Animation_4x7r8"),
+&"run_inch": SubResource("Animation_kubrq"),
+&"run_shoot": SubResource("Animation_jy13u"),
+&"slide": SubResource("Animation_5sho3"),
+&"stun": SubResource("Animation_pxlj0"),
+&"teleport": SubResource("Animation_e6fv4"),
+&"teleport_finish": SubResource("Animation_qvtkx")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]

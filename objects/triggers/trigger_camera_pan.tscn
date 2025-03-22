@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://crel0ora2qqes"]
 
-[ext_resource type="Script" path="res://scripts/trigger_camera_pan.gd" id="1_x3mrd"]
+[ext_resource type="Script" uid="uid://cj3bubblx0ri6" path="res://scripts/trigger_camera_pan.gd" id="1_x3mrd"]
 [ext_resource type="LabelSettings" uid="uid://cds1nk0736cs4" path="res://_project_system_files/label_debug_settings.tres" id="2_65h5q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_471yr"]

@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://b25cosue1pex7"]
 
-[ext_resource type="Script" path="res://scenes/level_select/level_select_screen.gd" id="1_a354p"]
+[ext_resource type="Script" uid="uid://drjv3lp2y24ii" path="res://scenes/level_select/level_select_screen.gd" id="1_a354p"]
 [ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="1_flhxi"]
 [ext_resource type="Texture2D" uid="uid://b0sa0v4rcpk1w" path="res://scenes/level_select/select_concept_bg.png" id="2_kd108"]
 [ext_resource type="PackedScene" uid="uid://bd7r18pbt78c0" path="res://scenes/level_select/level_select_boss_choice_margin_container.tscn" id="2_usr0s"]
 [ext_resource type="Texture2D" uid="uid://cwlgov4wd5l7c" path="res://scenes/level_select/portraits/level_omega.png" id="4_h1v3e"]
 [ext_resource type="Texture2D" uid="uid://dsct5ktbfgr80" path="res://scenes/level_select/portraits/level1_temp.png" id="5_orikt"]
-[ext_resource type="Shader" path="res://shaders/fill_white.gdshader" id="6_6you0"]
+[ext_resource type="Shader" uid="uid://4tdip3xctren" path="res://shaders/fill_white.gdshader" id="6_6you0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_076d1"]
 shader = ExtResource("6_6you0")
