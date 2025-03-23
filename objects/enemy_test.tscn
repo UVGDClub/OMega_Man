@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://clijcmla0ks20"]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_dvsxt"]
+[ext_resource type="Script" uid="uid://cdw8cuqghyj4k" path="res://scripts/enemy.gd" id="1_dvsxt"]
 [ext_resource type="Texture2D" uid="uid://wwvu3bjgriqv" path="res://sprites/debug/temp_guy.png" id="2_oy64c"]
 [ext_resource type="PackedScene" uid="uid://cbpl4l7efysx5" path="res://objects/enemy_hitbox.tscn" id="3_i2eio"]
 
