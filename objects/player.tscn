@@ -990,7 +990,7 @@ shape = SubResource("RectangleShape2D_446pv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_7merl")
+&"": SubResource("AnimationLibrary_7merl")
 }
 
 [node name="center" type="Marker2D" parent="." groups=["player"]]

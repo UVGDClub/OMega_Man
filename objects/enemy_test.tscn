@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://clijcmla0ks20"]
 
-[ext_resource type="Script" uid="uid://cdw8cuqghyj4k" path="res://scripts/enemy.gd" id="1_dvsxt"]
+[ext_resource type="Script" uid="uid://bhf0gr20pg6sp" path="res://scripts/enemy_test.gd" id="1_dhw63"]
 [ext_resource type="Texture2D" uid="uid://wwvu3bjgriqv" path="res://sprites/debug/temp_guy.png" id="2_oy64c"]
 [ext_resource type="PackedScene" uid="uid://cbpl4l7efysx5" path="res://objects/enemy_hitbox.tscn" id="3_i2eio"]
 
@@ -8,12 +8,14 @@
 size = Vector2(16, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sayh7"]
-radius = 1.0
+radius = 32.0
 
-[node name="enemy_test" type="CharacterBody2D" groups=["enemy"]]
+[node name="enemy_test" type="CharacterBody2D" node_paths=PackedStringArray("detection_area", "sprite") groups=["enemy"]]
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("1_dvsxt")
+script = ExtResource("1_dhw63")
+detection_area = NodePath("detection_range")
+sprite = NodePath("TempGuy")
 
 [node name="TempGuy" type="Sprite2D" parent="."]
 position = Vector2(0, -8)
