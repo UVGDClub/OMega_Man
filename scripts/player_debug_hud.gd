@@ -9,7 +9,7 @@ extends CanvasLayer
 @onready var lives = $lives
 @onready var ammo = $ammo
 
-@onready var player = Global.player;
+@onready var player = null;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,7 +19,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if(player == null): return
+	if(player == null):
+		player = Global.player; return;
 	
 	position_x.text = "X: " + str(snapped(player.position.x,0.01))
 	position_y.text = "Y: " + str(snapped(player.position.y,0.01))
@@ -29,6 +30,3 @@ func _process(_delta):
 	hp.text = "HP: " + str(player.health)
 	ammo.text = "AMMO: " + str(player.ammo)
 	lives.text = "LIVES: " + str(Global.playerLives)
-	
-	
-	pass
