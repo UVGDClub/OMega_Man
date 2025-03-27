@@ -339,7 +339,7 @@ func leave_stage():
 	await get_tree().create_timer(2.0).timeout
 	state_forceExit(state_Teleport_Leave)
 	await get_tree().create_timer(2.0).timeout
-	get_tree().change_scene_to_file("res://scenes/level_select/level_select_screen.tscn");
+	get_tree().change_scene_to_file("res://scenes/weapon_unlock/weapon_unlock.tscn");
 
 			
 func update_animation():

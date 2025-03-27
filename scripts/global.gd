@@ -4,15 +4,15 @@ var player: Player;
 var playerLives : int = 2;
 signal player_spawn(player);
 var player_weapon_unlocks:Dictionary = {
-	Player.WEAPON.NORMAL:true,
-	Player.WEAPON.POWER1:false,
-	Player.WEAPON.POWER2:false,
-	Player.WEAPON.POWER3:false,
-	Player.WEAPON.POWER4:false,
-	Player.WEAPON.POWER5:false,
-	Player.WEAPON.POWER6:false,
-	Player.WEAPON.POWER7:false,
-	Player.WEAPON.POWER8:false
+	Player.WEAPON.NORMAL:[true, "DEFAULT"],
+	Player.WEAPON.POWER1:[false,"LETHAL BALL"],
+	Player.WEAPON.POWER2:[false,"WEAPON 2"],
+	Player.WEAPON.POWER3:[false,"WEAPON 3"],
+	Player.WEAPON.POWER4:[false,"WEAPON 4"],
+	Player.WEAPON.POWER5:[false,"WEAPON 5"],
+	Player.WEAPON.POWER6:[false,"WEAPON 6"],
+	Player.WEAPON.POWER7:[false,"WEAPON 7"],
+	Player.WEAPON.POWER8:[false,"WEAPON 8"]
 }
 
 var camera: OmegaCamera2D;
@@ -44,7 +44,7 @@ func handle_player_death():
 func player_unlock_weapon(weapon:Player.WEAPON):
 	if(weapon < 0 || weapon > 8): weapon = 0;
 	print("weapon unlock:" + str(weapon))
-	player_weapon_unlocks[weapon] = true;
+	player_weapon_unlocks[weapon][0] = true;
 	pass
 	
 func on_player_spawn(p: Player) -> void:
