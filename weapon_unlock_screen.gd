@@ -39,4 +39,5 @@ func hack_adjust_weapon_name():
 #go to level select
 func _on_timer_timeout():
 	print("guh")
+	GameSaver.save()
 	get_tree().change_scene_to_file("res://scenes/level_select/level_select_screen.tscn");

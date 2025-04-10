@@ -16,6 +16,7 @@ var hover_timer_max = 8;
 func _ready():
 	hovering_sprite.visible = false;
 	if(level > 0 && level < 9): 
+		print (Global.player_weapon_unlocks)
 		if(Global.player_weapon_unlocks[level][0] == true): 
 			boss_face.visible = false;
 

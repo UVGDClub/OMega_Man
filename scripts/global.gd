@@ -24,9 +24,11 @@ var next_level_name: String;
 func _ready() -> void:
 	player_spawn.connect(on_player_spawn)
 	camera_spawn.connect(on_camera_spawn)
+	GameSaver.load()
 
 func _process(_delta):
 	handle_pause()
+	print (typeof(player_weapon_unlocks))
 		
 func handle_pause():
 	if(Input.is_action_just_pressed("act_start")):
@@ -52,3 +54,11 @@ func on_player_spawn(p: Player) -> void:
 	
 func on_camera_spawn(c: OmegaCamera2D) -> void:
 	camera = c
+	
+func save():
+	var save_dict = {
+		"filename" : "Global",
+		"parent" : get_parent().get_path(),
+		"player_weapon_unlocks": player_weapon_unlocks
+	}
+	return save_dict

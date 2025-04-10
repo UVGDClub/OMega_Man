@@ -18,6 +18,7 @@ config/icon="res://_project_system_files/icon.png"
 
 [autoload]
 
+GameSaver="*res://scripts/game_saver.gd"
 Global="*res://scripts/global.gd"
 
 [display]
