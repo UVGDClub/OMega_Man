@@ -7,7 +7,6 @@ extends StateEntity2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var center = $center
 
-
 const bulletSource = preload("res://objects/bullet_player_basic.tscn")
 const LADDER_ZONE = preload("res://objects/ladder_zone.tscn")
 @onready var World = $"../.."
@@ -228,7 +227,7 @@ func handle_weapon_swtich(menuTarget = null):
 	weapon_stats[weapon_state][0] = ammo;
 	
 	# use a while loop to scroll the next available unlocked weapon
-	while(Global.player_weapon_unlocks[next_weapon] == false):
+	while(Global.player_weapon_unlocks[next_weapon][0] == false):
 		next_weapon += input_switch
 		#roll_over
 		if(next_weapon > 8): next_weapon = 0;

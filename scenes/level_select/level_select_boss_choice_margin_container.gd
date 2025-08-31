@@ -7,7 +7,6 @@ extends Control
 @onready var boss_name = $Name
 @onready var mr_ms = $Mr_Ms
 
-
 var inputLock: bool = false;
 var selection_hover = false;
 var hover_timer = 0;
