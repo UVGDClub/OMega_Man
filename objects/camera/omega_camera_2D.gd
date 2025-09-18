@@ -89,7 +89,7 @@ func camera_page_screen_horizontally(dir:int, nudgeX: float):
 func follow_instance_horizontally():
 	if follow == null: return
 	if camera_page_screen_active: return
-	position.x = follow.position.x
+	position.x = follow.global_position.x
 	#lerp_target = follow.position
 
 #doesnt let the camera's center go past the boundaries set

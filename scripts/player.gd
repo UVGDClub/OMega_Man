@@ -257,7 +257,7 @@ func handle_shoot():
 			var bullet_ = bulletSource.instantiate()
 			bullets_left -= 1;
 			bullet_.set_velocity(facing)
-			bullet_.position = position + Vector2(facing * bullet_offset.x, bullet_offset.y)
+			bullet_.position = global_position + Vector2(facing * bullet_offset.x, bullet_offset.y)
 			World.add_child(bullet_)
 		_:
 			if(ammo == 0): return
@@ -282,9 +282,11 @@ func handle_jump(_delta):
 func try_climb_ladder() -> bool:
 	if(detect_ladder):
 		if(is_on_floor()):
-			if(input_move.y == 1): return true
+			if(input_move.y == 1): 
+				return true
 			return false;
-		if(abs(input_move.y)): return true
+		if(abs(input_move.y)): 
+			return true
 	return false
 	
 func try_damage(dmg,_angle = 0):

@@ -79,7 +79,7 @@ func load_level(level):
 		7: pass;
 		8: pass;
 		9: pass;
-		10: next_level = load("res://scenes/level_test.tscn");
+		10: next_level = load("res://scenes/example_level.tscn");
 
 #go to level
 func _on_timer_timeout():
