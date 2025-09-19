@@ -1,4 +1,4 @@
-class_name Player
+class_name Player ## Specialized Player Class
 extends StateEntity2D
 #REFERENCES
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -250,7 +250,7 @@ func handle_shoot():
 	if(bullets_left <= 0): return 
 	shoot_cooldown = shoot_cooldown_MAX;
 	shoot_anim_timer = shoot_anim_timer_max;
-	
+	Global.handle_player_death()
 	match(weapon_state):
 		WEAPON.NORMAL:
 			# shoot projectile

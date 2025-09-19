@@ -12,6 +12,7 @@ var charTimer = 4;
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.level_spawnpoint = 0;
 	boss_sprite.offset.y = -boss_sprite.texture.get_size().y/2 #snap anchor to bottom center
 	if(!Global.next_level_name.is_empty()):
 		name_to_type = Global.next_level_name;

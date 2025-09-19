@@ -20,6 +20,7 @@ signal camera_spawn(camera);
 
 var curr_level: int;
 var next_level_name: String;
+var level_spawnpoint: int = 0;
 
 func _ready() -> void:
 	player_spawn.connect(on_player_spawn)

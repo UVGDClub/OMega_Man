@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cqmr15mianwnu"]
+[gd_scene load_steps=21 format=3 uid="uid://cqmr15mianwnu"]
 
 [ext_resource type="Script" uid="uid://dg3xblxr71dws" path="res://scripts/level_script.gd" id="1_2oxm2"]
 [ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://objects/ladder_zone.tscn" id="2_cgx0p"]
@@ -10,10 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://bltiyh5uvi30t" path="res://objects/triggers/trigger_camera_restricter.tscn" id="8_8ja0x"]
 [ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://objects/triggers/trigger_camera_pan.tscn" id="9_1mc5i"]
 [ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://objects/triggers/trigger_kill_player.tscn" id="10_6lkka"]
-[ext_resource type="PackedScene" uid="uid://cwo6seha311se" path="res://objects/player.tscn" id="11_swq0g"]
 [ext_resource type="PackedScene" uid="uid://c7ohlnpe6tuq0" path="res://objects/item_pickup.tscn" id="12_usjx6"]
 [ext_resource type="PackedScene" uid="uid://cyd4f0t114ceq" path="res://objects/enemy_spawner.tscn" id="13_lw41s"]
 [ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/enemy_test.tscn" id="14_byeal"]
+[ext_resource type="PackedScene" uid="uid://co3oj4slgsrb0" path="res://objects/player_spawn_point.tscn" id="14_jb3lb"]
+[ext_resource type="PackedScene" uid="uid://d0pp7kr545bi3" path="res://objects/triggers/trigger_checkpoint.tscn" id="15_rgi05"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_525ym"]
 tile_data = PackedInt32Array(0, 65537, 1, 65536, 1, 1, 1, 1, 1, 65537, 65537, 1)
@@ -146,7 +147,8 @@ position = Vector2(1208, 496)
 restrict_to_area = Vector2(1024, 2064)
 
 [node name="Camera_Restrictor7" parent="triggers" instance=ExtResource("8_8ja0x")]
-position = Vector2(2192, 624)
+position = Vector2(2192, 613)
+scale = Vector2(6.9, 1.3)
 restrict_to_area = Vector2(2048, 2304)
 
 [node name="TriggerCameraUp1" parent="triggers" instance=ExtResource("9_1mc5i")]
@@ -225,11 +227,15 @@ restrict_to_area = Vector2(-512, 256)
 position = Vector2(1344, -224)
 restrict_to_area = Vector2(1024, 1280)
 
-[node name="Entities" type="Node2D" parent="."]
+[node name="player_checkpoint" parent="triggers" instance=ExtResource("15_rgi05")]
+position = Vector2(1344, -272)
 
-[node name="Player" parent="Entities" instance=ExtResource("11_swq0g")]
-position = Vector2(-384, -8)
-floor_snap_length = 4.0
+[node name="player_checkpoint2" parent="triggers" instance=ExtResource("15_rgi05")]
+position = Vector2(2198, 576)
+scale = Vector2(1, 3)
+location = 2
+
+[node name="Entities" type="Node2D" parent="."]
 
 [node name="Goal 1" parent="Entities" instance=ExtResource("12_usjx6")]
 position = Vector2(2440, 616)
@@ -322,3 +328,18 @@ enemy_to_spawn = ExtResource("14_byeal")
 [node name="EnemySpawner20" parent="Entities" instance=ExtResource("13_lw41s")]
 position = Vector2(1192, 48)
 enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="spawn_point" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
+position = Vector2(-384, -8)
+
+[node name="spawn_point2" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
+position = Vector2(1232, -208)
+location = 1
+camera_y_screen = -1
+
+[node name="spawn_point3" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
+position = Vector2(2176, 624)
+location = 2
+camera_y_screen = 2
