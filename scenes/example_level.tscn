@@ -332,14 +332,12 @@ enemy_to_spawn = ExtResource("14_byeal")
 [node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="spawn_point" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
-position = Vector2(-384, -8)
+position = Vector2(-384, 8)
 
 [node name="spawn_point2" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
 position = Vector2(1232, -208)
 location = 1
-camera_y_screen = -1
 
 [node name="spawn_point3" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
 position = Vector2(2176, 624)
 location = 2
-camera_y_screen = 2

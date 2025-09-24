@@ -42,13 +42,14 @@ func _process(_delta: float) -> void:
 func find_player():
 	if follow != null: return
 	if Global.player != null: follow = Global.player
-	else: printerr("Camera: could not find player!!")
+	#else: printerr("Camera: could not find player!!")
 
 ## incrementally processes the movement of the camera and player
 ## done every frame
 func _process_camera_page_screen():
 	if not camera_page_screen_active: return
 	if position == lerp_target:
+		
 		camera_page_screen_active = false
 		end_pan.emit()
 		return

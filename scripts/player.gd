@@ -250,7 +250,6 @@ func handle_shoot():
 	if(bullets_left <= 0): return 
 	shoot_cooldown = shoot_cooldown_MAX;
 	shoot_anim_timer = shoot_anim_timer_max;
-	Global.handle_player_death()
 	match(weapon_state):
 		WEAPON.NORMAL:
 			# shoot projectile

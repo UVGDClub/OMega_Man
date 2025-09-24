@@ -1,8 +1,24 @@
 extends Node
-
-var player: Player;
+#-- scenes:
+const PAUSE_MENU = preload("res://scenes/pause_menu/pause_menu.tscn")
+#--- game info:
+var curr_level: int;
+var next_level_name: String;
+var level_spawnpoint: int = 0;
 var playerLives : int = 2;
+#--- useful instances
+var camera: OmegaCamera2D;
+var player: Player;
+#--- toggles
+var pause_toggle = false;
+var can_pause = false;
+var debug_mode = false;
+var slow_mo : bool = false;
+#--- signals
+signal camera_spawn(camera);
 signal player_spawn(player);
+signal on_pause_game
+
 var player_weapon_unlocks:Dictionary = {
 	Player.WEAPON.NORMAL:[true, "DEFAULT"],
 	Player.WEAPON.POWER1:[false,"LETHAL BALL"],
@@ -15,23 +31,34 @@ var player_weapon_unlocks:Dictionary = {
 	Player.WEAPON.POWER8:[false,"WEAPON 8"]
 }
 
-var camera: OmegaCamera2D;
-signal camera_spawn(camera);
-
-var curr_level: int;
-var next_level_name: String;
-var level_spawnpoint: int = 0;
+var user_settings:Dictionary = {
+	"volume_sfx":100.0,
+	"volume_music":100.0,
+}
 
 func _ready() -> void:
+	add_child(PAUSE_MENU.instantiate()); #add pausemenu as child to global
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	player_spawn.connect(on_player_spawn)
 	camera_spawn.connect(on_camera_spawn)
 
 func _process(_delta):
-	handle_pause()
-		
-func handle_pause():
+	misc_input();
+
+func toggle_pause():
+	if !can_pause: return;
+	pause_toggle = !pause_toggle
+	get_tree().paused = pause_toggle;
+	on_pause_game.emit(pause_toggle);
+	
+func misc_input():
+	if(Input.is_action_just_pressed("debug_9")):
+		get_tree().reload_current_scene();
+	if(Input.is_action_just_pressed("debug_8")):
+		Global.player.state_forceExit(Global.player.state_Death);
 	if(Input.is_action_just_pressed("act_start")):
-		get_tree().change_scene_to_file("res://scenes/level_select/level_select_screen.tscn");
+		toggle_pause()
+		#get_tree().change_scene_to_file("res://scenes/level_select/level_select_screen.tscn");
 		
 func handle_player_death():
 	if(playerLives == 0):

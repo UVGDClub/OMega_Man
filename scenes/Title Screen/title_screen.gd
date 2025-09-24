@@ -3,6 +3,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.can_pause = false;
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -13,6 +14,7 @@ func goto_menu():
 	#TODO goto main menu
 	#for now, go to level select
 	var scene = load("res://scenes/level_select/level_select_screen.tscn")
+	Global.can_pause = true;
 	get_tree().change_scene_to_packed(scene)
 	
 func input_accept():

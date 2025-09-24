@@ -1,6 +1,6 @@
 extends Control
 @onready var omega = $GridContainer/Omega
-@onready var grid_container = $GridContainer
+@onready var grid_container:GridContainer = $GridContainer
 @onready var white_flash = $WhiteFlash
 
 var flash_timer = 60;
@@ -13,6 +13,7 @@ var level_selected = false;
 	#do robot master intro for level 
 
 func _ready():
+	Global.on_pause_game.connect(_on_pause);
 	omega.grab_focus()
 	white_flash.visible = false;
 	
@@ -33,5 +34,9 @@ func goto_boss_intro():
 #used by level containers
 func enter_level(level, boss_name):
 	level_selected = true;
+	Global.can_pause = false;
 	Global.curr_level = level;
 	Global.next_level_name = boss_name;
+
+func _on_pause(paused):
+	if !paused: omega.grab_focus();
