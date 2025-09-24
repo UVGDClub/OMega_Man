@@ -19,6 +19,7 @@ func _process(_delta):
 	handle_enemy_spawn();
 
 func handle_enemy_spawn():
+	if(Global.camera.camera_page_screen_active): return; #HACK dont spawn when camera is moving
 	if(!is_on_screen()): SPAWN_TRIGGER = true; return; #reload the spawner when off screen
 	if(!SPAWN_TRIGGER): return;
 	#if(is_instance_id_valid(ENEMY_INST_ID)): return

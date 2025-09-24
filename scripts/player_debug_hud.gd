@@ -19,9 +19,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	visible = Global.debug_mode
 	if(player == null):
 		player = Global.player; return;
-	
 	position_x.text = "X: " + str(snapped(player.position.x,0.01))
 	position_y.text = "Y: " + str(snapped(player.position.y,0.01))
 	state.text = "STATE: " + player._stateID

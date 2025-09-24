@@ -23,6 +23,7 @@ func _process(_delta):
 
 func detect_player_center_cross():
 	if(boss_door): return
+	if(Global.player == null): return;
 	if !overlaps_body(Global.player): return
 	if (Global.camera.camera_page_screen_active): return
 	if not isPointInArea(Global.player.center.global_position): return
