@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://2spraxk4axob"
+path="res://.godot/imported/Acro-Level 2-3.ogg-d7b5ae414fb7638e77404b3b66414330.oggvorbisstr"
+
+[deps]
+
+source_file="res://music/temp/Acro-Level 2-3.ogg"
+dest_files=["res://.godot/imported/Acro-Level 2-3.ogg-d7b5ae414fb7638e77404b3b66414330.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

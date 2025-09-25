@@ -6,13 +6,21 @@ extends StateEntity2D
 @onready var animation_player = $AnimationPlayer
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var center = $center
-
+@onready var World = $"../.."
+#objects
 const bulletSource = preload("res://objects/bullet_player_basic.tscn")
 const LADDER_ZONE = preload("res://objects/ladder_zone.tscn")
-@onready var World = $"../.."
-
+#sounds
+const DAMAGE = preload("res://sfx/temp/player/damage.ogg")
+const DEATH = preload("res://sfx/temp/player/death.ogg")
+const LAND = preload("res://sfx/temp/player/land.ogg")
+const SHOOT = preload("res://sfx/temp/player/shoot.ogg")
+const SPAWN = preload("res://sfx/temp/player/spawn.ogg")
 #debug
 var debug_slowMo = 1
+
+#signals
+signal death;
 
 #WEAPON STATE
 enum WEAPON {
@@ -258,6 +266,7 @@ func handle_shoot():
 			bullet_.set_velocity(facing)
 			bullet_.position = global_position + Vector2(facing * bullet_offset.x, bullet_offset.y)
 			World.add_child(bullet_)
+			SoundManager.playSound(SHOOT)
 		_:
 			if(ammo == 0): return
 			ammo -= weapon_stats[weapon_state][1];
@@ -465,6 +474,7 @@ var state_Air = func():
 		
 	exitConditions = func():
 		if(is_on_floor()): 
+			SoundManager.playSound(LAND,0.5);
 			if(input_move.x != 0): state_forceExit(state_Run)
 			else: state_forceExit(state_Idle)
 		if(try_climb_ladder()): state_forceExit(state_Ladder)
@@ -577,6 +587,7 @@ var state_Teleport_Enter = func():
 		ignore_friction = false;
 		ignore_gravity = false;
 		ignore_movement = false;
+		SoundManager.playSound(SPAWN);
 		return
 		
 	exitConditions = func():
@@ -626,6 +637,7 @@ var state_Damage = func():
 		anim_state = ANIM.DAMAGE;
 		has_control = false;
 		ignore_friction = true;
+		SoundManager.playSound(DAMAGE);
 		
 		I_FRAMES = 90;
 		velocity.y = 0;
@@ -675,6 +687,8 @@ var state_Death = func():
 	onEnter = func(): # run once, on entering the state. may not be necessary
 		anim_state = ANIM.STUN;
 		has_control = false;
+		SoundManager.playSound(DEATH);
+		death.emit()
 		return
 			
 	main	= func(): # run continuously

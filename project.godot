@@ -19,6 +19,7 @@ config/icon="res://_project_system_files/icon.png"
 [autoload]
 
 Global="*res://scripts/global.gd"
+SoundManager="*res://sound_manager.gd"
 
 [display]
 

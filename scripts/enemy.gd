@@ -2,6 +2,11 @@ class_name Enemy extends StateEntity2D
 
 const EXPLOSION_PARTICLE = preload("res://objects/explosion_particle.tscn")
 const ITEM_PICKUP = preload("res://objects/item_pickup.tscn")
+
+const DEATH_SMALL = preload("res://sfx/temp/enemy/death_small.ogg")
+const DEFLECT = preload("res://sfx/temp/enemy/deflect.ogg")
+const HIT = preload("res://sfx/temp/enemy/hit.ogg")
+
 @export var detection_area:Area2D = null;
 @export var sprite:Sprite2D = null;
 
@@ -16,6 +21,7 @@ var ignore_gravity = false;
 ## handles the death particle and drop item logic.
 func handle_death():
 	if(health <= 0): 
+		SoundManager.playSound(DEATH_SMALL);
 		#do explosion
 		var explode: GPUParticles2D = EXPLOSION_PARTICLE.instantiate()
 		explode.one_shot = true;
@@ -70,6 +76,7 @@ func detect_player():
 #TODO logic for weapon immunity and return false
 func try_damage(dmg):
 	health -= dmg;
+	SoundManager.playSound(HIT)
 	return true;
 
 ##called by enemy_spawner

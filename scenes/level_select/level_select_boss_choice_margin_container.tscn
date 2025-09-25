@@ -51,3 +51,5 @@ offset_bottom = 65.0
 text = "MAN"
 label_settings = ExtResource("2_ymv7h")
 horizontal_alignment = 2
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

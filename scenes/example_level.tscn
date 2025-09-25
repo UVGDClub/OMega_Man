@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cqmr15mianwnu"]
+[gd_scene load_steps=25 format=3 uid="uid://cqmr15mianwnu"]
 
 [ext_resource type="Script" uid="uid://dg3xblxr71dws" path="res://scripts/level_script.gd" id="1_2oxm2"]
 [ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://objects/ladder_zone.tscn" id="2_cgx0p"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/enemy_test.tscn" id="14_byeal"]
 [ext_resource type="PackedScene" uid="uid://co3oj4slgsrb0" path="res://objects/player_spawn_point.tscn" id="14_jb3lb"]
 [ext_resource type="PackedScene" uid="uid://d0pp7kr545bi3" path="res://objects/triggers/trigger_checkpoint.tscn" id="15_rgi05"]
+[ext_resource type="AudioStream" uid="uid://2spraxk4axob" path="res://music/temp/Acro-Level 2-3.ogg" id="17_sy77u"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_525ym"]
 tile_data = PackedInt32Array(0, 65537, 1, 65536, 1, 1, 1, 1, 1, 65537, 65537, 1)
@@ -93,7 +94,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="level_test" type="Node2D"]
 script = ExtResource("1_2oxm2")
-metadata/_edit_horizontal_guides_ = [240.0, 480.0, -240.0, 0.0, -480.0]
+metadata/_edit_horizontal_guides_ = [240.0, 480.0, -240.0, 0.0, -480.0, 720.0]
 metadata/_edit_vertical_guides_ = [0.0, -256.0, 1024.0, 512.0, 256.0, 1280.0, -512.0, 768.0, 2048.0, 1536.0, 1792.0, 2304.0]
 
 [node name="Background" type="Node2D" parent="."]
@@ -579,3 +580,7 @@ location = 2
 [node name="Item" parent="." instance=ExtResource("12_usjx6")]
 position = Vector2(1232, -88)
 item_type = 2
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_sy77u")
+autoplay = true

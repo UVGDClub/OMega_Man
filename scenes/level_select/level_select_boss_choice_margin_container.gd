@@ -7,6 +7,9 @@ extends Control
 @onready var boss_name = $Name
 @onready var mr_ms = $Mr_Ms
 
+const MENU_MOVE = preload("res://sfx/temp/menu/menu_move.ogg")
+const MENU_SELECT = preload("res://sfx/temp/menu/menu_select.ogg")
+
 var inputLock: bool = false;
 var selection_hover = false;
 var hover_timer = 0;
@@ -43,6 +46,7 @@ func input_accept():
 	return Input.is_action_just_pressed("act_jump")
 	
 func signal_enter_level(level_num):
+	SoundManager.playSound(MENU_SELECT);
 	#check if level valid
 	if level_num < 1 or level_num > 10: return;
 	#signal level transition
@@ -52,3 +56,5 @@ func signal_enter_level(level_num):
 	var fullname = boss_name.text + " " + mr_ms.text
 	menuMaster.enter_level(level_num, fullname);
 	
+func _on_focus_entered():
+	SoundManager.playSound(MENU_MOVE);

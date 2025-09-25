@@ -50,6 +50,9 @@ func toggle_pause():
 	pause_toggle = !pause_toggle
 	get_tree().paused = pause_toggle;
 	on_pause_game.emit(pause_toggle);
+
+func toggle_weapon_menu():
+	pass
 	
 func misc_input():
 	if(Input.is_action_just_pressed("debug_9")):
@@ -59,6 +62,9 @@ func misc_input():
 	if(Input.is_action_just_pressed("act_start")):
 		toggle_pause()
 		#get_tree().change_scene_to_file("res://scenes/level_select/level_select_screen.tscn");
+	if(Input.is_action_just_pressed("act_select")):
+		#weapon menu
+		toggle_weapon_menu();
 		
 func handle_player_death():
 	if(playerLives == 0):
