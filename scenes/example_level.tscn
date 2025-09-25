@@ -257,10 +257,10 @@ location = 2
 [node name="tutorials" type="Node2D" parent="."]
 
 [node name="guides" type="Label" parent="tutorials"]
-offset_left = -616.0
-offset_top = -240.0
-offset_right = -63.0
-offset_bottom = -35.0
+offset_left = 168.0
+offset_top = 480.0
+offset_right = 721.0
+offset_bottom = 685.0
 text = "See all these purple lines?
 
 These are guides, created by clicking and dragging from the ruler space 
@@ -272,13 +272,51 @@ Use these to measure out your levels and restrict the camera."
 label_settings = SubResource("LabelSettings_sy77u")
 horizontal_alignment = 1
 
-[node name="death zones" type="Label" parent="tutorials"]
-offset_left = 488.0
-offset_top = -112.0
-offset_right = 894.0
-offset_bottom = 41.0
-text = "This is a death trigger.
+[node name="cam restrict" type="Label" parent="tutorials"]
+offset_left = -656.0
+offset_top = -238.0
+offset_right = -103.0
+offset_bottom = -7.0
+text = "This is a Cam Restrict Trigger.
+It tells the camera how far it can move left and right.
+the X value is the left boundary.
+the Y value is the right boundary.
 
+These are CRITICAL for maintaining how much the player 
+is suppsoed to see.
+|
+V"
+label_settings = SubResource("LabelSettings_sy77u")
+horizontal_alignment = 1
+
+[node name="spawn and checkpoint" type="Label" parent="tutorials"]
+offset_left = 1280.0
+offset_top = -264.0
+offset_right = 1833.0
+offset_bottom = -33.0
+text = "<------
+The checkpoint trigger and the Spawnpoint 
+must have the same location number to be paired."
+label_settings = SubResource("LabelSettings_sy77u")
+
+[node name="cam trigger" type="Label" parent="tutorials"]
+offset_left = 272.0
+offset_right = 672.0
+offset_bottom = 205.0
+text = "< -- camera triggers will pan the camera if:
+1. player is inside the trigger
+2. player is moving in the same intention of the pan
+3. player crosses the border
+of the camera.
+"
+label_settings = SubResource("LabelSettings_sy77u")
+
+[node name="death zones" type="Label" parent="tutorials"]
+offset_left = -464.0
+offset_top = 286.0
+offset_right = -58.0
+offset_bottom = 439.0
+text = "This is a death trigger.
 All it does is kill the player. Typically used for pitfalls.
 
 If you make it a child of something that moves,
