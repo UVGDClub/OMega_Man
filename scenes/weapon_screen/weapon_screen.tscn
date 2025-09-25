@@ -1,0 +1,139 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5t1cxh5w3axw"]
+
+[ext_resource type="Script" uid="uid://s5p02olt26vw" path="res://scenes/weapon_screen/weapon_screen.gd" id="1_wjuk6"]
+[ext_resource type="PackedScene" uid="uid://bg00djokvttb1" path="res://scenes/weapon_screen/weapon_button.tscn" id="2_g08r0"]
+[ext_resource type="PackedScene" uid="uid://diyqsdng8bkj6" path="res://scenes/weapon_screen/next_button.tscn" id="2_jl2qj"]
+[ext_resource type="FontFile" uid="uid://dnm31l7x5h2ej" path="res://_project_system_files/MMRock9.ttf" id="3_jl2qj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xdfm4"]
+font = ExtResource("3_jl2qj")
+font_size = 8
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
+[node name="weapon_screen" type="CanvasLayer"]
+script = ExtResource("1_wjuk6")
+
+[node name="border" type="ColorRect" parent="."]
+offset_left = 144.0
+offset_top = 32.0
+offset_right = 240.0
+offset_bottom = 192.0
+color = Color(0.154876, 0.154876, 0.154876, 1)
+
+[node name="inside" type="ColorRect" parent="border"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 88.0
+offset_bottom = 152.0
+color = Color(0.67069, 0.67069, 0.67069, 1)
+
+[node name="next" parent="border/inside" instance=ExtResource("2_jl2qj")]
+layout_mode = 0
+offset_top = 8.0
+offset_bottom = 17.0
+
+[node name="page_1" type="Control" parent="border/inside"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="weapon_O" parent="border/inside/page_1" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 24.0
+offset_bottom = 33.0
+
+[node name="weapon_1" parent="border/inside/page_1" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 40.0
+offset_bottom = 49.0
+weaponIndex = 1
+
+[node name="Label" parent="border/inside/page_1/weapon_1" index="0"]
+text = "A"
+
+[node name="weapon_2" parent="border/inside/page_1" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 56.0
+offset_bottom = 65.0
+weaponIndex = 2
+
+[node name="Label" parent="border/inside/page_1/weapon_2" index="0"]
+text = "B"
+
+[node name="weapon_3" parent="border/inside/page_1" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 72.0
+offset_bottom = 81.0
+weaponIndex = 3
+
+[node name="Label" parent="border/inside/page_1/weapon_3" index="0"]
+text = "L"
+
+[node name="weapon_4" parent="border/inside/page_1" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 88.0
+offset_bottom = 97.0
+weaponIndex = 4
+
+[node name="Label" parent="border/inside/page_1/weapon_4" index="0"]
+text = "π"
+
+[node name="weapon_5" parent="border/inside/page_1" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 104.0
+offset_bottom = 113.0
+weaponIndex = 5
+
+[node name="Label" parent="border/inside/page_1/weapon_5" index="0"]
+offset_right = 17.0
+offset_bottom = 17.0
+text = "O"
+label_settings = SubResource("LabelSettings_xdfm4")
+
+[node name="page_2" type="Control" parent="border/inside"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="weapon_6" parent="border/inside/page_2" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 24.0
+offset_bottom = 33.0
+weaponIndex = 6
+
+[node name="Label" parent="border/inside/page_2/weapon_6" index="0"]
+text = "U"
+
+[node name="weapon_7" parent="border/inside/page_2" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 40.0
+offset_bottom = 49.0
+weaponIndex = 7
+
+[node name="Label" parent="border/inside/page_2/weapon_7" index="0"]
+text = "T"
+
+[node name="weapon_8" parent="border/inside/page_2" instance=ExtResource("2_g08r0")]
+layout_mode = 0
+offset_top = 56.0
+offset_bottom = 65.0
+weaponIndex = 8
+
+[node name="Label" parent="border/inside/page_2/weapon_8" index="0"]
+text = "F"
+
+[connection signal="pressed" from="border/inside/next" to="." method="_on_next_pressed"]
+
+[editable path="border/inside/page_1/weapon_O"]
+[editable path="border/inside/page_1/weapon_1"]
+[editable path="border/inside/page_1/weapon_2"]
+[editable path="border/inside/page_1/weapon_3"]
+[editable path="border/inside/page_1/weapon_4"]
+[editable path="border/inside/page_1/weapon_5"]
+[editable path="border/inside/page_2/weapon_6"]
+[editable path="border/inside/page_2/weapon_7"]
+[editable path="border/inside/page_2/weapon_8"]

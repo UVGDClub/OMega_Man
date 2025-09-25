@@ -36,7 +36,7 @@ enum WEAPON {
 }
 var weapon_state = WEAPON.NORMAL;
 
-# format -- NAME:[MAX AMMOUNT, WEAPON COST, LIMIT]
+# format -- NAME:[AMMO, WEAPON COST, LIMIT]
 var weapon_stats: Dictionary = {
 	WEAPON.NORMAL:[24,0,3],
 	WEAPON.POWER1:[24,1,1],
@@ -216,10 +216,15 @@ func handle_gravity(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
-func handle_weapon_swtich(menuTarget = null):
-	if(menuTarget != null):
-		if(menuTarget < 0 || menuTarget > 8):
+func handle_weapon_swtich(menuTarget:int = -1):
+	if(menuTarget != -1):
+		#force the weapon state switch through weapon menu
+		if(menuTarget >= 0 && menuTarget <= 8):
+			weapon_stats[weapon_state][0] = ammo;
 			weapon_state = menuTarget;
+			ammo = weapon_stats[weapon_state][0];
+			bullet_limit = weapon_stats[weapon_state][2];
+			bullets_left = bullet_limit;
 			return
 
 	var input_switch = (int(Input.is_action_just_pressed("weapon_switch_right")) 
@@ -270,6 +275,7 @@ func handle_shoot():
 		_:
 			if(ammo == 0): return
 			ammo -= weapon_stats[weapon_state][1];
+			weapon_stats[weapon_state][0] = ammo;
 			#TODO shoot whatever weapon projectile is needed
 		
 func handle_jump(_delta):
@@ -345,6 +351,7 @@ func handle_cooldowns():
 	
 func leave_stage():
 	has_control = false;
+	Global.can_weapon_screen = false;
 	await get_tree().create_timer(2.0).timeout
 	state_forceExit(state_Teleport_Leave)
 	await get_tree().create_timer(2.0).timeout
@@ -404,6 +411,7 @@ var state_Idle = func():
 	stateNext	= null; # normal exit
 	
 	onEnter = func(): # run once, on entering the state. may not be necessary
+		Global.can_weapon_screen = true;
 		anim_state = ANIM.IDLE;
 		ignore_movement = true;
 		bullet_offset = Vector2(21,-13)
@@ -687,6 +695,7 @@ var state_Death = func():
 	onEnter = func(): # run once, on entering the state. may not be necessary
 		anim_state = ANIM.STUN;
 		has_control = false;
+		Global.can_weapon_screen = false;
 		SoundManager.playSound(DEATH);
 		death.emit()
 		return
