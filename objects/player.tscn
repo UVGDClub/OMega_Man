@@ -1,7 +1,8 @@
-[gd_scene load_steps=47 format=3 uid="uid://cwo6seha311se"]
+[gd_scene load_steps=53 format=3 uid="uid://cwo6seha311se"]
 
 [ext_resource type="Script" uid="uid://ry7hhpv3oy54" path="res://scripts/player.gd" id="1_jkyx8"]
 [ext_resource type="Texture2D" uid="uid://3aixhpcyl60a" path="res://sprites/megaMan_Sprites_sheet1.png" id="2_o7uap"]
+[ext_resource type="Script" uid="uid://b2ude8hdc678a" path="res://scripts/player_hud.gd" id="3_uxov2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j4h83"]
 atlas = ExtResource("2_o7uap")
@@ -967,6 +968,30 @@ _data = {
 &"teleport_finish": SubResource("Animation_qvtkx")
 }
 
+[sub_resource type="Gradient" id="Gradient_ykyjo"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uxov2"]
+gradient = SubResource("Gradient_ykyjo")
+width = 8
+height = 56
+fill_from = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_uxov2"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nmc1l"]
+gradient = SubResource("Gradient_uxov2")
+width = 8
+height = 56
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f46kd"]
+gradient = SubResource("Gradient_uxov2")
+width = 8
+height = 56
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_jkyx8")
 
@@ -995,3 +1020,29 @@ libraries = {
 
 [node name="center" type="Marker2D" parent="." groups=["player"]]
 position = Vector2(0, -12)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("3_uxov2")
+
+[node name="HealthBar" type="TextureProgressBar" parent="HUD"]
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 40.0
+offset_bottom = 80.0
+max_value = 24.0
+value = 12.0
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_uxov2")
+texture_progress = SubResource("GradientTexture2D_nmc1l")
+tint_progress = Color(1, 1, 0.580392, 1)
+
+[node name="Ammo Bar" type="TextureProgressBar" parent="HUD"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 32.0
+offset_bottom = 80.0
+max_value = 24.0
+value = 12.0
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_uxov2")
+texture_progress = SubResource("GradientTexture2D_f46kd")
