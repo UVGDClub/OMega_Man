@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bg00djokvttb1"]
+[gd_scene load_steps=8 format=3 uid="uid://bg00djokvttb1"]
 
 [ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="1_7cqji"]
 [ext_resource type="Script" uid="uid://bdemtxoydbs2x" path="res://scenes/weapon_screen/weapon_button.gd" id="1_35yuf"]
+[ext_resource type="Texture2D" uid="uid://cpofdov8dsfi8" path="res://sprites/ui/ammo_bar_segment_texture_h.png" id="3_tjsrn"]
 
 [sub_resource type="Gradient" id="Gradient_tjsrn"]
 offsets = PackedFloat32Array(0)
@@ -42,9 +43,10 @@ layout_mode = 0
 offset_left = 20.0
 offset_right = 76.0
 offset_bottom = 8.0
-max_value = 24.0
-value = 24.0
+max_value = 28.0
+value = 28.0
 texture_under = SubResource("GradientTexture2D_wsjni")
+texture_over = ExtResource("3_tjsrn")
 texture_progress = SubResource("GradientTexture2D_35yuf")
 
 [node name="blinker" type="Timer" parent="."]

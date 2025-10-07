@@ -14,7 +14,7 @@ func _ready():
 	
 func set_ammo(amt, tint_ = Color.WHITE):
 	ammo.value = amt;
-	ammo.tint_progress = tint;
+	ammo.tint_progress = tint_;
 
 func _on_pressed():
 	#select weapon

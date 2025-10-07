@@ -622,3 +622,4 @@ item_type = 2
 [node name="music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_sy77u")
 autoplay = true
+bus = &"music"

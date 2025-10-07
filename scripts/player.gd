@@ -36,17 +36,17 @@ enum WEAPON {
 }
 var weapon_state = WEAPON.NORMAL;
 
-# format -- NAME:[AMMO, WEAPON COST, LIMIT]
+# format -- NAME:[AMMO, WEAPON COST, LIMIT, TINT]
 var weapon_stats: Dictionary = {
-	WEAPON.NORMAL:[24,0,3],
-	WEAPON.POWER1:[24,1,1],
-	WEAPON.POWER2:[24,1,1],
-	WEAPON.POWER3:[24,1,1],
-	WEAPON.POWER4:[24,1,1],
-	WEAPON.POWER5:[24,1,1],
-	WEAPON.POWER6:[24,1,1],
-	WEAPON.POWER7:[24,1,1],
-	WEAPON.POWER8:[24,1,1]
+	WEAPON.NORMAL:[28,0,3,Color(1.0,1.0,0.6)],
+	WEAPON.POWER1:[28,1,1,Color.RED],
+	WEAPON.POWER2:[28,1,1,Color.GREEN],
+	WEAPON.POWER3:[28,1,1,Color.BLUE],
+	WEAPON.POWER4:[28,1,1,Color.MAGENTA],
+	WEAPON.POWER5:[28,1,1,Color.YELLOW],
+	WEAPON.POWER6:[28,1,1,Color.CYAN],
+	WEAPON.POWER7:[28,1,1,Color.ORANGE],
+	WEAPON.POWER8:[28,1,1,Color.PURPLE]
 }
 
 #ANIMATION STATE
@@ -74,10 +74,10 @@ const FRICTION = 45.0
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 #stats
-var max_health = 24;
-var max_ammo = 24;
+var max_health = 28;
+var max_ammo = 28;
 var health = max_health;
-var ammo = 24;
+var ammo = 28;
 var bullets_left = 3;
 var bullet_limit = bullets_left;
 

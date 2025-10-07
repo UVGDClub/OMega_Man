@@ -32,10 +32,12 @@ func update_screen():
 	#set ammo count for all weapons
 	for i in range(len(weapons)):
 		var value = Global.player.weapon_stats[i][0];
-		weapons[i].set_ammo(value);
-		
-	#set the P weapon to be player health
-	weapon_normal.set_ammo(Global.player.health);
+		var tint = Global.player.weapon_stats[i][3];
+		#set the P weapon to be player health
+		if(i==0):
+			weapon_normal.set_ammo(Global.player.health,tint);
+			continue;
+		weapons[i].set_ammo(value,tint);
 	
 func goto_next_page():
 	for i in page_max:
