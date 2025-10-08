@@ -7,6 +7,7 @@ class_name Boss extends StateEntity2D
 
 const DEATH = preload("res://sfx/temp/player/death.ogg")
 const HIT = preload("res://sfx/temp/enemy/hit.ogg")
+const BOSS_HEALTH_TICK = preload("res://sfx/temp/boss_health_tick.wav")
 
 var health = 1;
 var facing = -1;
@@ -21,7 +22,7 @@ func handle_death():
 		item.item_type = 3; #goal object
 		add_sibling(item);
 		item.position = position + Vector2(0,-8);
-		
+		SoundManager.stop_music();
 		queue_free() #TEMP 
 
 ## adds gravity to velocity when airborne	
@@ -51,6 +52,15 @@ func try_damage(dmg):
 func show_and_fill_healthbar():
 	health_bar.show()
 	fill_timer.start();
+
+func _on_fill_timer_timeout():
+	if(health != 28):
+		health += 1;
+		fill_timer.start();
+	else:
+		Global.player.has_control = true;
+		state_forceExit(default_state);
+	SoundManager.playSound(BOSS_HEALTH_TICK,0.5);
 
 #region SHARED STATES
 ##falling into the arena
@@ -97,12 +107,3 @@ var state_Intro_2 = func():
 		return
 
 #endregion
-
-func _on_fill_timer_timeout():
-	if(health != 28):
-		health += 1;
-		fill_timer.start();
-	else:
-		Global.player.has_control = true;
-		state_forceExit(default_state);
-	#play sound

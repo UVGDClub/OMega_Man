@@ -1,9 +1,31 @@
 extends Node
 
 var global_sound_queue:Array;
+var current_music:AudioStreamPlayer = AudioStreamPlayer.new();
+var music_stopped:bool = false;
+
+func _ready():
+	add_child(current_music);
+	current_music.set_bus("music");
 
 func _process(delta):
 	cleanup_sound_queue();
+	loop_current_music();
+
+func playMusic(_stream, _volume = 1.0):
+	current_music.stream = _stream;
+	current_music.volume_linear = _volume;
+	music_stopped = false;
+	current_music.play();
+
+func loop_current_music():
+	if music_stopped: return;
+	if !current_music.playing:
+		current_music.play();
+
+func stop_music():
+	current_music.stop();
+	music_stopped = true;
 
 ## crates a global sound instance and plays the sound
 func playSound(_stream, _volume = 1.0, _pitch = 1.0, _pitchRange = 0.0):

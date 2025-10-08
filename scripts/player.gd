@@ -694,6 +694,7 @@ var state_Death = func():
 		has_control = false;
 		Global.can_weapon_screen = false;
 		SoundManager.playSound(DEATH);
+		SoundManager.stop_music();
 		death.emit()
 		return
 			

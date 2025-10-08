@@ -8,18 +8,18 @@ const READY_PLAYER = preload("res://scenes/ready_player.tscn")
 @onready var entities = $Entities
 @onready var music = $music
 
-var player_inst: CharacterBody2D = null;
-var loop_music: bool = true
+##Each level expects to have the following data:
+@export var level_music:AudioStream;
 
-# Called when the node enters the scene tree for the first time.
+var player_inst: CharacterBody2D = null;
+
 func _ready() -> void:
 	ready_player();
 	Global.can_pause = true;
-	pass # Replace with function body.
+	if(level_music != null):
+		SoundManager.playMusic(level_music);
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if(!music.playing && loop_music): music.play()
 	pass
 
 ##displays the ready popup just before spawning the player
@@ -44,7 +44,6 @@ func spawn_player():
 	entities.add_child(player)
 	player.global_position = spawn_location;
 	player_inst = player;
-	player_inst.death.connect(stop_music);
 
 func determine_spawn_point() -> SpawnPoint:
 	var spawns = spawn_points.get_children()
@@ -52,7 +51,3 @@ func determine_spawn_point() -> SpawnPoint:
 	var spawn_point = spawns[Global.level_spawnpoint];
 	assert(spawn_point is SpawnPoint) #if you stop here, there is a node in the spawnpoints tree that in not a valid spawn point.
 	return spawn_point;
-
-func stop_music():
-	loop_music = false;
-	music.stop()

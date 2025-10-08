@@ -14,3 +14,4 @@ func _process(delta):
 			Global.player.has_control = false; # lock player until boss finished intro
 			Global.spawn_boss.emit();
 			spawned_boss = true;
+			SoundManager.playMusic(Global.BOSS_THEME,0.25)

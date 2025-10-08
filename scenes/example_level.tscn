@@ -97,6 +97,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="level_test" type="Node2D"]
 script = ExtResource("1_2oxm2")
+level_music = ExtResource("17_sy77u")
 metadata/_edit_horizontal_guides_ = [240.0, 480.0, -240.0, 0.0, -480.0, 720.0]
 metadata/_edit_vertical_guides_ = [0.0, -256.0, 1024.0, 512.0, 256.0, 1280.0, -512.0, 768.0, 2048.0, 1536.0, 1792.0, 2304.0]
 
@@ -145,6 +146,10 @@ position = Vector2(192, -144)
 
 [node name="Item3" parent="items" instance=ExtResource("12_usjx6")]
 position = Vector2(224, -144)
+
+[node name="Item4" parent="items" instance=ExtResource("12_usjx6")]
+position = Vector2(1360, -88)
+item_type = 2
 
 [node name="triggers" type="Node2D" parent="."]
 position = Vector2(-128, 0)
@@ -257,6 +262,9 @@ position = Vector2(1344, -272)
 position = Vector2(2198, 576)
 scale = Vector2(1, 3)
 location = 2
+
+[node name="boss_spawn_trigger" parent="triggers" instance=ExtResource("18_esmae")]
+position = Vector2(2480, 624)
 
 [node name="tutorials" type="Node2D" parent="."]
 
@@ -602,6 +610,10 @@ enemy_to_spawn = ExtResource("14_byeal")
 position = Vector2(1192, 48)
 enemy_to_spawn = ExtResource("14_byeal")
 
+[node name="boss_spawner" parent="Entities" instance=ExtResource("19_i4628")]
+position = Vector2(2512, 544)
+boss_to_spawn = ExtResource("20_xb4na")
+
 [node name="SpawnPoints" type="Node2D" parent="."]
 
 [node name="spawn_point" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
@@ -614,19 +626,3 @@ location = 1
 [node name="spawn_point3" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
 position = Vector2(2176, 624)
 location = 2
-
-[node name="Item" parent="." instance=ExtResource("12_usjx6")]
-position = Vector2(1232, -88)
-item_type = 2
-
-[node name="music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("17_sy77u")
-autoplay = true
-bus = &"music"
-
-[node name="boss_spawn_trigger" parent="." instance=ExtResource("18_esmae")]
-position = Vector2(2352, 624)
-
-[node name="boss_spawner" parent="." instance=ExtResource("19_i4628")]
-position = Vector2(2512, 544)
-boss_to_spawn = ExtResource("20_xb4na")

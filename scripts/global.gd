@@ -2,10 +2,12 @@ extends Node
 #-- scenes:
 const PAUSE_MENU = preload("res://scenes/pause_menu/pause_menu.tscn")
 const WEAPON_SCREEN = preload("res://scenes/weapon_screen/weapon_screen.tscn")
+#-- music:
+const BOSS_THEME = preload("res://music/temp/boss_theme_temp.ogg")
 #--- game info:
 var curr_level: int;
 var next_level_name: String;
-var level_spawnpoint: int = 0;
+var level_spawnpoint: int = 2;
 var playerLives : int = 2;
 #--- useful instances
 var camera: OmegaCamera2D;
