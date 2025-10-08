@@ -17,6 +17,7 @@ var can_pause = false;
 var can_weapon_screen = false;
 var debug_mode = false;
 var slow_mo : bool = false;
+var boss_door_anim : bool = false;
 #--- signals
 signal camera_spawn(camera);
 signal player_spawn(player);

@@ -338,8 +338,9 @@ func event_death():
 	# spawn some particle system to get the same death effect
 	state_forceExit(state_Death);
 	
+## returns true if the camera is panning, or the boss door is panning.
 func camera_is_scrolling():
-	return Global.camera.camera_page_screen_active
+	return Global.camera.camera_page_screen_active || Global.boss_door_anim;
 			
 func handle_cooldowns():
 	if(I_FRAMES): I_FRAMES -= 1;

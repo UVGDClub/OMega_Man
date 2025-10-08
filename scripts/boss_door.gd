@@ -1,22 +1,48 @@
 extends Node2D
 @onready var trigger = $TriggerCameraPan
 @onready var door_defualt = $DoorDefualt
+@onready var animation_player = $AnimationPlayer
 
+var player_direction;
+var active:bool = false;
 
-# Called when the node enters the scene tree for the first time.
+##flow:
+## player touches door, player freezes
+## door plays open animation
+## camera pans into room
+## door closes
+## player unfreezes
+
 func _ready():
-	Global.camera.end_pan.connect(_on_camera_end_pan)
+	Global.camera.end_pan.connect(_close_door)
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-func _on_camera_end_pan():
-	door_defualt.visible = true;
-
 func _on_trigger_camera_pan_player_entered(velocity):
+	active = true;
+	Global.boss_door_anim = true; #locks player until anim finished.
+	player_direction = velocity
+	_open_door();
+
+func do_camera_pan(velocity):
 	var nudgeX = trigger.player_center_to_trigger_center() + 8
 	Global.camera.camera_page_screen_horizontally(sign(velocity.x),nudgeX)
-	door_defualt.visible = false;
+
+func _open_door():
+	animation_player.play("door_open");
+	pass
+
+##done when the pan ends
+func _close_door():
+	if(!active):return #dont play if im not the door that was touched.
+	animation_player.play("door_close")
+	pass
+
+func _on_animation_player_animation_finished(anim_name):
+	if(anim_name == "door_open"):
+		do_camera_pan(player_direction);
+	if(anim_name == "door_close"):
+		Global.boss_door_anim = false;
+		active = false;
