@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cqmr15mianwnu"]
+[gd_scene load_steps=28 format=3 uid="uid://cqmr15mianwnu"]
 
 [ext_resource type="Script" uid="uid://dg3xblxr71dws" path="res://scripts/level_script.gd" id="1_2oxm2"]
 [ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://objects/ladder_zone.tscn" id="2_cgx0p"]
@@ -17,6 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://co3oj4slgsrb0" path="res://objects/player_spawn_point.tscn" id="14_jb3lb"]
 [ext_resource type="PackedScene" uid="uid://d0pp7kr545bi3" path="res://objects/triggers/trigger_checkpoint.tscn" id="15_rgi05"]
 [ext_resource type="AudioStream" uid="uid://2spraxk4axob" path="res://music/temp/Acro-Level 2-3.ogg" id="17_sy77u"]
+[ext_resource type="PackedScene" uid="uid://dk8v03eb5bi07" path="res://objects/boss_spawn_trigger.tscn" id="18_esmae"]
+[ext_resource type="PackedScene" uid="uid://2fdb25n8q35r" path="res://objects/boss_spawner.tscn" id="19_i4628"]
+[ext_resource type="PackedScene" uid="uid://5luho3pq8uum" path="res://objects/boss_test.tscn" id="20_xb4na"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_525ym"]
 tile_data = PackedInt32Array(0, 65537, 1, 65536, 1, 1, 1, 1, 1, 65537, 65537, 1)
@@ -151,6 +154,7 @@ position = Vector2(2160, 592)
 
 [node name="boss_door2" parent="triggers" instance=ExtResource("7_1ar2s")]
 position = Vector2(2416, 592)
+last_door = true
 
 [node name="Camera_Restrictor4" parent="triggers" instance=ExtResource("8_8ja0x")]
 position = Vector2(1208, 496)
@@ -510,10 +514,6 @@ horizontal_alignment = 1
 
 [node name="Entities" type="Node2D" parent="."]
 
-[node name="Goal 1" parent="Entities" instance=ExtResource("12_usjx6")]
-position = Vector2(2440, 616)
-item_type = 3
-
 [node name="EnemySpawner" parent="Entities" instance=ExtResource("13_lw41s")]
 position = Vector2(-312, 48)
 enemy_to_spawn = ExtResource("14_byeal")
@@ -623,3 +623,10 @@ item_type = 2
 stream = ExtResource("17_sy77u")
 autoplay = true
 bus = &"music"
+
+[node name="boss_spawn_trigger" parent="." instance=ExtResource("18_esmae")]
+position = Vector2(2352, 624)
+
+[node name="boss_spawner" parent="." instance=ExtResource("19_i4628")]
+position = Vector2(2512, 544)
+boss_to_spawn = ExtResource("20_xb4na")

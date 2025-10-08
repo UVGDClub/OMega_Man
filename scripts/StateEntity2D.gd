@@ -1,5 +1,14 @@
 class_name StateEntity2D extends CharacterBody2D
 
+#shared resources
+const ITEM_PICKUP = preload("res://objects/item_pickup.tscn")
+
+#shared variables
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var ignore_gravity = false;
+
 #region STATE MACHINE BACK END
 #STATE DRIVERS
 var state = func(): return

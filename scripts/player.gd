@@ -9,7 +9,6 @@ extends StateEntity2D
 @onready var World = $"../.."
 #objects
 const bulletSource = preload("res://objects/bullet_player_basic.tscn")
-const LADDER_ZONE = preload("res://objects/ladder_zone.tscn")
 #sounds
 const DAMAGE = preload("res://sfx/temp/player/damage.ogg")
 const DEATH = preload("res://sfx/temp/player/death.ogg")
@@ -70,8 +69,6 @@ const SPEED = 100.0
 const SPEED_LADDER = 1.0
 const JUMP_VELOCITY = -300.0
 const FRICTION = 45.0
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 #stats
 var max_health = 28;
@@ -89,7 +86,6 @@ var jump_height_timer_max = 15;
 var jump_height_timer = jump_height_timer_max
 var damage_angle = 0; #radians
 var ignore_friction = false;
-var ignore_gravity = false;
 var ignore_movement = false;
 var can_shoot = true;
 var shoot_anim_timer: int = 0;

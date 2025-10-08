@@ -23,6 +23,7 @@ signal camera_spawn(camera);
 signal player_spawn(player);
 signal on_pause_game
 signal on_weapon_screen
+signal spawn_boss;
 
 var player_weapon_unlocks:Dictionary = {
 	Player.WEAPON.NORMAL:[true, "DEFAULT"],

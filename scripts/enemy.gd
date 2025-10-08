@@ -1,7 +1,6 @@
 class_name Enemy extends StateEntity2D
 
 const EXPLOSION_PARTICLE = preload("res://objects/explosion_particle.tscn")
-const ITEM_PICKUP = preload("res://objects/item_pickup.tscn")
 
 const DEATH_SMALL = preload("res://sfx/temp/enemy/death_small.ogg")
 const DEFLECT = preload("res://sfx/temp/enemy/deflect.ogg")
@@ -13,10 +12,6 @@ const HIT = preload("res://sfx/temp/enemy/hit.ogg")
 var health = 3;
 var facing = -1;
 var SPAWNER_INSTANCE:int = -1;
-
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var ignore_gravity = false;
 
 ## handles the death particle and drop item logic.
 func handle_death():
@@ -55,8 +50,8 @@ func handle_gravity(delta):
 func face_player():
 	if(Global.player == null): return
 	if(Global.player.position.x > position.x):
-		facing = -1;		
-	else: facing = 1;
+		facing = 1;		
+	else: facing = -1;
 	if(sprite != null):
 		sprite.flip_h = facing < 0;
 	

@@ -1,0 +1,222 @@
+[gd_scene load_steps=14 format=3 uid="uid://5luho3pq8uum"]
+
+[ext_resource type="Script" uid="uid://dxohede0nbqfl" path="res://scripts/boss_test.gd" id="1_07hav"]
+[ext_resource type="Texture2D" uid="uid://wwvu3bjgriqv" path="res://sprites/debug/temp_guy.png" id="2_hvb1f"]
+[ext_resource type="PackedScene" uid="uid://cbpl4l7efysx5" path="res://objects/enemy_hitbox.tscn" id="3_07hav"]
+[ext_resource type="Texture2D" uid="uid://c5htanryh66ky" path="res://sprites/ui/ammo_bar_segment_texture_v.png" id="4_07hav"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ih60y"]
+size = Vector2(32, 32)
+
+[sub_resource type="Animation" id="Animation_07hav"]
+resource_name = "Intro_1"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_ih60y"]
+resource_name = "Intro_2"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-2, 2.5), Vector2(-3, 1.8), Vector2(-2, 2), Vector2(-2, 2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0.845), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.733333, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_qrtih"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2, 2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_73fwd"]
+_data = {
+&"Intro_1": SubResource("Animation_07hav"),
+&"Intro_2": SubResource("Animation_ih60y"),
+&"RESET": SubResource("Animation_qrtih")
+}
+
+[sub_resource type="Gradient" id="Gradient_ykyjo"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ih60y"]
+gradient = SubResource("Gradient_ykyjo")
+width = 8
+height = 56
+fill_from = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_uxov2"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qrtih"]
+gradient = SubResource("Gradient_uxov2")
+width = 8
+height = 56
+
+[node name="boss_test" type="CharacterBody2D" groups=["enemy"]]
+script = ExtResource("1_07hav")
+metadata/_custom_type_script = "uid://cyngtfao82sqn"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+scale = Vector2(-2, 2)
+texture = ExtResource("2_hvb1f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_ih60y")
+
+[node name="enemy_hitbox" parent="." instance=ExtResource("3_07hav")]
+position = Vector2(0, -16)
+scale = Vector2(2.1, 2.1)
+collision_layer = 2
+damage = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_73fwd")
+}
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" type="TextureProgressBar" parent="HUD"]
+offset_left = 216.0
+offset_top = 24.0
+offset_right = 224.0
+offset_bottom = 80.0
+max_value = 28.0
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_ih60y")
+texture_over = ExtResource("4_07hav")
+texture_progress = SubResource("GradientTexture2D_qrtih")
+tint_progress = Color(1, 1, 0.6, 1)
+
+[node name="fill_timer" type="Timer" parent="HUD" groups=["enemy"]]
+wait_time = 0.05
+one_shot = true
+
+[connection signal="timeout" from="HUD/fill_timer" to="." method="_on_fill_timer_timeout"]

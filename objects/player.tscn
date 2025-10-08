@@ -969,27 +969,27 @@ _data = {
 &"teleport_finish": SubResource("Animation_qvtkx")
 }
 
-[sub_resource type="Gradient" id="Gradient_ykyjo"]
+[sub_resource type="Gradient" id="Gradient_nmc1l"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_uxov2"]
-gradient = SubResource("Gradient_ykyjo")
+gradient = SubResource("Gradient_nmc1l")
 width = 8
 height = 56
 fill_from = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_uxov2"]
+[sub_resource type="Gradient" id="Gradient_f46kd"]
 offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_nmc1l"]
-gradient = SubResource("Gradient_uxov2")
+gradient = SubResource("Gradient_f46kd")
 width = 8
 height = 56
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_f46kd"]
-gradient = SubResource("Gradient_uxov2")
+gradient = SubResource("Gradient_f46kd")
 width = 8
 height = 56
 
