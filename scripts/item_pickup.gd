@@ -4,6 +4,8 @@ extends RigidBody2D
 @export var onTimer: bool = false;
 @onready var sprite = $ItemPickup/Sprite
 
+const SFX_GOAL = preload("res://sfx/temp/level/tada1.wav")
+
 var death_timer: int = 300;
 var anim_timer: int = 0;
 #HACK automatically choose weapon of the current levels' boss
@@ -76,5 +78,6 @@ func _on_item_pickup_body_entered(player):
 			player.gain_extra_life()
 		3:
 			Global.player_unlock_weapon(unlock_weapon)
+			SoundManager.playSound(SFX_GOAL);
 			player.leave_stage();
 	queue_free()
