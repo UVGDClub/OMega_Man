@@ -22,5 +22,6 @@ func _on_options_pressed():
 	pass # Replace with function body.
 
 func _on_quit_pressed():
+	SoundManager.stop_music()
 	get_tree().change_scene_to_file("res://scenes/level_select/level_select_screen.tscn")
 	Global.toggle_pause();
