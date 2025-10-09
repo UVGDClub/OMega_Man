@@ -5,6 +5,7 @@ extends RigidBody2D
 @onready var sprite = $ItemPickup/Sprite
 
 const SFX_GOAL = preload("res://sfx/temp/level/tada1.wav")
+const SFX_1UP = preload("res://sfx/temp/player/1up.wav")
 
 var death_timer: int = 300;
 var anim_timer: int = 0;
@@ -76,6 +77,7 @@ func _on_item_pickup_body_entered(player):
 		2:
 			#get extra life
 			player.gain_extra_life()
+			SoundManager.playSound(SFX_1UP,0.25);
 		3:
 			Global.player_unlock_weapon(unlock_weapon)
 			SoundManager.playSound(SFX_GOAL);
