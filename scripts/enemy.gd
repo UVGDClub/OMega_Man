@@ -1,6 +1,6 @@
 class_name Enemy extends StateEntity2D
 
-const EXPLOSION_PARTICLE = preload("res://objects/explosion_particle.tscn")
+const EXPLOSION_SMALL = preload("res://objects/vfx_explosion_small.tscn")
 
 const DEATH_SMALL = preload("res://sfx/temp/enemy/death_small.ogg")
 const DEFLECT = preload("res://sfx/temp/enemy/deflect.ogg")
@@ -18,8 +18,7 @@ func handle_death():
 	if(health <= 0): 
 		SoundManager.playSound(DEATH_SMALL);
 		#do explosion
-		var explode: GPUParticles2D = EXPLOSION_PARTICLE.instantiate()
-		explode.one_shot = true;
+		var explode: Node2D = EXPLOSION_SMALL.instantiate()
 		explode.position.y -= 8
 		add_sibling(explode)
 		explode.position = position + Vector2(0,-8)

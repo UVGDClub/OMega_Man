@@ -16,8 +16,6 @@ func _physics_process(_delta):
 	check_player_climb_down()
 	pass
 
-
-
 func check_player_climb_down():
 	if(player_inst == null):return;
 	if(!player_top_detection.overlaps_body(player_inst)): return

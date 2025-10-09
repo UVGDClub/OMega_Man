@@ -9,6 +9,7 @@ extends StateEntity2D
 @onready var World = $"../.."
 #objects
 const bulletSource = preload("res://objects/bullet_player_basic.tscn")
+const VFX_BIG_DEATH = preload("res://objects/vfx/vfx_big_death.tscn")
 #sounds
 const DAMAGE = preload("res://sfx/temp/player/damage.ogg")
 const DEATH = preload("res://sfx/temp/player/death.ogg")
@@ -333,6 +334,22 @@ func event_death():
 	#TODO 
 	# spawn some particle system to get the same death effect
 	state_forceExit(state_Death);
+
+func big_death_explosion():
+	for i in range(8):
+		var explosion = VFX_BIG_DEATH.instantiate();
+		explosion.global_position = global_position
+		var velo = (Vector2.UP * 3.0).rotated((2*PI/8)*i)
+		explosion.velocity = velo
+		explosion.tint = Color.LIGHT_SKY_BLUE;
+		add_sibling(explosion);
+	for i in range(4):
+		var explosion = VFX_BIG_DEATH.instantiate();
+		explosion.global_position = global_position
+		var velo = (Vector2.UP * 1.5).rotated((2*PI/4)*i)
+		explosion.velocity = velo
+		explosion.tint = Color.LIGHT_SKY_BLUE;
+		add_sibling(explosion);
 	
 ## returns true if the camera is panning, or the boss door is panning.
 func camera_is_scrolling():
@@ -519,6 +536,10 @@ var state_Ladder = func():
 			var top_dist = abs(position.y - ladder_inst.position.y);
 			if(top_dist < 16):
 				anim_state = ANIM.LADDER_TOP;
+			if(top_dist < 8 && input_move.y == 1):
+				global_position.y = ceil(ladder_inst.global_position.y)-1;
+				state_forceExit(state_Idle);
+				pass
 
 		return
 		
@@ -660,7 +681,9 @@ var state_Damage = func():
 		return
 		
 	exitConditions = func():
-		if(health <= 0): state_forceExit(state_Death)
+		if(health <= 0): 
+			big_death_explosion()
+			state_forceExit(state_Death)
 		return
 	
 	
@@ -692,6 +715,8 @@ var state_Death = func():
 	onEnter = func(): # run once, on entering the state. may not be necessary
 		anim_state = ANIM.STUN;
 		has_control = false;
+		ignore_gravity = true;
+		velocity = Vector2.ZERO;
 		Global.can_weapon_screen = false;
 		SoundManager.playSound(DEATH);
 		SoundManager.stop_music();

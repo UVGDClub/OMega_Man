@@ -1,22 +1,21 @@
+## This boss has an extremely simple attack pattern
+## powered by a small state machine
+## Most megaman boss attack patterns are simple.
+
 extends Boss
 
-var hop_count:int = 0;
+var hop_count:int = 0; #used for attack pattern
 
 func _ready():
-	state = state_Intro_1;
-	state.call()
-	health_bar.hide();
-	default_state = state_Idle;
-	pass
+	initialize_boss(state_Idle);
 
 func _physics_process(delta):
 	stateDriver();
 	handle_gravity(delta);
-	handle_death();
+	handle_health_and_death();
 	move_and_slide()
-	health_bar.value = health;
 
-#region SPECIFIC STATES
+#region STATES
 
 var state_Idle = func():
 	_stateID		= "Idle";

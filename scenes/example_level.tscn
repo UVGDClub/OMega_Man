@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cqmr15mianwnu"]
+[gd_scene load_steps=27 format=3 uid="uid://cqmr15mianwnu"]
 
 [ext_resource type="Script" uid="uid://dg3xblxr71dws" path="res://scripts/level_script.gd" id="1_2oxm2"]
 [ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://objects/ladder_zone.tscn" id="2_cgx0p"]
@@ -19,7 +19,6 @@
 [ext_resource type="AudioStream" uid="uid://2spraxk4axob" path="res://music/temp/Acro-Level 2-3.ogg" id="17_sy77u"]
 [ext_resource type="PackedScene" uid="uid://dk8v03eb5bi07" path="res://objects/boss_spawn_trigger.tscn" id="18_esmae"]
 [ext_resource type="PackedScene" uid="uid://2fdb25n8q35r" path="res://objects/boss_spawner.tscn" id="19_i4628"]
-[ext_resource type="PackedScene" uid="uid://5luho3pq8uum" path="res://objects/boss_test.tscn" id="20_xb4na"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_525ym"]
 tile_data = PackedInt32Array(0, 65537, 1, 65536, 1, 1, 1, 1, 1, 65537, 65537, 1)
@@ -61,6 +60,7 @@ texture = ExtResource("3_i6lkt")
 7:1/0 = 0
 7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:2/0 = 0
 2:2/0 = 0
 3:2/0 = 0
@@ -68,6 +68,14 @@ texture = ExtResource("3_i6lkt")
 5:2/0 = 0
 6:2/0 = 0
 7:2/0 = 0
+7:3/0 = 0
+6:3/0 = 0
+5:3/0 = 0
+4:3/0 = 0
+3:3/0 = 0
+2:3/0 = 0
+1:3/0 = 0
+0:3/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n44uc"]
 texture = ExtResource("4_qkqhi")
@@ -266,6 +274,112 @@ location = 2
 [node name="boss_spawn_trigger" parent="triggers" instance=ExtResource("18_esmae")]
 position = Vector2(2480, 624)
 
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="EnemySpawner" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(-312, 48)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner2" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(194, 26)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner11" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(34, -54)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner12" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(242, -118)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner13" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(138, -86)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner14" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(138, -22)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner3" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(320, -312)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner4" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(240, -312)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner5" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(418, -366)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner10" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(-136, 90)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner6" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(568, -470)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner7" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(608, -372)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner15" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(808, -344)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner16" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(944, -392)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner8" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(490, -428)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner9" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(1152, -320)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner17" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(1112, -176)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner18" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(1162, -94)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner19" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(1144, 184)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner21" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(1200, 296)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner22" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(1162, 392)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="EnemySpawner20" parent="Entities" instance=ExtResource("13_lw41s")]
+position = Vector2(1192, 48)
+enemy_to_spawn = ExtResource("14_byeal")
+
+[node name="boss_spawner" parent="Entities" instance=ExtResource("19_i4628")]
+position = Vector2(2512, 544)
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="spawn_point" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
+position = Vector2(-384, 8)
+
+[node name="spawn_point2" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
+position = Vector2(1232, -208)
+location = 1
+
+[node name="spawn_point3" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
+position = Vector2(2176, 624)
+location = 2
+
 [node name="tutorials" type="Node2D" parent="."]
 
 [node name="guides" type="Label" parent="tutorials"]
@@ -333,6 +447,33 @@ All it does is kill the player. Typically used for pitfalls.
 
 If you make it a child of something that moves,
 you can create a moving death hazard"
+label_settings = SubResource("LabelSettings_sy77u")
+horizontal_alignment = 1
+
+[node name="boss room" type="Label" parent="tutorials"]
+offset_left = 2088.0
+offset_top = 328.0
+offset_right = 2808.0
+offset_bottom = 481.0
+text = "This is a Boss Room
+For a boss encounter to properly work you need:
+1. A proper boss object to spawn (see boss test for a template)
+2. a boss spawner object to spawn the boss object (1)
+3. a boss trigger"
+label_settings = SubResource("LabelSettings_sy77u")
+horizontal_alignment = 1
+
+[node name="boss room2" type="Label" parent="tutorials"]
+offset_left = 2080.0
+offset_top = 728.0
+offset_right = 2800.0
+offset_bottom = 881.0
+text = "The boss trigger will spawn the boss if:
+1. the player is touching it
+AND
+2. the boss door animation is finished
+AND
+3. there is a boss spawner that is given a valid boss object"
 label_settings = SubResource("LabelSettings_sy77u")
 horizontal_alignment = 1
 
@@ -519,110 +660,3 @@ a checkpoint just before the boss.
 The camera should also be restricted to not move from this room."
 label_settings = ExtResource("13_04vd0")
 horizontal_alignment = 1
-
-[node name="Entities" type="Node2D" parent="."]
-
-[node name="EnemySpawner" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(-312, 48)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner2" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(194, 26)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner11" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(34, -54)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner12" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(242, -118)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner13" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(138, -86)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner14" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(138, -22)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner3" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(320, -312)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner4" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(240, -312)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner5" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(418, -366)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner10" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(-136, 90)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner6" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(568, -470)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner7" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(608, -372)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner15" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(808, -344)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner16" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(944, -392)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner8" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(490, -428)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner9" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(1152, -320)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner17" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(1112, -176)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner18" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(1162, -94)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner19" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(1144, 184)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner21" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(1200, 296)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner22" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(1162, 392)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="EnemySpawner20" parent="Entities" instance=ExtResource("13_lw41s")]
-position = Vector2(1192, 48)
-enemy_to_spawn = ExtResource("14_byeal")
-
-[node name="boss_spawner" parent="Entities" instance=ExtResource("19_i4628")]
-position = Vector2(2512, 544)
-boss_to_spawn = ExtResource("20_xb4na")
-
-[node name="SpawnPoints" type="Node2D" parent="."]
-
-[node name="spawn_point" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
-position = Vector2(-384, 8)
-
-[node name="spawn_point2" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
-position = Vector2(1232, -208)
-location = 1
-
-[node name="spawn_point3" parent="SpawnPoints" instance=ExtResource("14_jb3lb")]
-position = Vector2(2176, 624)
-location = 2
