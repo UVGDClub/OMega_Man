@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5t1cxh5w3axw"]
+[gd_scene load_steps=8 format=3 uid="uid://b5t1cxh5w3axw"]
 
 [ext_resource type="Script" uid="uid://s5p02olt26vw" path="res://scenes/weapon_screen/weapon_screen.gd" id="1_wjuk6"]
 [ext_resource type="PackedScene" uid="uid://bg00djokvttb1" path="res://scenes/weapon_screen/weapon_button.tscn" id="2_g08r0"]
 [ext_resource type="PackedScene" uid="uid://diyqsdng8bkj6" path="res://scenes/weapon_screen/next_button.tscn" id="2_jl2qj"]
 [ext_resource type="FontFile" uid="uid://dnm31l7x5h2ej" path="res://_project_system_files/MMRock9.ttf" id="3_jl2qj"]
+[ext_resource type="Texture2D" uid="uid://pjrxet3doj5i" path="res://sprites/Items/1up.png" id="5_xdfm4"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="6_d6hr7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xdfm4"]
 font = ExtResource("3_jl2qj")
@@ -125,6 +127,25 @@ weaponIndex = 8
 
 [node name="Label" parent="border/inside/page_2/weapon_8" index="0"]
 text = "F"
+
+[node name="life_counter" type="Control" parent="border/inside"]
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 124.0
+offset_right = 76.0
+offset_bottom = 136.0
+
+[node name="icon" type="Sprite2D" parent="border/inside/life_counter"]
+position = Vector2(12, 4)
+texture = ExtResource("5_xdfm4")
+
+[node name="lives" type="Label" parent="border/inside/life_counter"]
+layout_mode = 0
+offset_left = 28.0
+offset_right = 68.0
+offset_bottom = 23.0
+text = ": 99"
+label_settings = ExtResource("6_d6hr7")
 
 [connection signal="pressed" from="border/inside/next" to="." method="_on_next_pressed"]
 

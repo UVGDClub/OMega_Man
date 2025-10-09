@@ -14,6 +14,7 @@ extends CanvasLayer
 @onready var page_2 = $border/inside/page_2
 
 @onready var next = $border/inside/next
+@onready var lives = $border/inside/life_counter/lives
 
 var weapons:Array;
 var pages:Array;
@@ -29,6 +30,8 @@ func _ready():
 	pages = [page_1, page_2];
 
 func update_screen():
+	#set lives:
+	lives.text = ": " + str(Global.playerLives)
 	#set ammo count for all weapons
 	for i in range(len(weapons)):
 		var tint = Global.player.weapon_stats[i][3];

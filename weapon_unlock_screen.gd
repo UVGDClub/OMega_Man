@@ -3,7 +3,7 @@ extends Control
 @onready var weapon_name = $weapon_name
 
 var next_level:PackedScene;
-var weapon_to_type:String = "ASS BLASTER";
+var weapon_to_type:String = "NO REWARD";
 var charTimer = 4;
 	
 # Called when the node enters the scene tree for the first time.

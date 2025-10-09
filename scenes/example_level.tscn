@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cqmr15mianwnu"]
+[gd_scene load_steps=28 format=3 uid="uid://cqmr15mianwnu"]
 
 [ext_resource type="Script" uid="uid://dg3xblxr71dws" path="res://scripts/level_script.gd" id="1_2oxm2"]
 [ext_resource type="PackedScene" uid="uid://b46ve4mmbcfvl" path="res://objects/ladder_zone.tscn" id="2_cgx0p"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://2spraxk4axob" path="res://music/temp/Acro-Level 2-3.ogg" id="17_sy77u"]
 [ext_resource type="PackedScene" uid="uid://dk8v03eb5bi07" path="res://objects/boss_spawn_trigger.tscn" id="18_esmae"]
 [ext_resource type="PackedScene" uid="uid://2fdb25n8q35r" path="res://objects/boss_spawner.tscn" id="19_i4628"]
+[ext_resource type="PackedScene" uid="uid://5luho3pq8uum" path="res://objects/boss_test.tscn" id="20_xb4na"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_525ym"]
 tile_data = PackedInt32Array(0, 65537, 1, 65536, 1, 1, 1, 1, 1, 65537, 65537, 1)
@@ -366,6 +367,7 @@ enemy_to_spawn = ExtResource("14_byeal")
 
 [node name="boss_spawner" parent="Entities" instance=ExtResource("19_i4628")]
 position = Vector2(2512, 544)
+boss_to_spawn = ExtResource("20_xb4na")
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
@@ -474,6 +476,20 @@ AND
 2. the boss door animation is finished
 AND
 3. there is a boss spawner that is given a valid boss object"
+label_settings = SubResource("LabelSettings_sy77u")
+horizontal_alignment = 1
+
+[node name="boss room3" type="Label" parent="tutorials"]
+offset_left = 2600.0
+offset_top = 520.0
+offset_right = 2944.0
+offset_bottom = 673.0
+text = "When the boss dies,
+1. the music stops
+2. it drops the goal object
+
+When the player picks up the goal object, 
+a jingle plays and the player exits the stage."
 label_settings = SubResource("LabelSettings_sy77u")
 horizontal_alignment = 1
 

@@ -11,8 +11,6 @@ const READY_PLAYER = preload("res://scenes/ready_player.tscn")
 ##Each level expects to have the following data:
 @export var level_music:AudioStream;
 
-var player_inst: CharacterBody2D = null;
-
 func _ready() -> void:
 	ready_player();
 	Global.can_pause = true;
@@ -43,7 +41,6 @@ func spawn_player():
 	var player = PLAYER.instantiate()
 	entities.add_child(player)
 	player.global_position = spawn_location;
-	player_inst = player;
 
 func determine_spawn_point() -> SpawnPoint:
 	var spawns = spawn_points.get_children()
