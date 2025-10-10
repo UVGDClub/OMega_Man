@@ -682,7 +682,6 @@ var state_Damage = func():
 		
 	exitConditions = func():
 		if(health <= 0): 
-			big_death_explosion()
 			state_forceExit(state_Death)
 		return
 	
@@ -722,6 +721,7 @@ var state_Death = func():
 		SoundManager.playSound(DEATH);
 		SoundManager.stop_music();
 		death.emit()
+		big_death_explosion()
 		return
 			
 	main	= func(): # run continuously
