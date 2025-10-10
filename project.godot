@@ -14,7 +14,7 @@ config/name="OMega_Man"
 run/main_scene="res://scenes/Title Screen/title_screen.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/image="res://_project_system_files/icon.png"
-config/icon="res://_project_system_files/icon.png"
+config/icon="uid://c1xqjfal766w6"
 
 [autoload]
 
