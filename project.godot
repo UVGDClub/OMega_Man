@@ -16,10 +16,14 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/image="res://_project_system_files/icon.png"
 config/icon="uid://c1xqjfal766w6"
 
+[audio]
+
+buses/default_bus_layout="res://_project_system_files/default_bus_layout.tres"
+
 [autoload]
 
 Global="*res://scripts/global.gd"
-SoundManager="*res://sound_manager.gd"
+SoundManager="*res://scripts/sound_manager.gd"
 
 [display]
 

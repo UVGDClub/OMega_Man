@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://objects/triggers/trigger_camera_pan.tscn" id="5_ublae"]
 [ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://objects/camera/omega_camera_2D.tscn" id="6_dvwfu"]
 [ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://objects/triggers/trigger_kill_player.tscn" id="7_267oo"]
-[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/enemy_test.tscn" id="8_85r6m"]
+[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/test/enemy_test.tscn" id="8_85r6m"]
 [ext_resource type="PackedScene" uid="uid://c7ohlnpe6tuq0" path="res://objects/item_pickup.tscn" id="9_ssyyr"]
 [ext_resource type="PackedScene" uid="uid://cyd4f0t114ceq" path="res://objects/enemy_spawner.tscn" id="10_xfuy2"]
 [ext_resource type="PackedScene" uid="uid://dcpf0ch86xj0m" path="res://objects/boss_door.tscn" id="11_nyghu"]

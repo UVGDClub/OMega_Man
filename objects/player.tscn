@@ -1,7 +1,7 @@
 [gd_scene load_steps=54 format=3 uid="uid://cwo6seha311se"]
 
 [ext_resource type="Script" uid="uid://ry7hhpv3oy54" path="res://scripts/player.gd" id="1_jkyx8"]
-[ext_resource type="Texture2D" uid="uid://3aixhpcyl60a" path="res://sprites/megaMan_Sprites_sheet1.png" id="2_o7uap"]
+[ext_resource type="Texture2D" uid="uid://3aixhpcyl60a" path="res://sprites/player/megaMan_Sprites_sheet1.png" id="2_o7uap"]
 [ext_resource type="Script" uid="uid://b2ude8hdc678a" path="res://scripts/player_hud.gd" id="3_uxov2"]
 [ext_resource type="Texture2D" uid="uid://c5htanryh66ky" path="res://sprites/ui/ammo_bar_segment_texture_v.png" id="4_nmc1l"]
 

@@ -10,7 +10,7 @@ class_name Boss extends StateEntity2D
 ##shared resources
 const DEATH = preload("res://sfx/temp/player/death.ogg")
 const HIT = preload("res://sfx/temp/enemy/hit.ogg")
-const BOSS_HEALTH_TICK = preload("res://sfx/temp/boss_health_tick.wav")
+const BOSS_HEALTH_TICK = preload("res://sfx/temp/enemy/boss_health_tick.wav")
 const VFX_BIG_DEATH = preload("res://objects/vfx/vfx_big_death.tscn")
 
 var health = 1;

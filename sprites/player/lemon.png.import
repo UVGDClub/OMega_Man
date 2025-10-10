@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2r3abalrihhq"
-path="res://.godot/imported/door_defualt.png-ed7e00213933ddf2d4f49ce934f4c60f.ctex"
+uid="uid://ci850lw1nn5po"
+path="res://.godot/imported/lemon.png-20c95c8ed2796444fb3c3bb4e3fec4ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/door_defualt.png"
-dest_files=["res://.godot/imported/door_defualt.png-ed7e00213933ddf2d4f49ce934f4c60f.ctex"]
+source_file="res://sprites/player/lemon.png"
+dest_files=["res://.godot/imported/lemon.png-20c95c8ed2796444fb3c3bb4e3fec4ba.ctex"]
 
 [params]
 

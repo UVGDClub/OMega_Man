@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wvvl65qnacam"
-path="res://.godot/imported/megaMan_Sprites_sheet2.png-5fdc5e01482a30d23483d0586663cda0.ctex"
+uid="uid://mxgiudc81pdn"
+path="res://.godot/imported/explosion_1_sheet.png-9975cd0fb43c4c2ad97c581b49e96d34.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/megaMan_Sprites_sheet2.png"
-dest_files=["res://.godot/imported/megaMan_Sprites_sheet2.png-5fdc5e01482a30d23483d0586663cda0.ctex"]
+source_file="res://sprites/vfx/explosion_1_sheet.png"
+dest_files=["res://.godot/imported/explosion_1_sheet.png-9975cd0fb43c4c2ad97c581b49e96d34.ctex"]
 
 [params]
 

@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://d0pp7kr545bi3" path="res://objects/triggers/trigger_checkpoint.tscn" id="12_111ra"]
 [ext_resource type="LabelSettings" uid="uid://cds1nk0736cs4" path="res://_project_system_files/label_debug_settings.tres" id="13_y1mmm"]
 [ext_resource type="PackedScene" uid="uid://cyd4f0t114ceq" path="res://objects/enemy_spawner.tscn" id="14_fgsjf"]
-[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/enemy_test.tscn" id="15_dilha"]
+[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/test/enemy_test.tscn" id="15_dilha"]
 [ext_resource type="PackedScene" uid="uid://co3oj4slgsrb0" path="res://objects/player_spawn_point.tscn" id="16_60rmx"]
 [ext_resource type="AudioStream" uid="uid://2spraxk4axob" path="res://music/temp/Acro-Level 2-3.ogg" id="17_1yrbx"]
 

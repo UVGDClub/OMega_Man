@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://chjxlj476ppsb"
-path="res://.godot/imported/boss_health_tick.wav-ea95dc2a2c1cb99a9bbfe6bfafeb9e87.sample"
+path="res://.godot/imported/boss_health_tick.wav-db4173854439e15537b2c6869a40ed52.sample"
 
 [deps]
 
-source_file="res://sfx/temp/boss_health_tick.wav"
-dest_files=["res://.godot/imported/boss_health_tick.wav-ea95dc2a2c1cb99a9bbfe6bfafeb9e87.sample"]
+source_file="res://sfx/temp/enemy/boss_health_tick.wav"
+dest_files=["res://.godot/imported/boss_health_tick.wav-db4173854439e15537b2c6869a40ed52.sample"]
 
 [params]
 

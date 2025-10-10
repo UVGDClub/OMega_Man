@@ -1,6 +1,6 @@
 class_name Enemy extends StateEntity2D
 
-const EXPLOSION_SMALL = preload("res://objects/vfx_explosion_small.tscn")
+const EXPLOSION_SMALL = preload("res://objects/vfx/vfx_explosion_small.tscn")
 
 const DEATH_SMALL = preload("res://sfx/temp/enemy/death_small.ogg")
 const DEFLECT = preload("res://sfx/temp/enemy/deflect.ogg")

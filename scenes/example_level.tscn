@@ -13,13 +13,13 @@
 [ext_resource type="PackedScene" uid="uid://c7ohlnpe6tuq0" path="res://objects/item_pickup.tscn" id="12_usjx6"]
 [ext_resource type="LabelSettings" uid="uid://cds1nk0736cs4" path="res://_project_system_files/label_debug_settings.tres" id="13_04vd0"]
 [ext_resource type="PackedScene" uid="uid://cyd4f0t114ceq" path="res://objects/enemy_spawner.tscn" id="13_lw41s"]
-[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/enemy_test.tscn" id="14_byeal"]
+[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/test/enemy_test.tscn" id="14_byeal"]
 [ext_resource type="PackedScene" uid="uid://co3oj4slgsrb0" path="res://objects/player_spawn_point.tscn" id="14_jb3lb"]
 [ext_resource type="PackedScene" uid="uid://d0pp7kr545bi3" path="res://objects/triggers/trigger_checkpoint.tscn" id="15_rgi05"]
 [ext_resource type="AudioStream" uid="uid://2spraxk4axob" path="res://music/temp/Acro-Level 2-3.ogg" id="17_sy77u"]
 [ext_resource type="PackedScene" uid="uid://dk8v03eb5bi07" path="res://objects/boss_spawn_trigger.tscn" id="18_esmae"]
 [ext_resource type="PackedScene" uid="uid://2fdb25n8q35r" path="res://objects/boss_spawner.tscn" id="19_i4628"]
-[ext_resource type="PackedScene" uid="uid://5luho3pq8uum" path="res://objects/boss_test.tscn" id="20_xb4na"]
+[ext_resource type="PackedScene" uid="uid://5luho3pq8uum" path="res://objects/test/boss_test.tscn" id="20_xb4na"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_525ym"]
 tile_data = PackedInt32Array(0, 65537, 1, 65536, 1, 1, 1, 1, 1, 65537, 65537, 1)

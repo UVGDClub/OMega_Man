@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cwo6seha311se" path="res://objects/player.tscn" id="11_2q4p8"]
 [ext_resource type="PackedScene" uid="uid://c7ohlnpe6tuq0" path="res://objects/item_pickup.tscn" id="12_rykmh"]
 [ext_resource type="PackedScene" uid="uid://cyd4f0t114ceq" path="res://objects/enemy_spawner.tscn" id="13_ly3yh"]
-[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/enemy_test.tscn" id="14_ed52e"]
+[ext_resource type="PackedScene" uid="uid://clijcmla0ks20" path="res://objects/test/enemy_test.tscn" id="14_ed52e"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_525ym"]
 tile_data = PackedInt32Array(0, 65537, 1, 65536, 1, 1, 1, 1, 1, 65537, 65537, 1)

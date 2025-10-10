@@ -716,6 +716,7 @@ var state_Death = func():
 		anim_state = ANIM.STUN;
 		has_control = false;
 		ignore_gravity = true;
+		visible = false;
 		velocity = Vector2.ZERO;
 		Global.can_weapon_screen = false;
 		SoundManager.playSound(DEATH);

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://by0cmn04dbgxi"]
 
-[ext_resource type="Script" uid="uid://b5w5ebud2pwkb" path="res://weapon_unlock_screen.gd" id="1_1yuec"]
+[ext_resource type="Script" uid="uid://b5w5ebud2pwkb" path="res://scripts/weapon_unlock_screen.gd" id="1_1yuec"]
 [ext_resource type="Texture2D" uid="uid://jr527q4fisqt" path="res://scenes/weapon_unlock/weapon_bg.png" id="2_vdrs5"]
 [ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="3_y6e6x"]
 [ext_resource type="AudioStream" uid="uid://beoqgipose7ce" path="res://music/temp/Acro-Pizza-1.ogg" id="4_vdrs5"]

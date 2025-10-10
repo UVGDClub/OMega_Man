@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dcpf0ch86xj0m"]
 
 [ext_resource type="Script" uid="uid://len88tt1fube" path="res://scripts/boss_door.gd" id="1_137la"]
-[ext_resource type="Texture2D" uid="uid://c2r3abalrihhq" path="res://sprites/door_defualt.png" id="1_gi5ox"]
+[ext_resource type="Texture2D" uid="uid://c2r3abalrihhq" path="res://sprites/Level_General/door_defualt.png" id="1_gi5ox"]
 [ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://objects/triggers/trigger_camera_pan.tscn" id="2_vmfie"]
 [ext_resource type="AudioStream" uid="uid://b2w51wp6xahal" path="res://sfx/temp/level/boss_door_segment.ogg" id="4_3qyfc"]
 

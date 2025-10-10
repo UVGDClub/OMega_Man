@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mxgiudc81pdn"
-path="res://.godot/imported/explosion_1_sheet.png-66a0677c9a62bf28d63209d2e1737f68.ctex"
+uid="uid://c2r3abalrihhq"
+path="res://.godot/imported/door_defualt.png-d19f57c7f14bfb3fecde095be4e305c1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/explosion_1_sheet.png"
-dest_files=["res://.godot/imported/explosion_1_sheet.png-66a0677c9a62bf28d63209d2e1737f68.ctex"]
+source_file="res://sprites/Level_General/door_defualt.png"
+dest_files=["res://.godot/imported/door_defualt.png-d19f57c7f14bfb3fecde095be4e305c1.ctex"]
 
 [params]
 
