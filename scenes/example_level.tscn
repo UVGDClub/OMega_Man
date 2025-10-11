@@ -27,7 +27,7 @@ tile_data = PackedInt32Array(0, 65537, 1, 65536, 1, 1, 1, 1, 1, 65537, 65537, 1)
 [sub_resource type="TileMapPattern" id="TileMapPattern_nrb6t"]
 tile_data = PackedInt32Array(0, 65537, 1, 1, 1, 1)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e0wnd"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i4628"]
 texture = ExtResource("3_i6lkt")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -78,7 +78,7 @@ texture = ExtResource("3_i6lkt")
 1:3/0 = 0
 0:3/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n44uc"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xb4na"]
 texture = ExtResource("4_qkqhi")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -91,8 +91,8 @@ texture = ExtResource("4_qkqhi")
 [sub_resource type="TileSet" id="TileSet_nuslc"]
 physics_layer_0/collision_layer = 0
 physics_layer_0/collision_mask = 0
-sources/1 = SubResource("TileSetAtlasSource_n44uc")
-sources/0 = SubResource("TileSetAtlasSource_e0wnd")
+sources/1 = SubResource("TileSetAtlasSource_xb4na")
+sources/0 = SubResource("TileSetAtlasSource_i4628")
 pattern_0 = SubResource("TileMapPattern_525ym")
 pattern_1 = SubResource("TileMapPattern_nrb6t")
 

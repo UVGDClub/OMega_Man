@@ -44,7 +44,11 @@ func spawn_player():
 
 func determine_spawn_point() -> SpawnPoint:
 	var spawns = spawn_points.get_children()
-	assert(len(spawns) > 0) #if you stop here, you have no spawn points!
+	var num_spawns = len(spawns)
+	assert(num_spawns > 0) #if you stop here, you have no spawn points!
+	if(Global.level_spawnpoint + 1 > num_spawns):
+		Global.level_spawnpoint = 0;
+		printerr("Global.level_spawnpoint is greater than the actual number of valid spawn points in the level!")
 	var spawn_point = spawns[Global.level_spawnpoint];
 	assert(spawn_point is SpawnPoint) #if you stop here, there is a node in the spawnpoints tree that in not a valid spawn point.
 	return spawn_point;
