@@ -11,9 +11,11 @@ config_version=5
 [application]
 
 config/name="OMega_Man"
-run/main_scene="res://scenes/Title Screen/title_screen.tscn"
+run/main_scene="uid://bs0cklp5ek716"
 config/features=PackedStringArray("4.4", "Forward Plus")
-boot_splash/image="res://_project_system_files/icon.png"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/fullsize=false
+boot_splash/image="uid://c1xqjfal766w6"
 config/icon="uid://c1xqjfal766w6"
 
 [audio]
