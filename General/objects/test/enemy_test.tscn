@@ -19,7 +19,6 @@ sprite = NodePath("TempGuy")
 
 [node name="TempGuy" type="Sprite2D" parent="."]
 position = Vector2(0, -8)
-scale = Vector2(-1, 1)
 texture = ExtResource("2_oy64c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -40,4 +39,3 @@ shape = SubResource("CircleShape2D_sayh7")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="handle_despawn"]

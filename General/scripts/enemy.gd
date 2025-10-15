@@ -8,10 +8,15 @@ const HIT = preload("res://General/sfx/temp/enemy/hit.ogg")
 
 @export var detection_area:Area2D = null;
 @export var sprite:Sprite2D = null;
+@onready var visible_on_screen_notifier_2d = $VisibleOnScreenNotifier2D
 
 var health = 3;
 var facing = -1;
 var SPAWNER_INSTANCE:int = -1;
+
+## call this in ready for each enemy
+func handle_node_connections():
+	visible_on_screen_notifier_2d.screen_exited.connect(handle_despawn);
 
 ## handles the death particle and drop item logic.
 func handle_death():
@@ -48,7 +53,7 @@ func handle_gravity(delta):
 ## If a valid Sprite2D is passed, this will automatically flip the sprite to face the player. 
 func face_player():
 	if(Global.player == null): return
-	if(Global.player.position.x > position.x):
+	if(Global.player.position.x < position.x):
 		facing = 1;		
 	else: facing = -1;
 	if(sprite != null):

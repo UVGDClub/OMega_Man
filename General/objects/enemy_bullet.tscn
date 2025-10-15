@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1c7seu5lrwg3"]
+
+[ext_resource type="Texture2D" uid="uid://ci850lw1nn5po" path="res://General/sprites/player/lemon.png" id="1_8i4u8"]
+[ext_resource type="Script" uid="uid://83t0x4ipbkxe" path="res://General/objects/enemy_bullet.gd" id="1_beoak"]
+[ext_resource type="PackedScene" uid="uid://cbpl4l7efysx5" path="res://General/objects/enemy_hitbox.tscn" id="2_beoak"]
+
+[node name="enemy_bullet" type="Node2D"]
+script = ExtResource("1_beoak")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("1_8i4u8")
+
+[node name="enemy_hitbox" parent="." instance=ExtResource("2_beoak")]
+scale = Vector2(0.5, 0.5)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

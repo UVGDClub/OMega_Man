@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://b0g8iwxn7nyci"]
+[gd_scene load_steps=22 format=4 uid="uid://b0g8iwxn7nyci"]
 
 [ext_resource type="Script" uid="uid://dg3xblxr71dws" path="res://General/scripts/level_script.gd" id="1_te07g"]
 [ext_resource type="Texture2D" uid="uid://cej8w2hlkch5g" path="res://General/sprites/debug/tilemap_debug.png" id="2_2os1m"]
@@ -8,7 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://General/objects/triggers/trigger_camera_pan.tscn" id="5_ovnmg"]
 [ext_resource type="PackedScene" uid="uid://bltiyh5uvi30t" path="res://General/objects/triggers/trigger_camera_restricter.tscn" id="6_2y5yt"]
 [ext_resource type="PackedScene" uid="uid://binni8e01yno4" path="res://General/objects/triggers/trigger_kill_player.tscn" id="6_vvxiq"]
+[ext_resource type="PackedScene" uid="uid://cyd4f0t114ceq" path="res://General/objects/enemy_spawner.tscn" id="7_esud7"]
 [ext_resource type="PackedScene" uid="uid://2v3msm41kp16" path="res://General/objects/camera/omega_camera_2D.tscn" id="7_pg7yi"]
+[ext_resource type="PackedScene" uid="uid://dximqy5u57e1x" path="res://Level_1/objects/fly_drone.tscn" id="8_tiakk"]
 [ext_resource type="PackedScene" uid="uid://co3oj4slgsrb0" path="res://General/objects/player_spawn_point.tscn" id="10_2y5yt"]
 [ext_resource type="PackedScene" uid="uid://c7ohlnpe6tuq0" path="res://General/objects/item_pickup.tscn" id="10_c75ym"]
 
@@ -193,6 +195,10 @@ position = Vector2(2128, -288)
 scale = Vector2(1, 5)
 
 [node name="Entities" type="Node2D" parent="."]
+
+[node name="EnemySpawner" parent="Entities" instance=ExtResource("7_esud7")]
+position = Vector2(480, 70)
+enemy_to_spawn = ExtResource("8_tiakk")
 
 [node name="items" type="Node2D" parent="."]
 

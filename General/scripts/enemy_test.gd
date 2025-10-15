@@ -2,12 +2,12 @@ extends Enemy
 
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
-@onready var detection_range = $detection_range
-@onready var detection_circle = $detection_range/detection_circle
+
 
 func _ready():
 	state = state_Idle;
 	state.call()
+	handle_node_connections();
 	pass
 
 func _physics_process(delta):

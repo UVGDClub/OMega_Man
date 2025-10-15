@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dximqy5u57e1x"]
+
+[ext_resource type="Script" uid="uid://cmv0un8fkuceh" path="res://Level_1/objects/fly_drone.gd" id="1_fnlmq"]
+[ext_resource type="Texture2D" uid="uid://ri3om4s6de74" path="res://Level_1/sprites/fly_drone.png" id="2_fnlmq"]
+[ext_resource type="PackedScene" uid="uid://cbpl4l7efysx5" path="res://General/objects/enemy_hitbox.tscn" id="3_fnlmq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bf2xp"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fnlmq"]
+radius = 124.064
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("detection_area", "sprite") groups=["enemy"]]
+script = ExtResource("1_fnlmq")
+detection_area = NodePath("detection_range")
+sprite = NodePath("Sprite2D")
+metadata/_custom_type_script = "uid://cdw8cuqghyj4k"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_fnlmq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bf2xp")
+
+[node name="enemy_hitbox" parent="." instance=ExtResource("3_fnlmq")]
+position = Vector2(0, -4)
+scale = Vector2(1.5, 1.5)
+
+[node name="detection_range" type="Area2D" parent="."]
+
+[node name="detection_circle" type="CollisionShape2D" parent="detection_range" groups=["enemy"]]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_fnlmq")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
