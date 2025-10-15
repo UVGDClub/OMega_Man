@@ -24,8 +24,8 @@ buses/default_bus_layout="res://_project_system_files/default_bus_layout.tres"
 
 [autoload]
 
-Global="*res://scripts/global.gd"
-SoundManager="*res://scripts/sound_manager.gd"
+Global="*res://General/scripts/global.gd"
+SoundManager="*res://General/scripts/sound_manager.gd"
 
 [display]
 

@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://dxgokdktreyw2"]
+
+[ext_resource type="Texture2D" uid="uid://bkf1n6p7msof2" path="res://General/scenes/boss_intro/cross_beam.png" id="1_opkk2"]
+[ext_resource type="Texture2D" uid="uid://bebjn6ox8soc1" path="res://General/scenes/boss_intro/stars3.png" id="1_rw0g7"]
+[ext_resource type="Script" uid="uid://wwwj1ivi5pnl" path="res://General/scenes/boss_intro/boss_intro.gd" id="1_xt1c0"]
+[ext_resource type="Texture2D" uid="uid://bx8id0bs05lom" path="res://General/scenes/boss_intro/stars2.png" id="2_ilbau"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="2_pia28"]
+[ext_resource type="Texture2D" uid="uid://bnknermfgvp6o" path="res://General/scenes/boss_intro/stars1.png" id="3_nculk"]
+[ext_resource type="Texture2D" uid="uid://wwvu3bjgriqv" path="res://General/sprites/debug/temp_guy.png" id="7_w8px3"]
+[ext_resource type="AudioStream" uid="uid://dgm56yy8rq10d" path="res://General/music/temp/boss_intro.ogg" id="8_u311b"]
+
+[node name="Boss Intro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xt1c0")
+
+[node name="black" type="ColorRect" parent="."]
+layout_mode = 1
+offset_right = 256.0
+offset_bottom = 240.0
+color = Color(0, 0, 0, 1)
+
+[node name="stars" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+
+[node name="Stars3" type="Parallax2D" parent="stars"]
+repeat_size = Vector2(256, 0)
+autoscroll = Vector2(20, 0)
+
+[node name="stars" type="Sprite2D" parent="stars/Stars3"]
+texture = ExtResource("1_rw0g7")
+centered = false
+
+[node name="Stars2" type="Parallax2D" parent="stars"]
+repeat_size = Vector2(256, 0)
+autoscroll = Vector2(75, 0)
+
+[node name="stars" type="Sprite2D" parent="stars/Stars2"]
+texture = ExtResource("2_ilbau")
+centered = false
+
+[node name="Stars1" type="Parallax2D" parent="stars"]
+repeat_size = Vector2(256, 0)
+autoscroll = Vector2(225, 0)
+
+[node name="stars" type="Sprite2D" parent="stars/Stars1"]
+texture = ExtResource("3_nculk")
+centered = false
+
+[node name="CrossBeam" type="Sprite2D" parent="."]
+position = Vector2(128, 112)
+texture = ExtResource("1_opkk2")
+
+[node name="Boss Name" type="Label" parent="."]
+layout_mode = 1
+offset_left = 128.0
+offset_top = 129.0
+offset_right = 129.0
+offset_bottom = 138.0
+label_settings = ExtResource("2_pia28")
+vertical_alignment = 1
+
+[node name="BossMarker" type="Marker2D" parent="."]
+position = Vector2(128, 128)
+gizmo_extents = 50.0
+
+[node name="BossSprite" type="Sprite2D" parent="."]
+position = Vector2(128, -32)
+texture = ExtResource("7_w8px3")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+autostart = true
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_u311b")
+volume_db = -12.0
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

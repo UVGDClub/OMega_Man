@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0pp7kr545bi3"]
+
+[ext_resource type="Script" uid="uid://cy6x8nvia8kki" path="res://General/scripts/trigger_checkpoint.gd" id="1_ic1cc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bowva"]
+size = Vector2(32, 32)
+
+[sub_resource type="SystemFont" id="SystemFont_vawu4"]
+subpixel_positioning = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ic1cc"]
+font = SubResource("SystemFont_vawu4")
+font_size = 8
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
+[node name="player_checkpoint" type="Area2D"]
+script = ExtResource("1_ic1cc")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_bowva")
+debug_color = Color(0.943066, 0.168159, 0.434053, 0.42)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 32.0
+offset_bottom = 34.0
+text = "CHECK
+POINT"
+label_settings = SubResource("LabelSettings_ic1cc")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

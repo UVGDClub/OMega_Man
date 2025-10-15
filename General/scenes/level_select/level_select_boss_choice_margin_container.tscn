@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://bd7r18pbt78c0"]
+
+[ext_resource type="Script" uid="uid://cxmv4wj6v6n37" path="res://General/scenes/level_select/level_select_boss_choice_margin_container.gd" id="1_o010t"]
+[ext_resource type="Texture2D" uid="uid://co7w4xok2v14a" path="res://General/scenes/level_select/portraits/portrait_blank.png" id="2_4pbrh"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="2_ymv7h"]
+[ext_resource type="Texture2D" uid="uid://bqn58v30msg0a" path="res://General/scenes/level_select/portraits/level_border_selected.png" id="3_verni"]
+
+[node name="LevelSelectBossChoice" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 67.0
+offset_bottom = 58.0
+script = ExtResource("1_o010t")
+
+[node name="Portrait" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 46.0
+offset_bottom = 54.0
+texture = ExtResource("2_4pbrh")
+stretch_mode = 2
+
+[node name="Boss_Face" type="TextureRect" parent="Portrait"]
+layout_mode = 0
+offset_right = 44.0
+offset_bottom = 44.0
+
+[node name="Selected" type="TextureRect" parent="Portrait"]
+visible = false
+layout_mode = 2
+offset_right = 44.0
+offset_bottom = 44.0
+texture = ExtResource("3_verni")
+expand_mode = 5
+stretch_mode = 2
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2
+offset_top = 48.0
+offset_right = 48.0
+offset_bottom = 57.0
+text = "------"
+label_settings = ExtResource("2_ymv7h")
+
+[node name="Mr_Ms" type="Label" parent="."]
+layout_mode = 2
+offset_top = 56.0
+offset_right = 48.0
+offset_bottom = 65.0
+text = "MAN"
+label_settings = ExtResource("2_ymv7h")
+horizontal_alignment = 2
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

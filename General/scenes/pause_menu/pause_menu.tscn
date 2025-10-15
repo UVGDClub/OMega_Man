@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://l1qc1tv6l23t"]
+
+[ext_resource type="Script" uid="uid://0byhco4vjgyy" path="res://General/scenes/pause_menu/pause_menu.gd" id="1_5bgjm"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="2_10tpt"]
+[ext_resource type="FontFile" uid="uid://dnm31l7x5h2ej" path="res://_project_system_files/MMRock9.ttf" id="3_0a7io"]
+
+[node name="pause_menu" type="CanvasLayer"]
+script = ExtResource("1_5bgjm")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.156863)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 104.0
+offset_top = 32.0
+offset_right = 152.0
+offset_bottom = 41.0
+text = "PAUSED"
+label_settings = ExtResource("2_10tpt")
+
+[node name="menu" type="VBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.0
+offset_top = 96.0
+offset_right = 36.0
+offset_bottom = 162.0
+grow_horizontal = 2
+
+[node name="resume" type="Button" parent="menu"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../quit")
+focus_neighbor_bottom = NodePath("../options")
+theme_override_fonts/font = ExtResource("3_0a7io")
+theme_override_font_sizes/font_size = 8
+text = "RESUME"
+
+[node name="options" type="Button" parent="menu"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../resume")
+focus_neighbor_bottom = NodePath("../quit")
+theme_override_fonts/font = ExtResource("3_0a7io")
+theme_override_font_sizes/font_size = 8
+text = "OPTIONS"
+
+[node name="quit" type="Button" parent="menu"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../options")
+focus_neighbor_bottom = NodePath("../resume")
+theme_override_fonts/font = ExtResource("3_0a7io")
+theme_override_font_sizes/font_size = 8
+text = "QUIT
+"
+
+[connection signal="pressed" from="menu/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="menu/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="menu/quit" to="." method="_on_quit_pressed"]

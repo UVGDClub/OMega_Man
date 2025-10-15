@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://clijcmla0ks20"]
+
+[ext_resource type="Script" uid="uid://bhf0gr20pg6sp" path="res://General/scripts/enemy_test.gd" id="1_dhw63"]
+[ext_resource type="Texture2D" uid="uid://wwvu3bjgriqv" path="res://General/sprites/debug/temp_guy.png" id="2_oy64c"]
+[ext_resource type="PackedScene" uid="uid://cbpl4l7efysx5" path="res://General/objects/enemy_hitbox.tscn" id="3_i2eio"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m6ua8"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sayh7"]
+radius = 32.0
+
+[node name="enemy_test" type="CharacterBody2D" node_paths=PackedStringArray("detection_area", "sprite") groups=["enemy"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_dhw63")
+detection_area = NodePath("detection_range")
+sprite = NodePath("TempGuy")
+
+[node name="TempGuy" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+scale = Vector2(-1, 1)
+texture = ExtResource("2_oy64c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_m6ua8")
+
+[node name="enemy_hitbox" parent="." instance=ExtResource("3_i2eio")]
+position = Vector2(0, -8)
+scale = Vector2(1.1, 1.1)
+collision_layer = 2
+
+[node name="detection_range" type="Area2D" parent="."]
+
+[node name="detection_circle" type="CollisionShape2D" parent="detection_range" groups=["enemy"]]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_sayh7")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="handle_despawn"]

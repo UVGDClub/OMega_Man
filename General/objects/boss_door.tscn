@@ -1,0 +1,165 @@
+[gd_scene load_steps=10 format=3 uid="uid://dcpf0ch86xj0m"]
+
+[ext_resource type="Script" uid="uid://len88tt1fube" path="res://General/scripts/boss_door.gd" id="1_137la"]
+[ext_resource type="Texture2D" uid="uid://c2r3abalrihhq" path="res://General/sprites/world/door_defualt.png" id="1_gi5ox"]
+[ext_resource type="PackedScene" uid="uid://crel0ora2qqes" path="res://General/objects/triggers/trigger_camera_pan.tscn" id="2_vmfie"]
+[ext_resource type="AudioStream" uid="uid://b2w51wp6xahal" path="res://General/sfx/temp/level/boss_door_segment.ogg" id="4_3qyfc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qyfc"]
+size = Vector2(32, 64)
+
+[sub_resource type="Animation" id="Animation_3qyfc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorDefualt:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 32, 64)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DoorDefualt:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("door_segment:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_4mfs2"]
+resource_name = "door_close"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorDefualt:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 32, 0), Rect2(0, 0, 32, 16), Rect2(0, 0, 32, 32), Rect2(0, 0, 32, 48), Rect2(0, 0, 32, 64)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DoorDefualt:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -32), Vector2(0, -24), Vector2(0, -16), Vector2(0, -8), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("door_segment:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.133333, 0.266667, 0.4, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, true, true, true]
+}
+
+[sub_resource type="Animation" id="Animation_7ekqh"]
+resource_name = "door_open"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DoorDefualt:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 32, 64), Rect2(0, 0, 32, 48), Rect2(0, 0, 32, 32), Rect2(0, 0, 32, 16), Rect2(0, 0, 32, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DoorDefualt:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.266667, 0.4, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -8), Vector2(0, -16), Vector2(0, -24), Vector2(0, -32)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("door_segment:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.133333, 0.266667, 0.4, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, true, true, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rvqta"]
+_data = {
+&"RESET": SubResource("Animation_3qyfc"),
+&"door_close": SubResource("Animation_4mfs2"),
+&"door_open": SubResource("Animation_7ekqh")
+}
+
+[node name="boss_door" type="StaticBody2D"]
+script = ExtResource("1_137la")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 32)
+shape = SubResource("RectangleShape2D_3qyfc")
+
+[node name="DoorDefualt" type="Sprite2D" parent="."]
+position = Vector2(16, 32)
+texture = ExtResource("1_gi5ox")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 64)
+
+[node name="TriggerCameraPan" parent="." instance=ExtResource("2_vmfie")]
+position = Vector2(-2, 0)
+scale = Vector2(2.2, 2)
+direction_move = 1
+boss_door = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rvqta")
+}
+
+[node name="door_segment" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3qyfc")
+
+[connection signal="player_entered" from="TriggerCameraPan" to="." method="_on_trigger_camera_pan_player_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

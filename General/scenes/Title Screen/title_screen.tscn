@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://ciclyfsbr5116"]
+
+[ext_resource type="Script" uid="uid://bdb16rvklnspp" path="res://General/scenes/Title Screen/title_screen.gd" id="1_85fp5"]
+[ext_resource type="Texture2D" uid="uid://cdo03tbix16fo" path="res://General/scenes/Title Screen/title_bg.png" id="1_427p6"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="2_15umc"]
+[ext_resource type="AudioStream" uid="uid://celfcbwpnqan6" path="res://General/sfx/temp/menu/menu_select.ogg" id="4_ml0ur"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_85fp5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(128, 120)
+texture = ExtResource("1_427p6")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_top = 128.0
+offset_right = 256.0
+offset_bottom = 240.0
+
+[node name="Label" type="Label" parent="Margin"]
+layout_mode = 2
+text = "PRESS START"
+label_settings = ExtResource("2_15umc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="flash_timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="select" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ml0ur")
+
+[node name="goto_timer" type="Timer" parent="."]
+wait_time = 1.5
+
+[connection signal="timeout" from="flash_timer" to="." method="_on_timer_timeout"]

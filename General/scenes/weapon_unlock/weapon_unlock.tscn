@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://by0cmn04dbgxi"]
+
+[ext_resource type="Script" uid="uid://b5w5ebud2pwkb" path="res://General/scripts/weapon_unlock_screen.gd" id="1_1yuec"]
+[ext_resource type="Texture2D" uid="uid://jr527q4fisqt" path="res://General/scenes/weapon_unlock/weapon_bg.png" id="2_vdrs5"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="3_y6e6x"]
+[ext_resource type="AudioStream" uid="uid://beoqgipose7ce" path="res://General/music/temp/Acro-Pizza-1.ogg" id="4_vdrs5"]
+
+[node name="weapon_unlock" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1yuec")
+
+[node name="bg" type="Sprite2D" parent="."]
+position = Vector2(128, 120)
+texture = ExtResource("2_vdrs5")
+
+[node name="YOU GOT" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_top = 72.0
+offset_right = 40.0
+offset_bottom = 81.0
+grow_horizontal = 2
+text = "YOU GOT"
+label_settings = ExtResource("3_y6e6x")
+horizontal_alignment = 1
+
+[node name="weapon_name" type="Label" parent="."]
+layout_mode = 1
+offset_left = 128.0
+offset_top = 152.0
+offset_right = 129.0
+offset_bottom = 161.0
+label_settings = ExtResource("3_y6e6x")
+horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_vdrs5")
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

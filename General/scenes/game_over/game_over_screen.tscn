@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://drmrvblmcwtol"]
+
+[ext_resource type="Script" uid="uid://fiierlvohbt5" path="res://General/scenes/game_over/game_over_screen.gd" id="1_mn3ea"]
+[ext_resource type="Texture2D" uid="uid://b0sa0v4rcpk1w" path="res://General/scenes/level_select/select_concept_bg.png" id="2_q5j0u"]
+[ext_resource type="LabelSettings" uid="uid://dlx67ty00ecj7" path="res://_project_system_files/label_level_select_settings.tres" id="3_3cxlp"]
+[ext_resource type="AudioStream" uid="uid://bxlm8kpe1bio0" path="res://General/music/temp/game_over_temp.wav" id="4_qavbd"]
+
+[node name="GameOver" type="Control"]
+custom_minimum_size = Vector2(256, 240)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mn3ea")
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(128, 120)
+texture = ExtResource("2_q5j0u")
+
+[node name="PressStartLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.0
+offset_top = 50.0
+offset_right = 44.0
+offset_bottom = 59.0
+grow_horizontal = 2
+text = "GAME OVER"
+label_settings = ExtResource("3_3cxlp")
+horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qavbd")
+volume_db = -6.0
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
