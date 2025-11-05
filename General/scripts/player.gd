@@ -135,6 +135,7 @@ func _physics_process(delta: float) -> void:
 	handle_friction()
 	handle_jump(delta)
 	handle_shoot()
+	handle_trigger_breaking_platform()
 
 	update_animation()
 	
@@ -290,6 +291,14 @@ func handle_jump(_delta):
 			jump_height_timer = 0;
 			return
 
+func handle_trigger_breaking_platform():
+	if is_on_floor():
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(i)
+			var collider = collision.get_collider()
+			if collider is StaticBody2D and collider.has_method("trigger_break"):
+				collider.trigger_break()
+	
 func try_climb_ladder() -> bool:
 	if(detect_ladder):
 		if(is_on_floor()):
