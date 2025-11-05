@@ -6,9 +6,6 @@ extends StaticBody2D
 @export var warning_time: float = 0.5
 @export var respawn_time: float = 2.0
 
-var is_breaking: bool = false
-var is_broken: bool = false
-
 enum State { Alive, Breaking }
 
 @onready var state = State.Alive
@@ -16,10 +13,10 @@ enum State { Alive, Breaking }
 func trigger_break():
 	if state == State.Alive:
 		state = State.Breaking
-		start_warning()
+		start_breaking()
 		
 
-func start_warning():
+func start_breaking():
 	warn_it()
 	await get_tree().create_timer(warning_time).timeout
 	break_it()
