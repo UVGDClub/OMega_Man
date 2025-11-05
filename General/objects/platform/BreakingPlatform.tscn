@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqrsl6xpfh66p"]
+
+[ext_resource type="Script" uid="uid://be42b55e4tvig" path="res://General/objects/platform/breaking_platform.gd" id="1_1nq3k"]
+[ext_resource type="Texture2D" uid="uid://bssh5ec5w7qkc" path="res://General/sprites/debug/tile_test.png" id="1_51hxb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_syuuv"]
+size = Vector2(16, 16)
+
+[node name="BreakingPlatform" type="StaticBody2D"]
+script = ExtResource("1_1nq3k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_syuuv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(8, 8)
+texture = ExtResource("1_51hxb")
+region_enabled = true
+region_rect = Rect2(0, 16, 16, 16)
