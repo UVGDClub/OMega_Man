@@ -1,0 +1,139 @@
+[gd_scene load_steps=21 format=3 uid="uid://bwu1f7lbmex1q"]
+
+[ext_resource type="Script" uid="uid://6gy2qq0vn7bi" path="res://General/objects/vfx/vfx_2d_oneshot.gd" id="1_o586c"]
+[ext_resource type="Texture2D" uid="uid://cru5eq4bn7ayb" path="res://General/sprites/debug/explosion-1_sheet.png" id="2_o586c"]
+[ext_resource type="AudioStream" uid="uid://gnrrct0p15sn" path="res://General/objects/obituary/obituary_sfx/explode_01.wav" id="3_ryvoe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryvoe"]
+atlas = ExtResource("2_o586c")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5reht"]
+atlas = ExtResource("2_o586c")
+region = Rect2(200, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trlb0"]
+atlas = ExtResource("2_o586c")
+region = Rect2(400, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6h2b"]
+atlas = ExtResource("2_o586c")
+region = Rect2(600, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq21b"]
+atlas = ExtResource("2_o586c")
+region = Rect2(0, 200, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5m6k1"]
+atlas = ExtResource("2_o586c")
+region = Rect2(200, 200, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88qn0"]
+atlas = ExtResource("2_o586c")
+region = Rect2(400, 200, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vuyku"]
+atlas = ExtResource("2_o586c")
+region = Rect2(600, 200, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5ii7"]
+atlas = ExtResource("2_o586c")
+region = Rect2(0, 400, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pn7mm"]
+atlas = ExtResource("2_o586c")
+region = Rect2(200, 400, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcwca"]
+atlas = ExtResource("2_o586c")
+region = Rect2(400, 400, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ws0qa"]
+atlas = ExtResource("2_o586c")
+region = Rect2(600, 400, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y1sj"]
+atlas = ExtResource("2_o586c")
+region = Rect2(0, 600, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_odlqw"]
+atlas = ExtResource("2_o586c")
+region = Rect2(200, 600, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ko7gk"]
+atlas = ExtResource("2_o586c")
+region = Rect2(400, 600, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mannt"]
+atlas = ExtResource("2_o586c")
+region = Rect2(600, 600, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qo4l2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryvoe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5reht")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trlb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6h2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iq21b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5m6k1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88qn0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vuyku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5ii7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pn7mm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcwca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ws0qa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y1sj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_odlqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ko7gk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mannt")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 24.0
+}]
+
+[node name="vfx_explosion_meme" type="Node2D"]
+script = ExtResource("1_o586c")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_qo4l2")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ryvoe")
+autoplay = true

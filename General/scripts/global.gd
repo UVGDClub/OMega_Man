@@ -7,7 +7,7 @@ const BOSS_THEME = preload("res://General/music/temp/boss_theme_temp.ogg")
 #--- game info:
 var curr_level: int;
 var next_level_name: String;
-var level_spawnpoint: int = 0;
+var level_spawnpoint: int = 1;
 var playerLives : int = 2;
 #--- useful instances
 var camera: OmegaCamera2D;
@@ -87,7 +87,8 @@ func handle_player_death():
 		get_tree().change_scene_to_file("res://General/scenes/game_over/game_over_screen.tscn");
 		#gameover screen
 	else:
-		get_tree().reload_current_scene();
+		get_tree().change_scene_to_file("res://General/objects/obituary.tscn");
+		#get_tree().reload_current_scene();
 		#restart current level
 	playerLives -= 1;
 	

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://c82k7hij44ihg"]
+
+[ext_resource type="Texture2D" uid="uid://cigyyu8kjfewv" path="res://General/objects/obituary/obituary.png" id="1_bsrfy"]
+[ext_resource type="Script" uid="uid://gm5acp47m7de" path="res://General/objects/obituary/obituary.gd" id="1_nxd7s"]
+
+[node name="obituary" type="CanvasLayer"]
+script = ExtResource("1_nxd7s")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(64, 64)
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("1_bsrfy")
+
+[node name="fadeout" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="timeout" from="fadeout" to="." method="_on_fadeout_timeout"]

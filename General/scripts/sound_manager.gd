@@ -27,7 +27,7 @@ func stop_music():
 	current_music.stop();
 	music_stopped = true;
 
-## crates a global sound instance and plays the sound
+## crates a global sound instance and plays the sound. returns a reference to the sound
 func playSound(_stream, _volume = 1.0, _pitch = 1.0, _pitchRange = 0.0):
 	var sound = AudioStreamPlayer.new();
 	sound.stream = _stream;
@@ -37,6 +37,7 @@ func playSound(_stream, _volume = 1.0, _pitch = 1.0, _pitchRange = 0.0):
 	add_child(sound);
 	global_sound_queue.append(sound);
 	sound.play();
+	return sound
 
 ## iterates and frees global sounds that aren't playing anymore
 func cleanup_sound_queue():
