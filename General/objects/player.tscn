@@ -1,9 +1,10 @@
-[gd_scene load_steps=54 format=3 uid="uid://cwo6seha311se"]
+[gd_scene load_steps=55 format=3 uid="uid://cwo6seha311se"]
 
 [ext_resource type="Script" uid="uid://ry7hhpv3oy54" path="res://General/scripts/player.gd" id="1_yun3a"]
 [ext_resource type="Texture2D" uid="uid://3aixhpcyl60a" path="res://General/sprites/player/megaMan_Sprites_sheet1.png" id="2_hkw58"]
 [ext_resource type="Script" uid="uid://b2ude8hdc678a" path="res://General/scripts/player_hud.gd" id="3_v6mph"]
 [ext_resource type="Texture2D" uid="uid://c5htanryh66ky" path="res://General/sprites/ui/ammo_bar_segment_texture_v.png" id="4_gyo0t"]
+[ext_resource type="PackedScene" uid="uid://bhyu3m03yrcd" path="res://General/weapons/default_weapon.tscn" id="5_hkw58"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j4h83"]
 atlas = ExtResource("2_hkw58")
@@ -1049,3 +1050,5 @@ fill_mode = 3
 texture_under = SubResource("GradientTexture2D_uxov2")
 texture_over = ExtResource("4_gyo0t")
 texture_progress = SubResource("GradientTexture2D_f46kd")
+
+[node name="DefaultWeapon" parent="." instance=ExtResource("5_hkw58")]

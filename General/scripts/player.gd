@@ -7,6 +7,8 @@ extends StateEntity2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var center = $center
 @onready var World = $"../.."
+@onready var weapon: Weapon = $DefaultWeapon
+
 #objects
 const bulletSource = preload("res://General/objects/bullet_player_basic.tscn")
 const VFX_BIG_DEATH = preload("res://General/objects/vfx/vfx_big_death.tscn")
@@ -256,26 +258,30 @@ func handle_weapon_swtich(menuTarget:int = -1):
 	bullets_left = bullet_limit;
 	
 func handle_shoot():
-	if(shoot_cooldown != 0): return
+	#if(shoot_cooldown != 0): return
 	if(!input_shoot): return;
-	if(bullets_left <= 0): return 
-	shoot_cooldown = shoot_cooldown_MAX;
+	#if(bullets_left <= 0): return 
+	#shoot_cooldown = shoot_cooldown_MAX;
 	shoot_anim_timer = shoot_anim_timer_max;
-	match(weapon_state):
-		WEAPON.NORMAL:
-			# shoot projectile
-			var bullet_ = bulletSource.instantiate()
-			bullets_left -= 1;
-			bullet_.set_velocity(facing)
-			bullet_.position = global_position + Vector2(facing * bullet_offset.x, bullet_offset.y)
-			World.add_child(bullet_)
-			SoundManager.playSound(SHOOT)
-		_:
-			if(ammo == 0): return
-			ammo -= weapon_stats[weapon_state][1];
-			weapon_stats[weapon_state][0] = ammo;
-			#TODO shoot whatever weapon projectile is needed
-		
+	weapon.shoot(self)
+	#match(weapon_state):
+		#WEAPON.NORMAL:
+			## shoot projectile
+			#var bullet_ = bulletSource.instantiate()
+			#bullets_left -= 1;
+			#bullet_.set_velocity(facing)
+			#bullet_.position = global_position + Vector2(facing * bullet_offset.x, bullet_offset.y)
+			#World.add_child(bullet_)
+			#SoundManager.playSound(SHOOT)
+		#_:
+			#if(ammo == 0): return
+			#ammo -= weapon_stats[weapon_state][1];
+			#weapon_stats[weapon_state][0] = ammo;
+			##TODO shoot whatever weapon projectile is needed
+
+func update_weapon_hud():
+	pass
+
 func handle_jump(_delta):
 	# Handle jump.
 	if(jump_cooldown): return;

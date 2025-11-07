@@ -8,6 +8,7 @@ var direction = 1;
 var damage = 1;
 var deathTimer = 120; # how long the instance will last in frames
 
+signal bullet_despawn
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,7 +34,7 @@ func handle_movement(delta):
 	position += velocity * delta;
 
 func handle_queue_free():
-	Global.player.try_restock_bullet(Player.WEAPON.NORMAL)
+	bullet_despawn.emit()
 	queue_free();
 	
 
