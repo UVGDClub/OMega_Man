@@ -6,5 +6,7 @@
 [node name="DefaultWeapon" type="Node2D"]
 script = ExtResource("1_3t1sf")
 bullet_scene = ExtResource("2_pb0gy")
+weapon_name = "Default Weapon"
 shot_cost = 0
+has_ammo_bar = false
 metadata/_custom_type_script = "uid://211v4uwjpjig"

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://du80hmfvia5sx"]
+
+[ext_resource type="Script" uid="uid://211v4uwjpjig" path="res://General/weapons/simple_weapon.gd" id="1_ldkr4"]
+[ext_resource type="PackedScene" uid="uid://sao7ex1k7k3b" path="res://General/weapons/test_bullet.tscn" id="2_63vrp"]
+
+[node name="TestWeapon" type="Node2D"]
+script = ExtResource("1_ldkr4")
+bullet_scene = ExtResource("2_63vrp")
+weapon_name = "test Weapon"
+metadata/_custom_type_script = "uid://211v4uwjpjig"

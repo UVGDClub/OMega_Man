@@ -8,6 +8,9 @@ extends StateEntity2D
 @onready var center = $center
 @onready var World = $"../.."
 @onready var weapon: Weapon = $DefaultWeapon
+@onready var hud: PlayerHUD = $HUD
+
+@export var weapon_list : Array[WeaponResource]
 
 #objects
 const bulletSource = preload("res://General/objects/bullet_player_basic.tscn")
@@ -76,7 +79,9 @@ const FRICTION = 45.0
 #stats
 var max_health = 28;
 var max_ammo = 28;
-var health = max_health;
+var health = max_health:
+	set(value):
+		hud.update_health_bar(value)
 var ammo = 28;
 var bullets_left = 3;
 var bullet_limit = bullets_left;
@@ -120,7 +125,7 @@ func _ready():
 	state = state_Teleport_Enter;
 	state.call()
 	Global.player_spawn.emit(self)
-	pass
+	hud.update_health_bar(health)
 
 func _physics_process(delta: float) -> void:
 	debug_handle_slowmo();
@@ -131,7 +136,7 @@ func _physics_process(delta: float) -> void:
 	stateDriver();
 	
 	#print(state.hash())
-	handle_weapon_swtich()
+	#handle_weapon_swtich()
 	handle_gravity(delta)
 	handle_movement()
 	handle_friction()
@@ -217,15 +222,17 @@ func handle_gravity(delta):
 		velocity.y += gravity * delta
 		
 func handle_weapon_swtich(menuTarget:int = -1):
-	if(menuTarget != -1):
-		#force the weapon state switch through weapon menu
-		if(menuTarget >= 0 && menuTarget <= 8):
-			weapon_stats[weapon_state][0] = ammo;
-			weapon_state = menuTarget;
-			ammo = weapon_stats[weapon_state][0];
-			bullet_limit = weapon_stats[weapon_state][2];
-			bullets_left = bullet_limit;
-			return
+	if menuTarget not in range(len(weapon_list)): return
+	
+	weapon_list[weapon.idx].saved_ammo = weapon.ammo
+	weapon_list[menuTarget].spawn_weapon(self)
+	update_weapon_hud()
+	#force the weapon state switch through weapon menu
+	#weapon_stats[weapon_state][0] = ammo;
+	#weapon_state = menuTarget;
+	#ammo = weapon_stats[weapon_state][0];
+	#bullet_limit = weapon_stats[weapon_state][2];
+	#bullets_left = bullet_limit;
 
 	var input_switch = (int(Input.is_action_just_pressed("weapon_switch_right")) 
 						- int(Input.is_action_just_pressed("weapon_switch_left")));
@@ -280,7 +287,8 @@ func handle_shoot():
 			##TODO shoot whatever weapon projectile is needed
 
 func update_weapon_hud():
-	pass
+	weapon_list[weapon.idx].saved_ammo = weapon.ammo
+	hud.update_ammo_bar(weapon.has_ammo_bar, weapon_list[weapon.idx].bar_colour, weapon.ammo)
 
 func handle_jump(_delta):
 	# Handle jump.
@@ -392,11 +400,7 @@ func update_animation():
 	match(anim_state):
 		ANIM.IDLE:
 			if(shoot_anim_timer):
-				match(weapon_state):
-					WEAPON.NORMAL:
-						animation_player.play("idle_shoot")
-					_:
-						animation_player.play("idle_shoot_palm")
+				animation_player.play("idle_" + weapon.anim_type)
 			elif(input_move.x != 0): animation_player.play("run_inch")
 			else: animation_player.play("idle")
 		ANIM.RUN:
@@ -404,19 +408,11 @@ func update_animation():
 			else: animation_player.play("run")
 		ANIM.AIR:
 			if(shoot_anim_timer):
-				match(weapon_state):
-					WEAPON.NORMAL:
-						animation_player.play("air_shoot")
-					_:
-						animation_player.play("air_shoot_palm")
+				animation_player.play("air_" + weapon.anim_type)
 			else: animation_player.play("air_neutral")
 		ANIM.LADDER:
 			if(shoot_anim_timer): 
-				match(weapon_state):
-					WEAPON.NORMAL:
-						animation_player.play("ladder_shoot")
-					_:
-						animation_player.play("ladder_shoot_palm")
+				animation_player.play("ladder_" + weapon.anim_type)
 			else: animation_player.play("ladder")
 		ANIM.LADDER_TOP:
 			animation_player.play("ladder_top")

@@ -1,12 +1,14 @@
 extends Area2D
+class_name PlayerBullet
 
 # no need for anything fancy on the movement
-var SPEED_DEFAULT = 200;
+@export var SPEED_DEFAULT = 200;
 var SPEED = 0;
 var velocity := Vector2.ZERO
 var direction = 1;
-var damage = 1;
-var deathTimer = 120; # how long the instance will last in frames
+@export var damage = 1;
+##how long the instance will last in frames
+@export var deathTimer = 120; # how long the instance will last in frames
 
 signal bullet_despawn
 

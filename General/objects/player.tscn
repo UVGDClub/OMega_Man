@@ -1,10 +1,30 @@
-[gd_scene load_steps=55 format=3 uid="uid://cwo6seha311se"]
+[gd_scene load_steps=59 format=3 uid="uid://cwo6seha311se"]
 
 [ext_resource type="Script" uid="uid://ry7hhpv3oy54" path="res://General/scripts/player.gd" id="1_yun3a"]
+[ext_resource type="Script" uid="uid://bq08ddapv8yiu" path="res://General/weapons/weapon_resource.gd" id="2_gyo0t"]
 [ext_resource type="Texture2D" uid="uid://3aixhpcyl60a" path="res://General/sprites/player/megaMan_Sprites_sheet1.png" id="2_hkw58"]
 [ext_resource type="Script" uid="uid://b2ude8hdc678a" path="res://General/scripts/player_hud.gd" id="3_v6mph"]
+[ext_resource type="PackedScene" uid="uid://du80hmfvia5sx" path="res://General/weapons/test_weapon.tscn" id="4_3sk10"]
 [ext_resource type="Texture2D" uid="uid://c5htanryh66ky" path="res://General/sprites/ui/ammo_bar_segment_texture_v.png" id="4_gyo0t"]
 [ext_resource type="PackedScene" uid="uid://bhyu3m03yrcd" path="res://General/weapons/default_weapon.tscn" id="5_hkw58"]
+
+[sub_resource type="Resource" id="Resource_4ol52"]
+script = ExtResource("2_gyo0t")
+weapon_scene = ExtResource("5_hkw58")
+acquired = true
+weapon_index = 0
+bar_colour = Color(1, 1, 1, 1)
+select_character = "P"
+metadata/_custom_type_script = "uid://bq08ddapv8yiu"
+
+[sub_resource type="Resource" id="Resource_fmx5p"]
+script = ExtResource("2_gyo0t")
+weapon_scene = ExtResource("4_3sk10")
+acquired = true
+weapon_index = 1
+bar_colour = Color(0.813789, 0.110791, 0.314034, 1)
+select_character = "P"
+metadata/_custom_type_script = "uid://bq08ddapv8yiu"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j4h83"]
 atlas = ExtResource("2_hkw58")
@@ -996,6 +1016,7 @@ height = 56
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_yun3a")
+weapon_list = Array[ExtResource("2_gyo0t")]([SubResource("Resource_4ol52"), SubResource("Resource_fmx5p")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
