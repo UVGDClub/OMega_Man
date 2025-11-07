@@ -6,7 +6,7 @@ extends Button
 
 const MENU_MOVE = preload("res://General/sfx/temp/menu/menu_move.ogg")
 
-@export var weaponIndex:Player.WEAPON;
+@export var weaponIndex: int = 0;
 var tint:Color = Color.WHITE;
 
 func _ready():

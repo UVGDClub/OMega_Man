@@ -60,6 +60,7 @@ func handle_animation():
 func _on_item_pickup_body_entered(player):
 	if(!player.is_in_group("player")): return;
 	#pick up item
+	player = player as Player
 	match(item_type):
 		0:
 			#gain health
@@ -79,7 +80,7 @@ func _on_item_pickup_body_entered(player):
 			player.gain_extra_life()
 			SoundManager.playSound(SFX_1UP,0.25);
 		3:
-			Global.player_unlock_weapon(unlock_weapon)
+			player.get_weapon(unlock_weapon)
 			SoundManager.playSound(SFX_GOAL);
 			player.leave_stage();
 	queue_free()

@@ -27,17 +27,7 @@ signal on_pause_game
 signal on_weapon_screen
 signal spawn_boss;
 
-var player_weapon_unlocks:Dictionary = {
-	Player.WEAPON.NORMAL:[true, "DEFAULT"],
-	Player.WEAPON.POWER1:[false,"LETHAL BALL"],
-	Player.WEAPON.POWER2:[false,"WEAPON 2"],
-	Player.WEAPON.POWER3:[false,"WEAPON 3"],
-	Player.WEAPON.POWER4:[false,"WEAPON 4"],
-	Player.WEAPON.POWER5:[false,"WEAPON 5"],
-	Player.WEAPON.POWER6:[false,"WEAPON 6"],
-	Player.WEAPON.POWER7:[false,"WEAPON 7"],
-	Player.WEAPON.POWER8:[false,"WEAPON 8"]
-}
+var saved_weapons : Array[WeaponResource]
 
 var user_settings:Dictionary = {
 	"volume_sfx":100.0,
@@ -90,12 +80,6 @@ func handle_player_death():
 		get_tree().reload_current_scene();
 		#restart current level
 	playerLives -= 1;
-	
-func player_unlock_weapon(weapon:Player.WEAPON):
-	if(weapon < 0 || weapon > 8): weapon = 0;
-	print("weapon unlock:" + str(weapon))
-	player_weapon_unlocks[weapon][0] = true;
-	pass
 	
 func on_player_spawn(p: Player) -> void:
 	player = p

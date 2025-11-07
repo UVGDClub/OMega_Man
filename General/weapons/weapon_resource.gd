@@ -1,6 +1,7 @@
 extends Resource
 class_name WeaponResource
 
+@export var weapon_name : String
 @export var weapon_scene : PackedScene
 @export var acquired : bool = false
 @export var weapon_index : int = 0

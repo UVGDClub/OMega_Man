@@ -17,9 +17,10 @@ var hover_timer_max = 8;
 
 func _ready():
 	hovering_sprite.visible = false;
-	if(level > 0 && level < 9): 
-		if(Global.player_weapon_unlocks[level][0] == true): 
-			boss_face.visible = false;
+	if(level > 0 && level < 9):
+		for w in Global.saved_weapons:
+			if w.weapon_index == level and w.acquired: 
+				boss_face.visible = false;
 
 func _process(_delta: float) -> void:
 	if(inputLock): grab_focus() #really bad way of doing this

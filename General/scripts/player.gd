@@ -27,33 +27,6 @@ var debug_slowMo = 1
 #signals
 signal death;
 
-#WEAPON STATE
-enum WEAPON {
-	NORMAL, #0
-	POWER1, #1
-	POWER2, #2...
-	POWER3, 
-	POWER4, 
-	POWER5,
-	POWER6,
-	POWER7, 
-	POWER8 #8
-}
-var weapon_state = WEAPON.NORMAL;
-
-# format -- NAME:[AMMO, WEAPON COST, LIMIT, TINT]
-var weapon_stats: Dictionary = {
-	WEAPON.NORMAL:[28,0,3,Color(1.0,1.0,0.6)],
-	WEAPON.POWER1:[28,1,1,Color.RED],
-	WEAPON.POWER2:[28,1,1,Color.GREEN],
-	WEAPON.POWER3:[28,1,1,Color.BLUE],
-	WEAPON.POWER4:[28,1,1,Color.MAGENTA],
-	WEAPON.POWER5:[28,1,1,Color.YELLOW],
-	WEAPON.POWER6:[28,1,1,Color.CYAN],
-	WEAPON.POWER7:[28,1,1,Color.ORANGE],
-	WEAPON.POWER8:[28,1,1,Color.PURPLE]
-}
-
 #ANIMATION STATE
 enum ANIM {
 	IDLE,
@@ -78,13 +51,10 @@ const FRICTION = 45.0
 
 #stats
 var max_health = 28;
-var max_ammo = 28;
 var health = max_health:
 	set(value):
+		health = value
 		hud.update_health_bar(value)
-var ammo = 28;
-var bullets_left = 3;
-var bullet_limit = bullets_left;
 
 # State Related Variables
 var facing = 1;
@@ -122,6 +92,8 @@ var shoot_cooldown: int = 0
 var bullet_offset: Vector2 = Vector2.ZERO;
 
 func _ready():
+	for i in len(Global.saved_weapons):
+		weapon_list[i].acquired = Global.saved_weapons[i].acquired
 	state = state_Teleport_Enter;
 	state.call()
 	Global.player_spawn.emit(self)
@@ -136,7 +108,7 @@ func _physics_process(delta: float) -> void:
 	stateDriver();
 	
 	#print(state.hash())
-	#handle_weapon_swtich()
+	handle_weapon_swtich()
 	handle_gravity(delta)
 	handle_movement()
 	handle_friction()
@@ -220,75 +192,47 @@ func handle_gravity(delta):
 	if(ignore_gravity): return
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		
+
+#currently a bug where if you swap to another weapon then swap back you can shoot > max num of onscreen bullets
+#but i kinda think its cool so im not fixing it
 func handle_weapon_swtich(menuTarget:int = -1):
-	if menuTarget not in range(len(weapon_list)): return
+	
+	var switch_dir := 0
+	if Input.is_action_just_pressed("weapon_switch_left"):
+		switch_dir = -1
+	elif Input.is_action_just_pressed("weapon_switch_right"):
+		switch_dir = 1
+	
+	if menuTarget not in range(len(weapon_list)) && switch_dir == 0: return
+	
+	if switch_dir != 0:
+		var start = weapon.idx
+		var i = wrapi(start + switch_dir, 0, weapon_list.size())
+		while i != start && !weapon_list[i].acquired:
+			i = wrapi(i + switch_dir, 0, weapon_list.size())
+		if i == start:
+			return
+		menuTarget = i
 	
 	weapon_list[weapon.idx].saved_ammo = weapon.ammo
 	weapon_list[menuTarget].spawn_weapon(self)
 	update_weapon_hud()
-	#force the weapon state switch through weapon menu
-	#weapon_stats[weapon_state][0] = ammo;
-	#weapon_state = menuTarget;
-	#ammo = weapon_stats[weapon_state][0];
-	#bullet_limit = weapon_stats[weapon_state][2];
-	#bullets_left = bullet_limit;
-
-	var input_switch = (int(Input.is_action_just_pressed("weapon_switch_right")) 
-						- int(Input.is_action_just_pressed("weapon_switch_left")));
-						
-	if(input_switch == 0): return;
-	
-	var next_weapon = weapon_state + input_switch;
-	#roll_over
-	if(next_weapon > 8): next_weapon = 0;
-	if(next_weapon < 0): next_weapon = 8;
-	#save current ammo
-	weapon_stats[weapon_state][0] = ammo;
-	
-	# use a while loop to scroll the next available unlocked weapon
-	while(Global.player_weapon_unlocks[next_weapon][0] == false):
-		next_weapon += input_switch
-		#roll_over
-		if(next_weapon > 8): next_weapon = 0;
-		if(next_weapon < 0): next_weapon = 8;
-		if(next_weapon == weapon_state): 
-			# edgecase: scrolled through every weapon, and we didnt find a new one
-			# should only happen when we have one weapon
-			print("you got nothing, son")
-			return
-	
-	#load new weapon ammo and limit
-	weapon_state = next_weapon;
-	ammo = weapon_stats[weapon_state][0];
-	bullet_limit = weapon_stats[weapon_state][2];
-	bullets_left = bullet_limit;
 	
 func handle_shoot():
-	#if(shoot_cooldown != 0): return
 	if(!input_shoot): return;
-	#if(bullets_left <= 0): return 
-	#shoot_cooldown = shoot_cooldown_MAX;
-	shoot_anim_timer = shoot_anim_timer_max;
-	weapon.shoot(self)
-	#match(weapon_state):
-		#WEAPON.NORMAL:
-			## shoot projectile
-			#var bullet_ = bulletSource.instantiate()
-			#bullets_left -= 1;
-			#bullet_.set_velocity(facing)
-			#bullet_.position = global_position + Vector2(facing * bullet_offset.x, bullet_offset.y)
-			#World.add_child(bullet_)
-			#SoundManager.playSound(SHOOT)
-		#_:
-			#if(ammo == 0): return
-			#ammo -= weapon_stats[weapon_state][1];
-			#weapon_stats[weapon_state][0] = ammo;
-			##TODO shoot whatever weapon projectile is needed
+	if weapon.shoot(self):
+		shoot_anim_timer = shoot_anim_timer_max;
 
 func update_weapon_hud():
 	weapon_list[weapon.idx].saved_ammo = weapon.ammo
 	hud.update_ammo_bar(weapon.has_ammo_bar, weapon_list[weapon.idx].bar_colour, weapon.ammo)
+
+func get_weapon(idx : int):
+	if idx not in range(len(weapon_list)): return
+	weapon_list[idx].acquired = true
+	Global.saved_weapons = weapon_list
+	for i in Global.saved_weapons.size():
+		Global.saved_weapons[i] = Global.saved_weapons[i].duplicate()
 
 func handle_jump(_delta):
 	# Handle jump.
@@ -336,19 +280,7 @@ func try_gain_health(amt):
 	health += amt
 	if(health > max_health):
 		health = max_health
-	
-func try_gain_ammo(amt):
-	if(ammo == max_ammo): return
-	ammo += amt
-	if(ammo > max_ammo):
-		ammo = max_ammo
 
-## used by projectiles when they destroy themselves
-func try_restock_bullet(type:WEAPON):
-	if(type != weapon_state): return;
-	if(bullets_left == bullet_limit): return
-	bullets_left += 1;
-	
 func gain_extra_life():
 	Global.playerLives += 1;
 	

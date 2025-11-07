@@ -6,11 +6,11 @@ class_name SimpleWeapon
 @export var bonus_offset : Vector2 = Vector2.ZERO
 @export var sfx : AudioStream = preload("res://General/sfx/temp/player/shoot.ogg")
 
-func shoot(player : Player):
-	if !super.shoot(player): return
+func shoot(player : Player) -> bool:
+	if !super.shoot(player): return false
 	if !bullet_scene: 
 		push_error("Weapon has NULL bullet scene.")
-		return
+		return false
 	
 	var World : Node2D = get_tree().get_first_node_in_group("World")
 	var bullet : Node2D = bullet_scene.instantiate()
@@ -28,3 +28,4 @@ func shoot(player : Player):
 	World.add_child(bullet)
 	bullet.global_position = player.global_position + Vector2(player.facing * player.bullet_offset.x, player.bullet_offset.y)
 	SoundManager.playSound(sfx)
+	return true

@@ -9,7 +9,7 @@ var charTimer = 4;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if(Global.curr_level > 0 && Global.curr_level < 9):
-		weapon_to_type = Global.player_weapon_unlocks[Global.curr_level][1];
+		weapon_to_type = Global.saved_weapons[Global.curr_level].weapon_name;
 	weapon_name.text = weapon_to_type;
 	weapon_name.visible = false; #HACK see hack_adjust_boss_name()
 	pass

@@ -40,6 +40,7 @@ func update_screen():
 		var tint = Global.player.weapon_list[i].bar_colour
 		var value = Global.player.weapon_list[i].saved_ammo
 		#set the P weapon to be player health
+		weapons[i].label.text = Global.player.weapon_list[i].select_character
 		weapons[i].show();
 		if(i==0):
 			weapon_normal.set_ammo(Global.player.health,tint);
