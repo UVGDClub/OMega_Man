@@ -10,6 +10,7 @@ extends StateEntity2D
 @onready var weapon: Weapon = $DefaultWeapon
 @onready var hud: PlayerHUD = $HUD
 
+##Read this for to make a weapon: https://docs.google.com/document/d/1Nx2bDud6jFGAK-fJVuQmFSQD_PMJEAqOdFbjn8nDh3g/edit?usp=sharing
 @export var weapon_list : Array[WeaponResource]
 
 #objects

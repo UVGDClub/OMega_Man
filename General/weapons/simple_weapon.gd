@@ -1,9 +1,11 @@
 extends Weapon
 class_name SimpleWeapon
 
+##The scene of the bullet you want to shoot
 @export var bullet_scene : PackedScene
 ##Only use this if your bullet doesn't spawn from the default offset
 @export var bonus_offset : Vector2 = Vector2.ZERO
+##sound effect played when shooting
 @export var sfx : AudioStream = preload("res://General/sfx/temp/player/shoot.ogg")
 
 func shoot(player : Player) -> bool:

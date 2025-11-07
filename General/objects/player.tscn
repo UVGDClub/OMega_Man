@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://cwo6seha311se"]
+[gd_scene load_steps=62 format=3 uid="uid://cwo6seha311se"]
 
 [ext_resource type="Script" uid="uid://ry7hhpv3oy54" path="res://General/scripts/player.gd" id="1_yun3a"]
 [ext_resource type="Script" uid="uid://bq08ddapv8yiu" path="res://General/weapons/weapon_resource.gd" id="2_gyo0t"]
@@ -45,6 +45,15 @@ acquired = true
 weapon_index = 3
 bar_colour = Color(0.619958, 0.405828, 0.939826, 1)
 select_character = "X"
+metadata/_custom_type_script = "uid://bq08ddapv8yiu"
+
+[sub_resource type="Resource" id="Resource_gyo0t"]
+script = ExtResource("2_gyo0t")
+weapon_name = ""
+acquired = false
+weapon_index = 0
+bar_colour = Color(1, 1, 1, 1)
+select_character = "P"
 metadata/_custom_type_script = "uid://bq08ddapv8yiu"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j4h83"]
@@ -1037,7 +1046,7 @@ height = 56
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_yun3a")
-weapon_list = Array[ExtResource("2_gyo0t")]([SubResource("Resource_4ol52"), SubResource("Resource_fmx5p"), SubResource("Resource_xd2x2"), SubResource("Resource_mfjgb")])
+weapon_list = Array[ExtResource("2_gyo0t")]([SubResource("Resource_4ol52"), SubResource("Resource_fmx5p"), SubResource("Resource_xd2x2"), SubResource("Resource_mfjgb"), SubResource("Resource_gyo0t")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
