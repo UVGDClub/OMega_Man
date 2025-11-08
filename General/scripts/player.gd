@@ -7,6 +7,12 @@ extends StateEntity2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var center = $center
 @onready var World = $"../.."
+@onready var weapon: Weapon = $DefaultWeapon
+@onready var hud: PlayerHUD = $HUD
+
+##Read this for to make a weapon: https://docs.google.com/document/d/1Nx2bDud6jFGAK-fJVuQmFSQD_PMJEAqOdFbjn8nDh3g/edit?usp=sharing
+@export var weapon_list : Array[WeaponResource]
+
 #objects
 const bulletSource = preload("res://General/objects/bullet_player_basic.tscn")
 const VFX_BIG_DEATH = preload("res://General/objects/vfx/vfx_big_death.tscn")
@@ -21,33 +27,6 @@ var debug_slowMo = 1
 
 #signals
 signal death;
-
-#WEAPON STATE
-enum WEAPON {
-	NORMAL, #0
-	POWER1, #1
-	POWER2, #2...
-	POWER3, 
-	POWER4, 
-	POWER5,
-	POWER6,
-	POWER7, 
-	POWER8 #8
-}
-var weapon_state = WEAPON.NORMAL;
-
-# format -- NAME:[AMMO, WEAPON COST, LIMIT, TINT]
-var weapon_stats: Dictionary = {
-	WEAPON.NORMAL:[28,0,3,Color(1.0,1.0,0.6)],
-	WEAPON.POWER1:[28,1,1,Color.RED],
-	WEAPON.POWER2:[28,1,1,Color.GREEN],
-	WEAPON.POWER3:[28,1,1,Color.BLUE],
-	WEAPON.POWER4:[28,1,1,Color.MAGENTA],
-	WEAPON.POWER5:[28,1,1,Color.YELLOW],
-	WEAPON.POWER6:[28,1,1,Color.CYAN],
-	WEAPON.POWER7:[28,1,1,Color.ORANGE],
-	WEAPON.POWER8:[28,1,1,Color.PURPLE]
-}
 
 #ANIMATION STATE
 enum ANIM {
@@ -73,11 +52,10 @@ const FRICTION = 45.0
 
 #stats
 var max_health = 28;
-var max_ammo = 28;
-var health = max_health;
-var ammo = 28;
-var bullets_left = 3;
-var bullet_limit = bullets_left;
+var health = max_health:
+	set(value):
+		health = value
+		hud.update_health_bar(value)
 
 # State Related Variables
 var facing = 1;
@@ -115,10 +93,12 @@ var shoot_cooldown: int = 0
 var bullet_offset: Vector2 = Vector2.ZERO;
 
 func _ready():
+	for i in len(Global.saved_weapons):
+		weapon_list[i].acquired = Global.saved_weapons[i].acquired
 	state = state_Teleport_Enter;
 	state.call()
 	Global.player_spawn.emit(self)
-	pass
+	hud.update_health_bar(health)
 
 func _physics_process(delta: float) -> void:
 	debug_handle_slowmo();
@@ -213,69 +193,53 @@ func handle_gravity(delta):
 	if(ignore_gravity): return
 	if not is_on_floor():
 		velocity.y += gravity * delta
-		
-func handle_weapon_swtich(menuTarget:int = -1):
-	if(menuTarget != -1):
-		#force the weapon state switch through weapon menu
-		if(menuTarget >= 0 && menuTarget <= 8):
-			weapon_stats[weapon_state][0] = ammo;
-			weapon_state = menuTarget;
-			ammo = weapon_stats[weapon_state][0];
-			bullet_limit = weapon_stats[weapon_state][2];
-			bullets_left = bullet_limit;
-			return
 
-	var input_switch = (int(Input.is_action_just_pressed("weapon_switch_right")) 
-						- int(Input.is_action_just_pressed("weapon_switch_left")));
-						
-	if(input_switch == 0): return;
+#currently a bug where if you swap to another weapon then swap back you can shoot > max num of onscreen bullets
+#but i kinda think its cool so im not fixing it
+func handle_weapon_swtich(menuTarget:int = -1):
 	
-	var next_weapon = weapon_state + input_switch;
-	#roll_over
-	if(next_weapon > 8): next_weapon = 0;
-	if(next_weapon < 0): next_weapon = 8;
-	#save current ammo
-	weapon_stats[weapon_state][0] = ammo;
+	var switch_dir := 0
+	if Input.is_action_just_pressed("weapon_switch_left"):
+		switch_dir = -1
+	elif Input.is_action_just_pressed("weapon_switch_right"):
+		switch_dir = 1
 	
-	# use a while loop to scroll the next available unlocked weapon
-	while(Global.player_weapon_unlocks[next_weapon][0] == false):
-		next_weapon += input_switch
-		#roll_over
-		if(next_weapon > 8): next_weapon = 0;
-		if(next_weapon < 0): next_weapon = 8;
-		if(next_weapon == weapon_state): 
-			# edgecase: scrolled through every weapon, and we didnt find a new one
-			# should only happen when we have one weapon
-			print("you got nothing, son")
+	if menuTarget not in range(len(weapon_list)) && switch_dir == 0: return
+	
+	if switch_dir != 0:
+		var start = weapon.idx
+		var i = wrapi(start + switch_dir, 0, weapon_list.size())
+		while i != start && !weapon_list[i].acquired:
+			i = wrapi(i + switch_dir, 0, weapon_list.size())
+		if i == start:
 			return
+		menuTarget = i
 	
-	#load new weapon ammo and limit
-	weapon_state = next_weapon;
-	ammo = weapon_stats[weapon_state][0];
-	bullet_limit = weapon_stats[weapon_state][2];
-	bullets_left = bullet_limit;
+	weapon_list[weapon.idx].saved_ammo = weapon.ammo
+	weapon_list[menuTarget].spawn_weapon(self)
+	update_weapon_hud()
 	
 func handle_shoot():
-	if(shoot_cooldown != 0): return
 	if(!input_shoot): return;
-	if(bullets_left <= 0): return 
-	shoot_cooldown = shoot_cooldown_MAX;
-	shoot_anim_timer = shoot_anim_timer_max;
-	match(weapon_state):
-		WEAPON.NORMAL:
-			# shoot projectile
-			var bullet_ = bulletSource.instantiate()
-			bullets_left -= 1;
-			bullet_.set_velocity(facing)
-			bullet_.position = global_position + Vector2(facing * bullet_offset.x, bullet_offset.y)
-			World.add_child(bullet_)
-			SoundManager.playSound(SHOOT)
-		_:
-			if(ammo == 0): return
-			ammo -= weapon_stats[weapon_state][1];
-			weapon_stats[weapon_state][0] = ammo;
-			#TODO shoot whatever weapon projectile is needed
-		
+	if weapon.shoot(self):
+		shoot_anim_timer = shoot_anim_timer_max;
+
+func update_weapon_hud():
+	weapon_list[weapon.idx].saved_ammo = weapon.ammo
+	hud.update_ammo_bar(weapon.has_ammo_bar, weapon_list[weapon.idx].bar_colour, weapon.ammo)
+
+func get_weapon(idx : int):
+	if idx not in range(len(weapon_list)): return
+	weapon_list[idx].acquired = true
+	Global.saved_weapons = weapon_list
+	for i in Global.saved_weapons.size():
+		Global.saved_weapons[i] = Global.saved_weapons[i].duplicate()
+
+func try_gain_ammo(amount : int):
+	#TODO add ammo over time while pausing game (idk if we want this even though its in the original mega man it might make the game feel clunky)
+	weapon.ammo += amount
+	update_weapon_hud()
+
 func handle_jump(_delta):
 	# Handle jump.
 	if(jump_cooldown): return;
@@ -322,19 +286,7 @@ func try_gain_health(amt):
 	health += amt
 	if(health > max_health):
 		health = max_health
-	
-func try_gain_ammo(amt):
-	if(ammo == max_ammo): return
-	ammo += amt
-	if(ammo > max_ammo):
-		ammo = max_ammo
 
-## used by projectiles when they destroy themselves
-func try_restock_bullet(type:WEAPON):
-	if(type != weapon_state): return;
-	if(bullets_left == bullet_limit): return
-	bullets_left += 1;
-	
 func gain_extra_life():
 	Global.playerLives += 1;
 	
@@ -386,11 +338,7 @@ func update_animation():
 	match(anim_state):
 		ANIM.IDLE:
 			if(shoot_anim_timer):
-				match(weapon_state):
-					WEAPON.NORMAL:
-						animation_player.play("idle_shoot")
-					_:
-						animation_player.play("idle_shoot_palm")
+				animation_player.play("idle_" + weapon.anim_type)
 			elif(input_move.x != 0): animation_player.play("run_inch")
 			else: animation_player.play("idle")
 		ANIM.RUN:
@@ -398,19 +346,11 @@ func update_animation():
 			else: animation_player.play("run")
 		ANIM.AIR:
 			if(shoot_anim_timer):
-				match(weapon_state):
-					WEAPON.NORMAL:
-						animation_player.play("air_shoot")
-					_:
-						animation_player.play("air_shoot_palm")
+				animation_player.play("air_" + weapon.anim_type)
 			else: animation_player.play("air_neutral")
 		ANIM.LADDER:
 			if(shoot_anim_timer): 
-				match(weapon_state):
-					WEAPON.NORMAL:
-						animation_player.play("ladder_shoot")
-					_:
-						animation_player.play("ladder_shoot_palm")
+				animation_player.play("ladder_" + weapon.anim_type)
 			else: animation_player.play("ladder")
 		ANIM.LADDER_TOP:
 			animation_player.play("ladder_top")

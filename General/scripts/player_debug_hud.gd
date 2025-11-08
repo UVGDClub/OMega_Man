@@ -26,7 +26,7 @@ func _process(_delta):
 	position_y.text = "Y: " + str(snapped(player.position.y,0.01))
 	state.text = "STATE: " + player._stateID
 	state_time.text = "STATE TIME: " + str(player.stateTime)
-	weapon.text = "WEAPON: " + str(player.weapon_state)
+	weapon.text = "WEAPON: " + str(player.weapon_list[player.weapon.idx].weapon_name)
 	hp.text = "HP: " + str(player.health)
-	ammo.text = "AMMO: " + str(player.ammo)
+	ammo.text = "AMMO: " + str(player.weapon.ammo)
 	lives.text = "LIVES: " + str(Global.playerLives)

@@ -33,18 +33,18 @@ func update_screen():
 	#set lives:
 	lives.text = ": " + str(Global.playerLives)
 	#set ammo count for all weapons
-	for i in range(len(weapons)):
-		var tint = Global.player.weapon_stats[i][3];
-		var value = Global.player.weapon_stats[i][0];
+	for w in weapons:
+		w.hide()
+	for i in range(len(Global.player.weapon_list)):
+		if !Global.player.weapon_list[i].acquired: continue
+		var tint = Global.player.weapon_list[i].bar_colour
+		var value = Global.player.weapon_list[i].saved_ammo
 		#set the P weapon to be player health
+		weapons[i].label.text = Global.player.weapon_list[i].select_character
+		weapons[i].show();
 		if(i==0):
 			weapon_normal.set_ammo(Global.player.health,tint);
-			continue;
-		var unlocked = Global.player_weapon_unlocks[i][0];
-		if(!unlocked): 
-			weapons[i].hide();
-			continue;
-		weapons[i].show();
+			continue
 		weapons[i].set_ammo(value,tint);
 	
 func goto_next_page():

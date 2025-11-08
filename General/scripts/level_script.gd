@@ -12,6 +12,7 @@ const READY_PLAYER = preload("res://General/objects/ready_player.tscn")
 @export var level_music:AudioStream;
 
 func _ready() -> void:
+	add_to_group("World")
 	ready_player();
 	Global.can_pause = true;
 	if(level_music != null):
