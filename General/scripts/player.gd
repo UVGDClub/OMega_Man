@@ -235,6 +235,11 @@ func get_weapon(idx : int):
 	for i in Global.saved_weapons.size():
 		Global.saved_weapons[i] = Global.saved_weapons[i].duplicate()
 
+func try_gain_ammo(amount : int):
+	#TODO add ammo over time while pausing game (idk if we want this even though its in the original mega man it might make the game feel clunky)
+	weapon.ammo += amount
+	update_weapon_hud()
+
 func handle_jump(_delta):
 	# Handle jump.
 	if(jump_cooldown): return;
