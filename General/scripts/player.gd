@@ -250,7 +250,7 @@ func handle_jump(_delta):
 		#velocity.y = JUMP_VELOCITY * (jump_height_timer_max-jump_height_timer+9)/jump_height_timer_max
 	if !is_on_floor() && jump_height_timer:
 		#if jumped, and released the jump button quick enough, stop ascending
-		if Input.is_action_just_released("act_jump"):
+		if Input.is_action_just_released("act_jump") && velocity.y <= 0:
 			velocity.y = 0
 			jump_height_timer = 0;
 			return
